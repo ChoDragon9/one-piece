@@ -1,15 +1,4 @@
-const queryToString = obj => {
-  if (!obj) {
-    return ''
-  }
-
-  const query = Object
-    .entries(obj)
-    .map(item => item.join('='))
-    .join('&')
-  return `?${query}`
-}
-
+const DOMAIN = 'http://localhost:3000'
 const DEFAULT_HEADER = {
   'Content-Type': 'application/json'
 }
@@ -22,26 +11,16 @@ const HTTP_METHOD = {
 }
 
 const fetchData = ({url, method, body, headers}) => {
-  return fetch(url, {
+  return fetch(`${DOMAIN}${url}`, {
     method,
-    body,
-    headers: Object.assign(DEFAULT_HEADER, headers)
+    body: convertToHttpBody(body),
+    headers: convertToHttpHeader({body, headers})
   })
     .then(async response => {
       const {status, statusText} = response
       const body = await extractHttpBody(response)
       return {status, statusText, body}
     })
-}
-
-const extractHttpBody = response => {
-  const contentType = response.headers.get('Content-Type')
-
-  switch (true) {
-    case contentType.startsWith('application/json'):
-      return response.json()
-  }
-  return response.text()
 }
 
 const fetchGetData = (url, queryObj) => {
@@ -73,4 +52,36 @@ const fetchDeleteData = (url, body) => {
     body,
     method: HTTP_METHOD.DELETE,
   })
+}
+
+const extractHttpBody = response => {
+  const contentType = response.headers.get('Content-Type')
+
+  switch (true) {
+    case contentType.startsWith('application/json'):
+      return response.json()
+    case contentType.startsWith('image'):
+      return response.blob()
+  }
+  return response.text()
+}
+
+const convertToHttpBody = body => {
+  return (body instanceof FormData) ? body : JSON.stringify(body)
+}
+
+const convertToHttpHeader = ({body, headers}) => {
+  return (body instanceof FormData) ? undefined : Object.assign(DEFAULT_HEADER, headers)
+}
+
+const queryToString = obj => {
+  if (!obj) {
+    return ''
+  }
+
+  const query = Object
+    .entries(obj)
+    .map(item => item.join('='))
+    .join('&')
+  return `?${query}`
 }

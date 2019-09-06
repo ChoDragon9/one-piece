@@ -2,13 +2,13 @@
 
 #### 스펙
 - GET
-  - Arraybuffer
-  - Blob
   - JSON
   - HTML
-  - formData
   - TXT
 - POST
+  - JSON
   - File Upload
 - PUT
+  - JSON
+  - File Upload
 - DELETE
