@@ -1,0 +1,4 @@
+.idea
+./node_modules
+express-server/node_modules
+pdfjs-sample/node_modules
