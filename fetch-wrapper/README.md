@@ -1,8 +1,7 @@
 > https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
 #### 스펙
-- DOMAIN
-  - Phase간 변경
+```
 - GET
   - JSON
   - HTML
@@ -14,6 +13,7 @@
   - JSON
   - File Upload
 - DELETE
+```
 
 ### 예제
 #### 응답 포맷
@@ -62,9 +62,8 @@ fetchPostData('/post/file', formData)
 #### PUT
 ##### Basic
 ```js
-addClick('put-json', () => {
-  fetchPutData('/put/json', {data: 'json'})
-    .then(response => console.log(response))
+fetchPutData('/put/json', {data: 'json'})
+  .then(response => console.log(response))
 ```
 
 ##### File Upload
@@ -74,7 +73,7 @@ const formData = new FormData()
 formData.append('uploadFile', file, file.name)
 
 fetchPutData('/put/file', formData)
-.then(response => console.log(response))
+  .then(response => console.log(response))
 ```
 
 #### DELETE
