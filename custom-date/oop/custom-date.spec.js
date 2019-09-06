@@ -1,22 +1,5 @@
 const {BeeDate} = require('./custom-date')
-
-let result = true
-const log = (txt, fn) => {
-  console.log('------------------------')
-  console.log(txt)
-  try {
-    if (fn()) {
-      console.log('[SUCCESS] ', txt)
-    } else {
-      console.error('[FAIL] ', txt)
-      result = false
-    }
-  } catch (e) {
-    result = false
-    console.error(e)
-  }
-  console.log('------------------------')
-}
+const {log, logResult} = require('../log')
 
 log('create - nothing', function () {
   const nowDate = new Date()
@@ -334,4 +317,4 @@ log('range - limit 365', () => {
 	return result
 })
 
-console.log('Total Result: ', result ? 'SUCCESS' : 'FAIL')
+logResult()
