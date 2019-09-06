@@ -16,6 +16,12 @@
 ```
 
 ### 예제
+#### 도메인 변경
+`/src/fetch-wrapper.js` 상수 변경 후 사용
+```js
+const DOMAIN = 'http://localhost:3000'
+```
+
 #### 응답 포맷
 ```
 {
