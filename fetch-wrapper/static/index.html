@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<table border="1">
+  <tr>
+    <td>Method</td>
+    <td>Data</td>
+    <td>Button</td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>Not Found</td>
+    <td><button type="button" id="get-not">Request</button></td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>JSON</td>
+    <td><button type="button" id="get-json">Request</button></td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>HTML</td>
+    <td><button type="button" id="get-html">Request</button></td>
+  </tr>
+  <tr>
+    <td>GET</td>
+    <td>Text</td>
+    <td><button type="button" id="get-text">Request</button></td>
+  </tr>
+</table>
+
+<script src="/source/fetch-wrapper.js"></script>
+<script>
+  const getElem = selector => document.querySelector('#' + selector)
+  const addClick = (selector, callback) => {
+    const elem = getElem(selector)
+    elem.onclick = callback
+  }
+
+  window.onload = () => {
+    ['not', 'json','html','text'].forEach(item => {
+      addClick('get-' + item, () => {
+        fetchGetData('/get/' + item)
+          .then(response => console.log(response))
+      })
+    })
+  }
+</script>
+</body>
+</html>
