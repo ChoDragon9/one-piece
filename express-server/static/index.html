@@ -5,10 +5,24 @@
   <title>Title</title>
 </head>
 <body>
+<input type="file" id="my-file">
+<input type="button" value="Submit" onclick="uploadFile()">
 
 <script src="/src/sample.js"></script>
 <script>
-  alert(add(10, 5))
+  console.log(add(10, 5))
+
+  const uploadFile = () => {
+    const file = document.querySelector('#my-file').files[0]
+    const formData = new FormData()
+
+    formData.append('uploadFile', file, file.name)
+
+    fetch('/upload', {
+      method: 'POST',
+      body: formData
+    })
+  }
 </script>
 </body>
 </html>
