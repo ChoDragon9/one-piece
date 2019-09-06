@@ -10,19 +10,6 @@ const HTTP_METHOD = {
   DELETE: 'DELETE'
 }
 
-const fetchData = ({url, method, body, headers}) => {
-  return fetch(`${DOMAIN}${url}`, {
-    method,
-    body: convertToHttpBody(body),
-    headers: convertToHttpHeader({body, headers})
-  })
-    .then(async response => {
-      const {status, statusText} = response
-      const body = await extractHttpBody(response)
-      return {status, statusText, body}
-    })
-}
-
 const fetchGetData = (url, queryObj) => {
   return fetchData({
     url: `${url}${queryToString(queryObj)}`,
@@ -54,6 +41,27 @@ const fetchDeleteData = (url, body) => {
   })
 }
 
+const fetchData = ({url, method, body, headers}) => {
+  return fetch(`${DOMAIN}${url}`, {
+    method,
+    body: toHttpBody(body),
+    headers: toHttpHeader({body, headers})
+  })
+    .then(async response => {
+      const {status, statusText} = response
+      const body = await extractHttpBody(response)
+      return {status, statusText, body}
+    })
+}
+
+const toHttpBody = body => {
+  return isFormData(body) ? body : JSON.stringify(body)
+}
+
+const toHttpHeader = ({body, headers}) => {
+  return isFormData(body) ? undefined : Object.assign(DEFAULT_HEADER, headers)
+}
+
 const extractHttpBody = response => {
   const contentType = response.headers.get('Content-Type')
 
@@ -66,13 +74,7 @@ const extractHttpBody = response => {
   return response.text()
 }
 
-const convertToHttpBody = body => {
-  return (body instanceof FormData) ? body : JSON.stringify(body)
-}
-
-const convertToHttpHeader = ({body, headers}) => {
-  return (body instanceof FormData) ? undefined : Object.assign(DEFAULT_HEADER, headers)
-}
+const isFormData = data => data instanceof FormData
 
 const queryToString = obj => {
   if (!obj) {
