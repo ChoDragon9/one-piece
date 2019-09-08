@@ -1,7 +1,7 @@
 const {BeeDate} = require('./custom-date')
-const {log, logResult} = require('../log')
+const {specLog, logResult} = require('../../spec-log')
 
-log('create - nothing', function () {
+specLog('create - nothing', function () {
   const nowDate = new Date()
   const date = BeeDate.create()
 
@@ -17,7 +17,7 @@ log('create - nothing', function () {
   return result
 })
 
-log('create - timestamp', () => {
+specLog('create - timestamp', () => {
 	const nowDate = new Date()
 	const date = BeeDate.create(+nowDate)
 
@@ -33,7 +33,7 @@ log('create - timestamp', () => {
 	return result
 })
 
-log('create - BeeDate', () => {
+specLog('create - BeeDate', () => {
 	const srcDate = BeeDate.create()
 	const targetDate = BeeDate.create(srcDate)
 
@@ -49,7 +49,7 @@ log('create - BeeDate', () => {
 	return result
 })
 
-log('create - Date', () => {
+specLog('create - Date', () => {
 	const nowDate = new Date()
 	const date = BeeDate.create(nowDate)
 
@@ -65,13 +65,13 @@ log('create - Date', () => {
 	return result
 })
 
-log('createFromDate - Year', () => {
+specLog('createFromDate - Year', () => {
 	const date = BeeDate.createFromDate(2019)
 	const result = date.getFullYear() === 1970
 	return result
 })
 
-log('createFromDate - Year, Month', () => {
+specLog('createFromDate - Year, Month', () => {
 	const date = BeeDate.createFromDate(2019, 10)
 	const result = [
 	  date.getFullYear() === 2019,
@@ -80,7 +80,7 @@ log('createFromDate - Year, Month', () => {
 	return result.every(v => v)
 })
 
-log('createFromDate - Year, Month, Date', () => {
+specLog('createFromDate - Year, Month, Date', () => {
 	const date = BeeDate.createFromDate(2019, 1, 2)
 	const result = [
 		date.getFullYear() === 2019,
@@ -90,7 +90,7 @@ log('createFromDate - Year, Month, Date', () => {
 	return result.every(v => v)
 })
 
-log('clone', () => {
+specLog('clone', () => {
 	const date = BeeDate.create()
 	const clonedDate = date.clone()
 
@@ -106,7 +106,7 @@ log('clone', () => {
 	return result
 })
 
-log('addDate', () => {
+specLog('addDate', () => {
 	const date = BeeDate.createFromDate(2019, 1, 1)
 	const addedDate = date.addDate(5)
 
@@ -119,7 +119,7 @@ log('addDate', () => {
 	return result.every(v => v)
 })
 
-log('subtractDate', () => {
+specLog('subtractDate', () => {
 	const date = BeeDate.createFromDate(2019, 1, 10)
 	const addedDate = date.subtractDate(5)
 
@@ -132,7 +132,7 @@ log('subtractDate', () => {
 	return result.every(v => v)
 })
 
-log('getYesterday', () => {
+specLog('getYesterday', () => {
 	const date = BeeDate.createFromDate(2019, 1, 2)
 	const yesterday = date.getYesterday()
 
@@ -145,7 +145,7 @@ log('getYesterday', () => {
 })
 
 
-log('formatDate - YYYY-MM-DD', () => {
+specLog('formatDate - YYYY-MM-DD', () => {
 	const date = BeeDate.createFromDate(2019, 1, 2)
 
 	const result = date.formatDate('-')
@@ -153,7 +153,7 @@ log('formatDate - YYYY-MM-DD', () => {
 	return result === '2019-02-02'
 })
 
-log('formatDate - YYYY.MM.DD', () => {
+specLog('formatDate - YYYY.MM.DD', () => {
 	const date = BeeDate.createFromDate(2019, 1, 2)
 
 	const result = date.formatDate('.')
@@ -161,7 +161,7 @@ log('formatDate - YYYY.MM.DD', () => {
 	return result === '2019.02.02'
 })
 
-log('formatTime - HH:mm:ss', () => {
+specLog('formatTime - HH:mm:ss', () => {
 	const date = BeeDate.createFromDate(2019, 1, 2, 10, 11, 13)
 
 	const result = date.formatTime(':')
@@ -169,7 +169,7 @@ log('formatTime - HH:mm:ss', () => {
 	return result === '10:11:13'
 })
 
-log('format - YYYY-MM-DD', () => {
+specLog('format - YYYY-MM-DD', () => {
 	const date = BeeDate.createFromDate(2019, 1, 2)
 
 	const result = date.format(({year, month, date}) => `${year}-${month}-${date}`)
@@ -177,7 +177,7 @@ log('format - YYYY-MM-DD', () => {
 	return result === '2019-02-02'
 })
 
-log('format - YYYY.MM.DD', () => {
+specLog('format - YYYY.MM.DD', () => {
 	const date = BeeDate.createFromDate(2019, 1, 2)
 
 	const result = date.format(({year, month, date}) => `${year}.${month}.${date}`)
@@ -185,7 +185,7 @@ log('format - YYYY.MM.DD', () => {
 	return result === '2019.02.02'
 })
 
-log('format - YYYY.MM.DD HH:mm:ss', () => {
+specLog('format - YYYY.MM.DD HH:mm:ss', () => {
 	const date = BeeDate.createFromDate(2019, 1, 2, 10, 11, 13)
 
 	const result = date.format(({year, month, date, hours, minutes, seconds}) => `${year}.${month}.${date} ${hours}:${minutes}:${seconds}`)
@@ -193,7 +193,7 @@ log('format - YYYY.MM.DD HH:mm:ss', () => {
 	return result === '2019.02.02 10:11:13'
 })
 
-log('isSameDate', () => {
+specLog('isSameDate', () => {
 	const srcDate = BeeDate.createFromDate(2019, 1, 2)
 	const targetDate = BeeDate.createFromDate(2019, 1, 2)
 
@@ -202,7 +202,7 @@ log('isSameDate', () => {
 	return result
 })
 
-log('isSameDate - not', () => {
+specLog('isSameDate - not', () => {
 	const srcDate = BeeDate.createFromDate(2019, 1, 2)
 	const targetDate = BeeDate.createFromDate(2019, 1, 3)
 
@@ -211,7 +211,7 @@ log('isSameDate - not', () => {
 	return result
 })
 
-log('isSameMonth', () => {
+specLog('isSameMonth', () => {
 	const srcDate = BeeDate.createFromDate(2019, 1, 2)
 	const targetDate = BeeDate.createFromDate(2019, 1, 2)
 
@@ -220,7 +220,7 @@ log('isSameMonth', () => {
 	return result
 })
 
-log('isSameMonth - not', () => {
+specLog('isSameMonth - not', () => {
 	const srcDate = BeeDate.createFromDate(2019, 1, 2)
 	const targetDate = BeeDate.createFromDate(2019, 2, 3)
 
@@ -229,7 +229,7 @@ log('isSameMonth - not', () => {
 	return result
 })
 
-log('isSameYear', () => {
+specLog('isSameYear', () => {
 	const srcDate = BeeDate.createFromDate(2019, 1, 2)
 	const targetDate = BeeDate.createFromDate(2019, 1, 2)
 
@@ -238,7 +238,7 @@ log('isSameYear', () => {
 	return result
 })
 
-log('isSameYear - not', () => {
+specLog('isSameYear - not', () => {
 	const srcDate = BeeDate.createFromDate(2019, 1, 2)
 	const targetDate = BeeDate.createFromDate(2018, 2, 3)
 
@@ -247,7 +247,7 @@ log('isSameYear - not', () => {
 	return result
 })
 
-log('isLeapYear', () => {
+specLog('isLeapYear', () => {
 	const date = BeeDate.createFromDate(2016, 2)
 
 	const result = date.isLeapYear()
@@ -255,7 +255,7 @@ log('isLeapYear', () => {
 	return result
 })
 
-log('isLeapYear - not', () => {
+specLog('isLeapYear - not', () => {
 	const date = BeeDate.createFromDate(2017, 2)
 
 	const result = !date.isLeapYear()
@@ -263,7 +263,7 @@ log('isLeapYear - not', () => {
 	return result
 })
 
-log('getLastDate', () => {
+specLog('getLastDate', () => {
 	const LAST_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 	const date = Array
     .from({length: 12}, (v, i) => {
@@ -278,7 +278,7 @@ log('getLastDate', () => {
 	return result
 })
 
-log('getLastDate - leap year', () => {
+specLog('getLastDate - leap year', () => {
 	const date = BeeDate.createFromDate(2016, 2)
 
 	const result = date.getLastDate() === 29
@@ -286,7 +286,7 @@ log('getLastDate - leap year', () => {
 	return result
 })
 
-log('range', () => {
+specLog('range', () => {
 	const startDate = BeeDate.createFromDate(2016, 0, 1)
 	const endDate = BeeDate.createFromDate(2016, 0, 20)
 	const range = startDate.range(endDate)
@@ -299,7 +299,7 @@ log('range', () => {
 	return result.every(v => v)
 })
 
-log('range - past', () => {
+specLog('range - past', () => {
 	const startDate = BeeDate.createFromDate(2016, 0, 20)
 	const endDate = BeeDate.createFromDate(2016, 0, 1)
 
@@ -308,7 +308,7 @@ log('range - past', () => {
 	return result
 })
 
-log('range - limit 365', () => {
+specLog('range - limit 365', () => {
 	const startDate = BeeDate.createFromDate(2016, 0, 1)
 	const endDate = BeeDate.createFromDate(2017, 12, 31)
 

@@ -1,5 +1,12 @@
+/*
+specLog('<message>', function () {
+})
+// Last Line
+logResult()
+*/
+
 let result = true
-const log = (txt, fn) => {
+const specLog = (txt, fn) => {
   console.log('------------------------')
   console.log(txt)
   try {
@@ -20,4 +27,4 @@ const logResult = () => {
   console.log('Total Result: ', result ? 'SUCCESS' : 'FAIL')
 }
 
-module.exports = {log, logResult}
+module.exports = {specLog, logResult}
