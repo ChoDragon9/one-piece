@@ -1,30 +1,30 @@
-const {addDate, diffDay, subtractDate} = require("./fp-date");
+const {addDay, diffDay, subtractDay} = require("./fp-date");
 const {log, logResult} = require('../log')
 
-log('addDate - tomorrow', () => {
+log('addDay - tomorrow', () => {
   const today = new Date(2019, 0, 1)
-  const tomorrow = addDate(today, 1)
+  const tomorrow = addDay(today, 1)
 
   return tomorrow.getDate() == 2
 })
 
-log('addDate - nextWeek', () => {
+log('addDay - nextWeek', () => {
   const today = new Date(2019, 0, 1)
-  const nextWeek = addDate(today, 7)
+  const nextWeek = addDay(today, 7)
 
   return nextWeek.getDate() === 8
 })
 
-log('subtractDate - yesterday', () => {
+log('subtractDay - yesterday', () => {
   const today = new Date(2019, 0, 8)
-  const yesterday = subtractDate(today, 1)
+  const yesterday = subtractDay(today, 1)
 
   return yesterday.getDate() === 7
 })
 
-log('subtractDate - prevWeek', () => {
+log('subtractDay - prevWeek', () => {
   const today = new Date(2019, 0, 8)
-  const prevWeek = subtractDate(today, 7)
+  const prevWeek = subtractDay(today, 7)
 
   return prevWeek.getDate() === 1
 })

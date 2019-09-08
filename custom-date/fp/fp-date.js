@@ -1,10 +1,10 @@
-const addDate = (date, count) => {
+const addDay = (date, count) => {
   const clonedDate = new Date(date)
   clonedDate.setDate(clonedDate.getDate() + count)
   return clonedDate
 }
 
-const subtractDate = (date, count) => {
+const subtractDay = (date, count) => {
   const clonedDate = new Date(date)
   clonedDate.setDate(clonedDate.getDate() - count)
   return clonedDate
@@ -16,7 +16,7 @@ const diffDay = (srcDate, targetDate) => {
 }
 
 module.exports = {
-  addDate,
-  subtractDate,
+  addDay,
+  subtractDay,
   diffDay
 }
