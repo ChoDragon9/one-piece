@@ -12,7 +12,7 @@ const toMonthDays = ({year, month}) => {
   const nextMonthLength = restDay ? WEEK_LENGTH - restDay : restDay
 
   const prevMonthDays = range(dayIndex).map(() => '')
-  const currentMonthDays = range(lastDate).map((_, i) => i + 1)
+  const currentMonthDays = range(lastDate).map((_, i) => i + 1) // [1, 2, ...]
   const nextMonthDays = range(nextMonthLength).map(() => '')
 
   return chunk([].concat(prevMonthDays, currentMonthDays, nextMonthDays), WEEK_LENGTH)
