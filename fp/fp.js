@@ -1,3 +1,5 @@
+const range = require('./range')
+const chunk = require('./chunk')
 const each = iter => (list) => {
   for (let i = 0, len = list.length; i < len; i++) {
     iter(list[i], i, list, len)
@@ -93,5 +95,7 @@ module.exports = {
   isUndefined,
   negate,
   clone,
-  merge
+  merge,
+  range,
+  chunk
 }

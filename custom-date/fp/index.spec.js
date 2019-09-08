@@ -1,7 +1,11 @@
-const {addDay, diffDay, subtractDay} = require("./fp-date");
-const isLeapYear = require("./is-leap-year");
-const toLastDay = require("./to-last-day");
-const toDayIndex = require("./to-day-index");
+const {
+  addDay,
+  subtractDay,
+  diffDay,
+  isLeapYear,
+  toLastDay,
+  toDayIndex
+} = require("./index");
 const {specLog, logResult} = require('../../spec-log')
 
 specLog('addDay - tomorrow', () => {

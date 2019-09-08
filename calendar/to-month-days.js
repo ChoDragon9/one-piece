@@ -1,7 +1,5 @@
-const toDayIndex = require('../custom-date/fp/to-day-index')
-const toLastDay = require('../custom-date/fp/to-last-day')
-const chunk = require('../fp/chunk')
-const range = require('../fp/range')
+const {toDayIndex, toLastDay} = require('../custom-date/fp')
+const {chunk, range} = require('../fp/fp')
 
 const toMonthDays = ({year, month}) => {
   const WEEK_LENGTH = 7
