@@ -1,4 +1,4 @@
-const {addDay, diffDay, subtractDay, isLeapYear, toLastDate} = require("./fp-date");
+const {addDay, diffDay, subtractDay, isLeapYear, toLastDate, toDayIndex} = require("./fp-date");
 const {log, logResult} = require('../log')
 
 log('addDay - tomorrow', () => {
@@ -64,6 +64,27 @@ log('toLastDate - 2020/2', () => {
   const result = toLastDate({year, month})
 
   return result === 29
+})
+
+log('toDayIndex - 2019/9/1', () => {
+  const date = new Date(2019, 8, 1)
+  const result = toDayIndex(date)
+
+  return result === 0
+})
+
+log('toDayIndex - 2019/9/4', () => {
+  const date = new Date(2019, 8, 4)
+  const result = toDayIndex(date)
+
+  return result === 3
+})
+
+log('toDayIndex - 2019/9/7', () => {
+  const date = new Date(2019, 8, 7)
+  const result = toDayIndex(date)
+
+  return result === 6
 })
 
 logResult()

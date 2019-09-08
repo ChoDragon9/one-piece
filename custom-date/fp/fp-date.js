@@ -35,10 +35,13 @@ const toLastDate = ({year, month}) => {
   return LAST_DAYS[month - 1]
 }
 
+const toDayIndex = date => date.getDay()
+
 module.exports = {
   addDay,
   subtractDay,
   diffDay,
   isLeapYear,
-  toLastDate
+  toLastDate,
+  toDayIndex
 }
