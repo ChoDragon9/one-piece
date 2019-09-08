@@ -1,6 +1,6 @@
 const isLeapYear = require('./is-leap-year')
 
-const toLastDate = ({year, month}) => {
+const toLastDay = ({year, month}) => {
   const LAST_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
   const LEAP_YEAR_LAST_DATE = 29
   const MONTH_FEBRUARY = 2
@@ -11,4 +11,4 @@ const toLastDate = ({year, month}) => {
   return LAST_DAYS[month - 1]
 }
 
-module.exports = toLastDate
+module.exports = toLastDay

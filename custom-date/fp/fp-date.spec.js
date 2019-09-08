@@ -1,6 +1,6 @@
 const {addDay, diffDay, subtractDay} = require("./fp-date");
 const isLeapYear = require("./is-leap-year");
-const toLastDate = require("./to-last-date");
+const toLastDay = require("./to-last-day");
 const toDayIndex = require("./to-day-index");
 const {specLog, logResult} = require('../../spec-log')
 
@@ -53,18 +53,18 @@ specLog('isLeapYear - 2020', () => {
   return result === true
 })
 
-specLog('toLastDate - 2020/1', () => {
+specLog('toLastDay - 2020/1', () => {
   const year = 2020
   const month = 1
-  const result = toLastDate({year, month})
+  const result = toLastDay({year, month})
 
   return result === 31
 })
 
-specLog('toLastDate - 2020/2', () => {
+specLog('toLastDay - 2020/2', () => {
   const year = 2020
   const month = 2
-  const result = toLastDate({year, month})
+  const result = toLastDay({year, month})
 
   return result === 29
 })
