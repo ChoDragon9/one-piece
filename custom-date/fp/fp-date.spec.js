@@ -1,4 +1,4 @@
-const {addDay, diffDay, subtractDay} = require("./fp-date");
+const {addDay, diffDay, subtractDay, isLeapYear, toLastDate} = require("./fp-date");
 const {log, logResult} = require('../log')
 
 log('addDay - tomorrow', () => {
@@ -34,6 +34,36 @@ log('diffDay', () => {
   const nextWeek = new Date(2019, 0, 8)
 
   return diffDay(today, nextWeek) === 7
+})
+
+log('isLeapYear - 2019', () => {
+  const year = 2019
+  const result = isLeapYear(year)
+
+  return result === false
+})
+
+log('isLeapYear - 2020', () => {
+  const year = 2020
+  const result = isLeapYear(year)
+
+  return result === true
+})
+
+log('toLastDate - 2020/1', () => {
+  const year = 2020
+  const month = 1
+  const result = toLastDate({year, month})
+
+  return result === 31
+})
+
+log('toLastDate - 2020/2', () => {
+  const year = 2020
+  const month = 2
+  const result = toLastDate({year, month})
+
+  return result === 29
 })
 
 logResult()
