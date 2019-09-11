@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CSV File</title>
+</head>
+<body>
+<input type="file" accept=".csv" onchange="loadFile(this)">
+
+<script>
+  const loadFile = (self) => {
+    const {files: [csvFile]} = self
+    const promise = csvToObj(csvFile)
+    promise.then(console.log)
+  }
+  const csvToObj = csvFile => {
+    return new Promise((resolve) => {
+      const reader = Object.assign(new FileReader(), {
+        onload: ({target: {result}}) => {
+          const csvData = result
+            .split(/\r\n|\n/)
+            .map(line => line.split(','))
+          resolve(csvData)
+        }
+      })
+      reader.readAsText(csvFile)
+    })
+  }
+</script>
+</body>
+</html>
