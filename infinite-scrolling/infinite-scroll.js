@@ -1,11 +1,12 @@
 const observerOptions = {
   threshold: [0, .25, .5, .75, 1]
 }
+const DETECT_RATIO = .5
 const mountInfiniteScroll = (options) => {
   const {
     detector,
     detectListener,
-    detectRatio = .5,
+    detectRatio = DETECT_RATIO,
   } = options
   const observer = (elem) => {
     const [{intersectionRatio, isIntersecting}] = elem
