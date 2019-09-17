@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.8/c3.css">
+  <style>
+    /* 라벨 색상 및 사이즈 수정 */
+    .c3 svg {
+      font-size: 13px;
+      fill: #999
+    }
+    /* 좌표의 선 삭제 */
+    .c3 .tick line {
+      display: none
+    }
+    /* 차트 내부 선 색상 및 라인으로 변경 */
+    .c3-grid line {
+      stroke-dasharray: 0;
+      stroke: #ddd
+    }
+  </style>
+</head>
+<body>
+<h1>Date Chart</h1>
+<div id="chart-date"></div>
+<img src="./goal.png">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.0.0/d3.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.8/c3.js"></script>
+<script>
+  const CHART_OPTION = {
+    HEIGHT: 380,
+    PADDING_TOP: 50,
+    COLOR_PATTERN: [
+      '#45454d',
+      '#ce2e6c',
+      '#f75f00',
+      '#43ab92',
+      '#512c62',
+      '#504658',
+      '#1089ff'
+    ],
+    POINT_RADIUS: 4
+  }
+
+  const COMMON_CHART_OPTION = {
+    padding: {
+      top: CHART_OPTION.PADDING_TOP
+    },
+    size: {
+      height: CHART_OPTION.HEIGHT
+    },
+    color: {
+      pattern: CHART_OPTION.COLOR_PATTERN
+    },
+    point: {
+      r: CHART_OPTION.POINT_RADIUS
+    },
+    legend: {
+      position: 'inset',
+      inset: {
+        anchor: 'top-right',
+        y: -CHART_OPTION.PADDING_TOP,
+        step: 1
+      }
+    },
+    grid: {
+      y: {
+        show: true
+      }
+    }
+  }
+
+  const drawChart = (element, labels, columns) => {
+    const chart = c3.generate(Object.assign({
+      bindto: '#chart-date',
+      data: {
+        x: 'x',
+        columns: [
+          [
+            'x',
+            ...labels
+          ],
+          ...columns
+        ],
+      },
+      axis: {
+        x: {
+          type: 'timeseries',
+          tick: {
+            format: '%Y'
+          }
+        }
+      },
+      tooltip: {
+        format: {
+          title: (x) => {
+            const year = x.getFullYear()
+            const month = x.getMonth() + 1
+            return `${year}.${month > 10 ? month : '0' + month}`
+          },
+          value: value => `${value}%`,
+        }
+      }
+    }, COMMON_CHART_OPTION));
+
+    return () => {
+      chart.destroy()
+    }
+  }
+
+  window.onload = () => {
+    const elem = document.querySelector('#chart-date')
+    const labels = [
+      '2010-01-01',
+      '2011-01-01',
+      '2012-01-01',
+      '2013-01-01',
+      '2014-01-01',
+      '2015-01-01',
+      '2016-01-01',
+      '2017-01-01'
+    ]
+    const columns = Array
+      .from({length: 10}, (v, index) => index + 1)
+      .map(index => {
+        return [`data${index}`]
+          .concat([110, 90, 110, 90, 110, 90, 110, 90].map(v => v * index))
+      })
+
+    const chart = drawChart(elem, labels, columns)
+    setTimeout(() => {
+      chart()
+    }, 5000)
+  }
+</script>
+</body>
+</html>
