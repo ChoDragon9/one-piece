@@ -21,29 +21,37 @@
 <div id="editor-presentor"></div>
 
 <script>
-  const toolbarOptions = [
-    ['image', 'bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  const TOOLBAR_OPTIONS = [
+    // toggled buttons
+    ['image', 'bold', 'italic', 'underline', 'strike'],
     ['blockquote', 'code-block'],
 
-    [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+    // custom button values
+    [{ 'header': 1 }, { 'header': 2 }],
     [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-    [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-    [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-    [{ 'direction': 'rtl' }],                         // text direction
+    // superscript/subscript
+    [{ 'script': 'sub'}, { 'script': 'super' }],
+    // outdent/indent
+    [{ 'indent': '-1'}, { 'indent': '+1' }],
+    // text direction
+    [{ 'direction': 'rtl' }],
 
-    [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+    // custom dropdown
+    [{ 'size': ['small', false, 'large', 'huge'] }],
     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 
-    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+    // dropdown with defaults from theme
+    [{ 'color': [] }, { 'background': [] }],
     [{ 'font': [] }],
     [{ 'align': [] }],
 
-    ['clean']                                         // remove formatting button
+    // remove formatting button
+    ['clean']
   ];
 
   const container = new Quill('#editor-container', {
     modules: {
-      toolbar: toolbarOptions
+      toolbar: TOOLBAR_OPTIONS
     },
     placeholder: 'Compose an epic...',
     theme: 'snow'
