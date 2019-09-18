@@ -6,25 +6,19 @@
 </head>
 <body>
 <input type="file" accept=".csv" onchange="loadFile(this)">
-
+<script src="csv-loader.js"></script>
 <script>
   const loadFile = (self) => {
     const {files: [csvFile]} = self
-    const promise = csvToObj(csvFile)
-    promise.then(console.log)
-  }
-  const csvToObj = csvFile => {
-    return new Promise((resolve) => {
-      const reader = Object.assign(new FileReader(), {
-        onload: ({target: {result}}) => {
-          const csvData = result
-            .split(/\r\n|\n/)
-            .map(line => line.split(','))
-          resolve(csvData)
-        }
-      })
-      reader.readAsText(csvFile)
-    })
+    if (!isCSVFormat(csvFile)) {
+      alert('CSV 파일이 아닙니다.')
+      self.value = ''
+      return
+    }
+
+    csvToObj(csvFile)
+      .then(console.log)
+      .catch(console.error)
   }
 </script>
 </body>
