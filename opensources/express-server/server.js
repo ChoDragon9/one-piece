@@ -1,7 +1,8 @@
 const express = require('express')
 const multer = require('multer')
+const cookieParser = require('cookie-parser');
 
-const SERVER_POST = 3000
+const SERVER_POST = 4000
 const UPLOADED_FILE_DIR = 'uploaded_files'
 const app = express()
 const storage = multer.diskStorage({
@@ -16,11 +17,21 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage })
 
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://local.kakao.com:3000");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header("Access-Control-Allow-Credentials", true);
+  next();
+});
+
+app.use(cookieParser())
+
 app.use('/static', express.static('static'))
 app.use('/src', express.static('src'))
 app.use(`/${UPLOADED_FILE_DIR}`, express.static(UPLOADED_FILE_DIR))
 
 app.get('/', (req, res) => {
+  console.log(req.cookies)
   res.send('Hello World!')
 })
 
@@ -38,5 +49,5 @@ app.post('/upload', upload.any(), (req, res) => {
 })
 
 app.listen(SERVER_POST, () => {
-  console.log('Example app listening on port 3000!')
+  console.log(`Example app listening on port ${SERVER_POST}!`)
 })
