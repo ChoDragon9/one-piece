@@ -9,3 +9,5 @@ export const filter = (predicate, iterable) => {
 }
 
 export const join = (sep, iter) => from(iter).join(sep)
+
+export const size = (iterable) => from(iterable).length
