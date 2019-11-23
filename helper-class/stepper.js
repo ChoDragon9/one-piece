@@ -29,14 +29,15 @@ var Stepper = /** @class */ (function () {
         configurable: true
     });
     Stepper.prototype.next = function () {
-        var current = this.current + this.step;
-        this.current = this.calibratePosition(current);
+        this.changeCurrent(this.current + this.step);
     };
     Stepper.prototype.prev = function () {
-        var current = this.current - this.step;
-        this.current = this.calibratePosition(current);
+        this.changeCurrent(this.current - this.step);
     };
     Stepper.prototype.moveTo = function (position) {
+        this.changeCurrent(position);
+    };
+    Stepper.prototype.changeCurrent = function (position) {
         this.current = this.calibratePosition(position);
     };
     Stepper.prototype.calibratePosition = function (position) {

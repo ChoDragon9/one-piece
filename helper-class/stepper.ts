@@ -14,29 +14,26 @@ export class Stepper {
   get isMax(): boolean {
     return this.current === this.max
   }
-
   get isMin(): boolean {
     return this.current === this.min
   }
-
   get currentPosition(): number {
     return this.current
   }
 
   next(): void {
-    const current = this.current + this.step
-    this.current = this.calibratePosition(current)
+    this.changeCurrent(this.current + this.step)
   }
-
   prev(): void {
-    const current = this.current - this.step
-    this.current = this.calibratePosition(current)
+    this.changeCurrent(this.current - this.step)
+  }
+  moveTo(position: number): void {
+    this.changeCurrent(position)
   }
 
-  moveTo(position: number): void {
+  private changeCurrent(position: number): void {
     this.current = this.calibratePosition(position)
   }
-
   private calibratePosition(position: number): number {
     return position > this.max
       ? this.max
