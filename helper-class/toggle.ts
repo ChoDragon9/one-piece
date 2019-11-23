@@ -9,6 +9,9 @@ export class ToggleHelper {
   off(): void {
     this.state = false
   }
+  toggle(): void {
+    this.state = !this.state
+  }
   get isOn(): boolean {
     return this.state
   }
