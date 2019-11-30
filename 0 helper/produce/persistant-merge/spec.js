@@ -155,3 +155,25 @@ test('변경이 원하는 값은 모두 정상적으로 변경되야 한다.', (
   assert(nextState.inner2.inner.inner2.done === true, true)
   assert(nextState.inner2.inner.inner2.txt === 'Hello World', true)
 })
+
+
+test('변경 후 내부적으로 사용 가능하다.', () => {
+  const baseState = {
+    done: false,
+    inner: {
+      count: 1,
+      message: ''
+    },
+  }
+
+  const nextState = produce((draft) => {
+    draft.inner.count++
+    draft.inner.count++
+    draft.inner.count++
+    draft.inner.count++
+    draft.inner.message = `count is ${draft.inner.count}`
+  })(baseState)
+
+  assert(nextState.inner.count === 5, true)
+  assert(nextState.inner.message === 'count is 5', true)
+})
