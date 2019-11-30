@@ -9,7 +9,7 @@ const shallowCopy = obj => {
 }
 
 class LinkedList {
-  constructor(base, parent = null, propName = null) {
+  constructor(base, parent, propName) {
     this.base = base
     this.parent = parent
     this.propName = propName
@@ -31,6 +31,10 @@ class LinkedList {
       this.parent.changeLinkedList(this.propName, this.copy)
     }
   }
+
+  static create(base, parent = null, propName = null) {
+    return new LinkedList(base, parent, propName)
+  }
 }
 
 const canProduce = value => {
@@ -42,7 +46,7 @@ const canProduce = value => {
 class LinkedListProxy {
   constructor(base, parentState, propName) {
     this.base = base
-    this.state = new LinkedList(base, parentState, propName)
+    this.state = LinkedList.create(base, parentState, propName)
     this.children = []
 
     const {proxy, revoke} = this.createProxy()
@@ -73,6 +77,12 @@ class LinkedListProxy {
     this.revokeFn()
     this.children.forEach(child => child.revoke())
   }
+  toBase() {
+    return this.state.toBase()
+  }
+  toProxy() {
+    return this.proxy
+  }
   static create(base, parentState, propName) {
     return new LinkedListProxy(base, parentState, propName)
   }
@@ -81,10 +91,10 @@ class LinkedListProxy {
 const produceBase = (base, fn) => {
   const linkedListProxy = LinkedListProxy.create(base)
 
-  fn(linkedListProxy.proxy)
+  fn(linkedListProxy.toProxy())
   linkedListProxy.revoke()
 
-  return linkedListProxy.state.toBase()
+  return linkedListProxy.toBase()
 }
 
 const produce = (fn) => (base) => {
