@@ -1,4 +1,5 @@
 const {produce} = require('./persistant/produce')
+const {produce: produceOop} = require('./persistant-oop/produce')
 
 const clone = obj => JSON.parse(JSON.stringify(obj))
 const cloneProduce = (fn) => (state) => {
@@ -47,7 +48,8 @@ const callback = obj => {
 arr.forEach((len) => {
   console.group(len)
   run(cloneProduce(callback), len, 'cloneProduce')
-  run(produce(callback), len, 'produce')
+  run(produce(callback), len, 'produce'),
+  run(produceOop(callback), len, 'produceOop')
   console.groupEnd()
 })
 
