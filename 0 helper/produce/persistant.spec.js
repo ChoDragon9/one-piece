@@ -16,6 +16,8 @@ test('프로퍼티 변경 시 주소가 변경된다.', () => {
   console.log(baseState !== nextState)
   console.log(baseState.done !== nextState.done)
 })
+
+
 test('변경하지 않는 객체는 변경되면 안된다.', () => {
   const baseState = {
     done: false,
@@ -135,18 +137,10 @@ test('변경이 원하는 값은 모두 정상적으로 변경되야 한다.', (
   }
 
   const nextState = produce((draft) => {
-    draft.done = true
     draft.inner2.txt = 'Hello1'
-    draft.inner2.inner.inner.done = true
-    draft.inner2.inner.inner2.done = true
-    draft.inner2.inner.inner2.txt = 'Hello World'
+    console.log(draft.inner2.txt)
+    // draft.inner2.inner.inner.done = true
+    // draft.inner2.inner.inner2.done = true
+    // draft.inner2.inner.inner2.txt = 'Hello World'
   })(baseState)
-
-  console.log(nextState.done === true)
-  console.log(nextState.inner2.txt === 'Hello1')
-  console.log(nextState.inner2.inner.inner.done === true)
-  console.log(nextState.inner2.inner.inner2.done === true)
-  console.log(nextState.inner2.inner.inner2.txt === 'Hello World')
-
-  console.log(nextState)
 })
