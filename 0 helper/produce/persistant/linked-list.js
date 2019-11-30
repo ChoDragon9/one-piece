@@ -6,13 +6,18 @@ state: linkedList 아이템
 list: state[]
  */
 
-const toLinkedList = (base, parent = null, propName = null, list = []) => {
-  const state = {
+const toLinkedListItem = (base, parent = null, propName = null) => {
+  return {
     base,
     parent,
     propName,
     copy: null,
   }
+}
+
+const toLinkedList = (base, parent = null, propName = null, list = []) => {
+  const state = toLinkedListItem(base, parent, propName)
+
   list.push(state)
 
   for (const propName in base) {
