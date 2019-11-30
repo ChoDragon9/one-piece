@@ -230,3 +230,11 @@ test('프리미티브 타입은 바로 리턴된다. - Undefined', () => {
 
   assert(baseState === nextState, true)
 })
+
+test('프리미티브 타입은 바로 리턴된다. - Symbol', () => {
+  const baseState = Symbol('symbol')
+
+  const nextState = produce(() => {})(baseState)
+
+  assert(baseState === nextState, true)
+})
