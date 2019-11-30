@@ -54,7 +54,7 @@ class LinkedListProxy {
     this.revokeFn = revoke
   }
   getter(target, propName) {
-    const value = this.state.toBase()[propName]
+    const value = this.toBase()[propName]
     return canProduce(value) ?
       this.createChildProxy(value, propName) :
       value
