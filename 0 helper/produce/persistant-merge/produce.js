@@ -1,17 +1,3 @@
-const canProduce = value => {
-  return value === undefined || value === null ?
-    false :
-    Array.isArray(value) || typeof value === 'object'
-}
-
-const assign = (...obj) => Object.assign(...obj)
-
-const shallowCopy = obj => {
-  if (!canProduce(obj)) return obj
-  if (Array.isArray(obj)) return obj.concat()
-  return Object.assign({}, obj)
-}
-
 const toLinkedListItem = (base, parent = null, propName = null) => {
   return {
     base,
@@ -21,30 +7,25 @@ const toLinkedListItem = (base, parent = null, propName = null) => {
   }
 }
 
-const toBase = (state) => {
-  return state.copy ? state.copy : state.base
-}
-
 const changeLinkedList = (state, propName, value) => {
-  const nextValue = {[propName]: value}
-
-  state.copy ?
-    assign(state.copy, nextValue) :
-    assign(state, {
-      copy: assign(shallowCopy(state.base), nextValue)
-    })
+  if (state.copy) {
+    state.copy[propName] = value
+  } else {
+    state.copy = Object.assign({}, state.base, {[propName]: value})
+  }
 
   if (state.parent) {
     changeLinkedList(state.parent, state.propName, state.copy)
   }
 }
 
+
 const createProxy = (base, revokes, parentState, propName) => {
   const state = toLinkedListItem(base, parentState, propName)
   const handler = {
     get (target, key) {
-      const value = toBase(state)[key]
-      if (canProduce(value)) {
+      const value = state.copy ? state.copy[key] : state.base[key]
+      if (typeof value === 'object') {
         const {proxy} = createProxy(value, revokes, state, key)
         return proxy
       } else {
@@ -52,6 +33,7 @@ const createProxy = (base, revokes, parentState, propName) => {
       }
     },
     set (target, key, value) {
+      console.log('SET', target, key, value)
       changeLinkedList(state, key, value)
     }
   }
@@ -61,15 +43,11 @@ const createProxy = (base, revokes, parentState, propName) => {
   return {proxy, revoke, revokes, state}
 }
 
-const produceBase = (base, fn) => {
+const produce = (base, fn) => {
   const {proxy, revokes, state} = createProxy(base, [])
 
   fn(proxy)
   revokes.forEach(fn => fn())
 
-  return toBase(state)
-}
-
-const produce = (fn) => (base) => {
-  return canProduce(base) ? produceBase(base, fn) : base
+  return state.copy ? state.copy : state.base
 }
