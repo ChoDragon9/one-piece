@@ -8,7 +8,26 @@
   <title>Document</title>
 </head>
 <body>
-<script src="persistant.js"></script>
-<script src="persistant.spec.js"></script>
+<script src="persistant/persistant.js"></script>
+<script>
+  const baseState = {
+    done: false,
+    inner: {
+      txt: 'World',
+      inner: {
+        txt: 'World'
+      }
+    }
+  }
+
+  const nextState = proxyAll(baseState, (draft) => {
+    draft.done = true
+    draft.inner.txt = 'Hello'
+    draft.inner.inner.txt = 'Hello'
+  })
+
+  console.log(baseState)
+  console.log(nextState)
+</script>
 </body>
 </html>
