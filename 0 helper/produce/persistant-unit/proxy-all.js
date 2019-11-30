@@ -10,7 +10,7 @@ const createProxy = (state, revokes) => {
       }
     },
     set (target, key, value) {
-      console.log('SET', target, key, value)
+      console.log('SET', key, value)
       target[key] = value
     }
   }

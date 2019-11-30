@@ -6,24 +6,20 @@ const test = (message, fn) => {
 const assert = (src, target) => console.log(src === target)
 
 test('모든 객체의 변경 감지한다.', () => {
-  const baseState = {
-    done: false,
-    inner: {
-      txt: 'World',
-      inner: {
-        txt: 'World'
-      }
-    }
+const baseState = {
+  done: false,
+  inner: {
+    txt: 'World',
   }
+}
 
-  const nextState = proxyAll(baseState, (draft) => {
-    draft.done = true
-    draft.inner.txt = 'Hello'
-    draft.inner.inner.txt = 'Hello'
-  })
+const nextState = proxyAll(baseState, (draft) => {
+  draft.done = true
+  draft.inner.txt = 'Hello'
+})
 
-  console.log(baseState)
-  console.log(nextState)
+console.log(baseState)
+console.log(nextState)
 })
 
 test('linkedlist로 변경된다.', () => {

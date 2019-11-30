@@ -1,5 +1,3 @@
-const isObject = obj => typeof obj === 'object'
-
 /*
 base: 오리지날 데이터
 state: linkedList 아이템
@@ -21,7 +19,7 @@ const toLinkedList = (base, parent = null, propName = null, list = []) => {
   list.push(state)
 
   for (const propName in base) {
-    if (isObject(base[propName])) {
+    if (typeof base[propName] === 'object') {
       toLinkedList(base[propName], state, propName, list)
     }
   }
