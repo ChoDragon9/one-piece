@@ -74,3 +74,6 @@ const produceBase = (base, fn) => {
 const produce = (fn) => (base) => {
   return canProduce(base) ? produceBase(base, fn) : base
 }
+
+
+module.exports = {produce}
