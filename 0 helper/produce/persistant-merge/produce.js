@@ -36,7 +36,6 @@ const createProxy = (base, revokes, parentState, propName) => {
       }
     },
     set (target, key, value) {
-      console.log('SET', target, key, value)
       changeLinkedList(state, key, value)
     }
   }
