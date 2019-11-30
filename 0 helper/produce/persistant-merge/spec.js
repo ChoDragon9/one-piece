@@ -190,3 +190,43 @@ test('배열의 아이템을 변경할 수 있다.', () => {
   assert(baseState[0].message === nextState[0].message, false)
   assert(baseState[1] === nextState[1], true)
 })
+
+test('프리미티브 타입은 바로 리턴된다. - Boolean', () => {
+  const baseState = true
+
+  const nextState = produce(() => {})(baseState)
+
+  assert(baseState === nextState, true)
+})
+
+test('프리미티브 타입은 바로 리턴된다. - String', () => {
+  const baseState = 'message'
+
+  const nextState = produce(() => {})(baseState)
+
+  assert(baseState === nextState, true)
+})
+
+test('프리미티브 타입은 바로 리턴된다. - Number', () => {
+  const baseState = 1
+
+  const nextState = produce(() => {})(baseState)
+
+  assert(baseState === nextState, true)
+})
+
+test('프리미티브 타입은 바로 리턴된다. - Null', () => {
+  const baseState = null
+
+  const nextState = produce(() => {})(baseState)
+
+  assert(baseState === nextState, true)
+})
+
+test('프리미티브 타입은 바로 리턴된다. - Undefined', () => {
+  const baseState = undefined
+
+  const nextState = produce(() => {})(baseState)
+
+  assert(baseState === nextState, true)
+})

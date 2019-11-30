@@ -1,3 +1,17 @@
+const canProduce = value => {
+  return value === undefined || value === null ?
+    false :
+    Array.isArray(value) || typeof value === 'object'
+}
+
+const assign = (...obj) => Object.assign(...obj)
+
+const shallowCopy = obj => {
+  if (!canProduce(obj)) return obj
+  if (Array.isArray(obj)) return obj.concat()
+  return Object.assign({}, obj)
+}
+
 const toLinkedListItem = (base, parent = null, propName = null) => {
   return {
     base,
@@ -9,13 +23,6 @@ const toLinkedListItem = (base, parent = null, propName = null) => {
 
 const toBase = (state) => {
   return state.copy ? state.copy : state.base
-}
-
-const assign = (...obj) => Object.assign(...obj)
-
-const shallowCopy = obj => {
-  if (Array.isArray(obj)) return obj.concat()
-  return Object.assign({}, obj)
 }
 
 const changeLinkedList = (state, propName, value) => {
@@ -37,7 +44,7 @@ const createProxy = (base, revokes, parentState, propName) => {
   const handler = {
     get (target, key) {
       const value = toBase(state)[key]
-      if (typeof value === 'object') {
+      if (canProduce(value)) {
         const {proxy} = createProxy(value, revokes, state, key)
         return proxy
       } else {
@@ -54,11 +61,15 @@ const createProxy = (base, revokes, parentState, propName) => {
   return {proxy, revoke, revokes, state}
 }
 
-const produce = (fn) => (base) => {
+const produceBase = (base, fn) => {
   const {proxy, revokes, state} = createProxy(base, [])
 
   fn(proxy)
   revokes.forEach(fn => fn())
 
   return toBase(state)
+}
+
+const produce = (fn) => (base) => {
+  return canProduce(base) ? produceBase(base, fn) : base
 }
