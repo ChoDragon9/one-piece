@@ -1,11 +1,16 @@
 const isArray = value => Array.isArray(value)
-
 const assign = (...obj) => Object.assign(...obj)
-
+const canProduce = value => {
+  return value === undefined || value === null ?
+    false :
+    isArray(value) || typeof value === 'object'
+}
 const shallowCopy = obj => {
-  if (!canProduce(obj)) return obj
-  if (isArray(obj)) return obj.concat()
-  return assign({}, obj)
+  return !canProduce(obj) ?
+    obj :
+    isArray(obj) ?
+      obj.concat() :
+      assign({}, obj)
 }
 
 class LinkedList {
@@ -16,7 +21,7 @@ class LinkedList {
     this.copy = null
   }
   toBase() {
-    return this.copy ? this.copy : this.base
+    return this.copy || this.base
   }
   changeLinkedList (propName, value) {
     const nextValue = {[propName]: value}
@@ -37,21 +42,19 @@ class LinkedList {
   }
 }
 
-const canProduce = value => {
-  return value === undefined || value === null ?
-    false :
-    isArray(value) || typeof value === 'object'
-}
-
 class LinkedListProxy {
   constructor(base, parentState, propName) {
-    this.base = base
-    this.state = LinkedList.create(base, parentState, propName)
-    this.children = []
-
-    const {proxy, revoke} = this.createProxy()
+    const {proxy, revoke} = this.createProxy(base)
     this.proxy = proxy
     this.revokeFn = revoke
+    this.state = LinkedList.create(base, parentState, propName)
+    this.children = []
+  }
+  createProxy(base) {
+    return Proxy.revocable(base, {
+      get: (...args) => this.getter(...args),
+      set: (...args) => this.setter(...args)
+    })
   }
   getter(target, propName) {
     const value = this.toBase()[propName]
@@ -59,19 +62,13 @@ class LinkedListProxy {
       this.createChildProxy(value, propName) :
       value
   }
-  setter(target, propName, value) {
-    this.state.changeLinkedList(propName, value)
-  }
-  createProxy() {
-    return Proxy.revocable(this.base, {
-      get: (...args) => this.getter(...args),
-      set: (...args) => this.setter(...args)
-    })
-  }
   createChildProxy(value, propName) {
     const child = LinkedListProxy.create(value, this.state, propName)
     this.children.push(child)
     return child.proxy
+  }
+  setter(target, propName, value) {
+    this.state.changeLinkedList(propName, value)
   }
   revoke() {
     this.revokeFn()
