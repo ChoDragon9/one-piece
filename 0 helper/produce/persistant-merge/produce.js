@@ -11,12 +11,21 @@ const toBase = (state) => {
   return state.copy ? state.copy : state.base
 }
 
+const assign = (...obj) => Object.assign(...obj)
+
+const shallowCopy = obj => {
+  if (Array.isArray(obj)) return obj.concat()
+  return Object.assign({}, obj)
+}
+
 const changeLinkedList = (state, propName, value) => {
-  if (state.copy) {
-    state.copy[propName] = value
-  } else {
-    state.copy = Object.assign({}, state.base, {[propName]: value})
-  }
+  const nextValue = {[propName]: value}
+
+  state.copy ?
+    assign(state.copy, nextValue) :
+    assign(state, {
+      copy: assign(shallowCopy(state.base), nextValue)
+    })
 
   if (state.parent) {
     changeLinkedList(state.parent, state.propName, state.copy)

@@ -156,7 +156,6 @@ test('변경이 원하는 값은 모두 정상적으로 변경되야 한다.', (
   assert(nextState.inner2.inner.inner2.txt === 'Hello World', true)
 })
 
-
 test('변경 후 내부적으로 사용 가능하다.', () => {
   const baseState = {
     done: false,
@@ -176,4 +175,18 @@ test('변경 후 내부적으로 사용 가능하다.', () => {
 
   assert(nextState.inner.count === 5, true)
   assert(nextState.inner.message === 'count is 5', true)
+})
+
+test('배열의 아이템을 변경할 수 있다.', () => {
+  const baseState = [
+    { message: 'Hello' },
+    { message: 'World' }
+  ]
+
+  const nextState = produce((draft) => {
+    draft[0].message = `${draft[0].message} World`
+  })(baseState)
+
+  assert(baseState[0].message === nextState[0].message, false)
+  assert(baseState[1] === nextState[1], true)
 })
