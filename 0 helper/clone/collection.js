@@ -1,8 +1,9 @@
+const canClone = (obj) => typeof obj === 'object'
 const isMap = (target) => target instanceof Map
 const isSet = (target) => target instanceof Set
 
 const clone = obj => {
-  if (typeof obj !== 'object') return obj
+  if (!canClone(obj)) return obj
   if (Array.isArray(obj)) return obj.map(clone)
   if (isMap(obj)) return new Map(obj)
   if (isSet(obj)) return new Set(obj)
