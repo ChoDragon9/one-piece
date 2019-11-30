@@ -19,7 +19,6 @@ const changeLinkedList = (state, propName, value) => {
   }
 }
 
-
 const createProxy = (base, revokes, parentState, propName) => {
   const state = toLinkedListItem(base, parentState, propName)
   const handler = {

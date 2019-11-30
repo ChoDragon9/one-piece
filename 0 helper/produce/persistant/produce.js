@@ -1,15 +1,16 @@
+const isArray = value => Array.isArray(value)
 const canProduce = value => {
   return value === undefined || value === null ?
     false :
-    Array.isArray(value) || typeof value === 'object'
+    isArray(value) || typeof value === 'object'
 }
 
 const assign = (...obj) => Object.assign(...obj)
 
 const shallowCopy = obj => {
   if (!canProduce(obj)) return obj
-  if (Array.isArray(obj)) return obj.concat()
-  return Object.assign({}, obj)
+  if (isArray(obj)) return obj.concat()
+  return assign({}, obj)
 }
 
 const toLinkedListItem = (base, parent = null, propName = null) => {

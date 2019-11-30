@@ -20,19 +20,19 @@ test('프로퍼티 변경 시 주소가 변경된다.', () => {
 
 
 test('변경하지 않는 객체는 변경되면 안된다.', () => {
-  const baseState = {
+const baseState = {
+  done: false,
+  inner: {
     done: false,
-    inner: {
-      done: false,
-    }
   }
+}
 
-  const nextState = produce(baseState, (draft) => {
-    draft.done = true
-  })
+const nextState = produce(baseState, (draft) => {
+  draft.done = true
+})
 
-  assert(baseState.done === nextState.done, false)
-  assert(baseState.inner === nextState.inner, true)
+assert(baseState.done === nextState.done, false)
+assert(baseState.inner === nextState.inner, true)
 })
 
 test('객체 변경 시, 새로운 객체가 만들어진다.', () => {

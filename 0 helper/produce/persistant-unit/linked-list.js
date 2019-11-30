@@ -34,10 +34,6 @@ const toLinkedList = (base, parent = null, propName = null, list = []) => {
 /*
 첫번째 아이템이 copy가 있으면 변경된 것을 의미함
  */
-const toBase = (list) => {
-  return list[0].copy ? list[0].copy : list[0].base
-}
-
 const changeLinkedList = (state, propName, value) => {
   if (state.copy) {
     state.copy[propName] = value
@@ -48,4 +44,8 @@ const changeLinkedList = (state, propName, value) => {
   if (state.parent) {
     changeLinkedList(state.parent, state.propName, state.copy)
   }
+}
+
+const toBase = (list) => {
+  return list[0].copy ? list[0].copy : list[0].base
 }
