@@ -9,25 +9,101 @@
 </head>
 <body>
 <script src="persistant/proxy-all.js"></script>
+<script src="persistant/linked-list.js"></script>
 <script>
-  const baseState = {
-    done: false,
-    inner: {
-      txt: 'World',
+  const test = (message, fn) => {
+    console.group(message)
+    fn()
+    console.groupEnd()
+  }
+  const assert = (src, target) => console.log(src === target)
+
+  test('모든 객체의 변경 감지한다.', () => {
+    const baseState = {
+      done: false,
       inner: {
-        txt: 'World'
+        txt: 'World',
+        inner: {
+          txt: 'World'
+        }
       }
     }
-  }
 
-  const nextState = proxyAll(baseState, (draft) => {
-    draft.done = true
-    draft.inner.txt = 'Hello'
-    draft.inner.inner.txt = 'Hello'
+    const nextState = proxyAll(baseState, (draft) => {
+      draft.done = true
+      draft.inner.txt = 'Hello'
+      draft.inner.inner.txt = 'Hello'
+    })
+
+    console.log(baseState)
+    console.log(nextState)
   })
 
-  console.log(baseState)
-  console.log(nextState)
+  test('linkedlist로 변경된다.', () => {
+    const base = {
+      value: 'Hello'
+    }
+
+    const state = toLinkedList(base)
+
+    assert(state[0].base === base, true)
+  })
+
+  test('toLinkedList - inner', () => {
+    const base = {
+      value: 'Hello',
+      inner: {
+        message: 'Hello World'
+      }
+    }
+
+    const state = toLinkedList(base)
+
+    assert(state[0].base === base, true)
+    assert(state[1].base === base.inner, true)
+  })
+
+  test('changeLinkedList', () => {
+    const base = {
+      value: 'Hello',
+      inner1: {
+        message: '1',
+        count: 1
+      },
+      inner2: {
+        message: '2',
+        count: 2
+      }
+    }
+    const state = toLinkedList(base)
+    changeLinkedList(state[2], 'message', 3)
+
+    assert(base.value === state[0].copy.value, true)
+    assert(base.inner1 === state[0].copy.inner1, true)
+    assert(base.inner2 === state[0].copy.inner2, false)
+  })
+
+  test('toBase', () => {
+    const base = {
+      value: 'Hello',
+      inner1: {
+        message: '1',
+        count: 1
+      },
+      inner2: {
+        message: '2',
+        count: 2
+      }
+    }
+    const state = toLinkedList(base)
+    changeLinkedList(state[2], 'message', 3)
+
+    const changeBase = toBase(state)
+
+    assert(base.value === changeBase.value, true)
+    assert(base.inner1 === changeBase.inner1, true)
+    assert(base.inner2 === changeBase.inner2, false)
+  })
 </script>
 </body>
 </html>
