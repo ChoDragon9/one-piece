@@ -2,14 +2,13 @@ const clone = function <T>(obj: T): T {
   return JSON.parse(JSON.stringify(obj))
 }
 
-const immutable = function <T>(fn: (state: T, ...options: any[]) => void) {
+const produce = function <T>(fn: (state: T, ...options: any[]) => void) {
   return (state: T, ...options: any[]): T => {
     const clonedState = clone(state)
     fn(clonedState, ...options)
     return clonedState
   }
 }
-
 
 const baseState: any[] = [
   {
@@ -22,7 +21,7 @@ const baseState: any[] = [
   }
 ]
 
-const nextState = immutable<any[]>(draftState => {
+const nextState = produce((draftState: any[]) => {
   draftState.push({todo: "Tweet about it"})
   draftState[1].done = true
 })(baseState)
@@ -36,6 +35,6 @@ console.log(nextState[1].done === true)
 console.log(nextState[0] === baseState[0])
 console.log(nextState[1] !== baseState[1])
 
-immutable<{x : number }>(draftState => {
+produce((draftState: {x : number }) => {
   draftState.x = 10
 })({ x: 0 })
