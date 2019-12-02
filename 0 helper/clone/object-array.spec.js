@@ -35,3 +35,22 @@ console.log(clone(Symbol('Test')))
 console.log(clone(false))
 console.log(clone(NaN))
 console.groupEnd()
+
+console.group('clone - class')
+class Test {
+  constructor(state) {
+    this.state = state
+  }
+  change(state) {
+    this.state = state
+  }
+  read() {
+    return this.state
+  }
+}
+const test = new Test('1')
+const clonedTest = clone(test)
+test.change('2')
+clonedTest.change('3')
+console.log(test.read(), clonedTest.read())
+console.groupEnd()
