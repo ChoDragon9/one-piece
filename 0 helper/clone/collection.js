@@ -26,9 +26,9 @@ const isPrimitive = value => {
       return true
   }
 }
-const isArray = (target) => Array.isArray(target)
-const isMap = (target) => target instanceof Map
-const isSet = (target) => target instanceof Set
+const isArray = target => Array.isArray(target)
+const isMap = target => target instanceof Map
+const isSet = target => target instanceof Set
 
 const cloneObject = obj => {
   const cloned = Object.create(Object.getPrototypeOf(obj))

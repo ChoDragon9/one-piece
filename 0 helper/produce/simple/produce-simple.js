@@ -1,4 +1,4 @@
-const clone = (json) => JSON.parse(JSON.stringify(json))
+const clone = json => JSON.parse(JSON.stringify(json))
 
 const produce = (state, recipe) => {
   const clonedState = clone(state)
