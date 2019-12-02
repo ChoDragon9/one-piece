@@ -1,3 +1,3 @@
-const clone = obj => JSON.parse(JSON.stringify(obj))
+const clone = json => JSON.parse(JSON.stringify(json))
 
 module.exports = {clone}
