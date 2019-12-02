@@ -31,5 +31,4 @@ const cloneObject = obj => {
   return cloned
 }
 
-
 module.exports = {clone}
