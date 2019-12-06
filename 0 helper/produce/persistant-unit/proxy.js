@@ -19,3 +19,8 @@ const proxy = createProxy(target)
 
 proxy.message = 'World!'
 console.log(proxy.message)
+
+console.group('Destructuring')
+const {message} = proxy
+console.log(message)
+console.groupEnd()
