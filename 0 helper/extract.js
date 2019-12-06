@@ -30,7 +30,7 @@ const extract = (state, mapper) => {
   const proxy = createProxy(state, revokes)
   const mappedResult = mapper(proxy)
 
-  const result = mappedResult._value === undefined ?
+  const result = mappedResult === undefined || mappedResult._value === undefined ?
     undefined :
     mappedResult._value
 
@@ -73,4 +73,11 @@ console.group('undefined - middle')
 console.log(extract(STEP[1], o => o.p1.p), undefined)
 console.log(extract(STEP[2], o => o.p.p1.p), undefined)
 console.log(extract(STEP[2], o => o.p1.p.p), undefined)
+console.groupEnd()
+
+console.group('attack')
+console.log(extract(STEP[1], o => {
+  o._value = { test: '' }
+  return o.test
+}), undefined)
 console.groupEnd()
