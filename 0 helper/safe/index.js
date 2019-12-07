@@ -1,39 +1,35 @@
 const symbol = Symbol('safe')
 const pack = value => ({ [symbol]: value })
 const unpack = pack => pack[symbol]
-
-const createProxy = (state, revokes) => {
-  const wrap = pack(state)
-  const handler = {
-    get (target, key) {
-      const unpacked = unpack(target)
-      switch (true) {
-        case key === symbol:
-          return unpacked
-        case unpacked === undefined || unpacked[key] === undefined:
-          return createProxy(undefined, revokes)
-        default:
-          return createProxy(unpacked[key], revokes)
-      }
-    }
-  }
-
-  const {proxy, revoke} = Proxy.revocable(wrap, handler)
-  revokes.push(revoke)
-  return proxy
-}
+const isPack = pack => typeof pack === 'object' && symbol in pack
 
 const safe = (state, mapper) => {
   const revokes = []
   const proxy = createProxy(state, revokes)
   const mappedResult = mapper(proxy)
-
-  const result = mappedResult === undefined || unpack(mappedResult) === undefined ?
-    undefined :
-    unpack(mappedResult)
+  const result = isPack(mappedResult) ? unpack(mappedResult) : mappedResult
 
   revokes.forEach(fn => fn())
   return result
+}
+
+const createProxy = (state, revokes) => {
+  const wrap = pack(state)
+  const handler = trap(revokes)
+  const {proxy, revoke} = Proxy.revocable(wrap, handler)
+  revokes.push(revoke)
+  return proxy
+}
+
+const trap = (revokes) => {
+  return {
+    get (target, key) {
+      const unpacked = unpack(target)
+      return key === symbol ?
+        unpacked :
+        createProxy(unpacked === undefined ? undefined : unpacked[key], revokes)
+    }
+  }
 }
 
 module.exports = {safe}

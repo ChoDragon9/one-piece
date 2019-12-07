@@ -1,5 +1,5 @@
 const {safe} = require('./index')
-const test = (a, b) => console.log(a === b)
+const test = (a, b) => console.log(a === b, a, b)
 
 const STEP = [
   { p: 'p', v: 'v' },
@@ -38,8 +38,5 @@ test(safe(STEP[2], o => o.p1.p.p), undefined)
 console.groupEnd()
 
 console.group('attack')
-test(safe(STEP[1], o => {
-  o._value = { test: '' }
-  return o.test
-}), undefined)
+test(safe(STEP[1], () => 1), 1)
 console.groupEnd()
