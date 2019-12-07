@@ -1,4 +1,5 @@
-const {safeChain} = require('./index')
+const {safeChain} = require('./safe-chain')
+const {safeChain: tryCatch} = require('./try-catch')
 const run = (fn, len, name) => {
   const obj = {
     num: 100000000,
@@ -37,6 +38,7 @@ const callback = obj => obj.inner.inner.inner.str
 arr.forEach((len) => {
   console.group(len)
   run((obj) => safeChain(obj, callback), len, 'safeChain')
+  run((obj) => tryCatch(obj, callback), len, 'tryCatch')
   run(callback, len, 'callback')
   console.groupEnd()
 })
