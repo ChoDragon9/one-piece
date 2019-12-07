@@ -26,7 +26,7 @@ test(safeChain(STEP[2], o => o.p.p.p), 'p2')
 test(safeChain(STEP[3], o => o.n), null)
 test(safeChain(STEP[3], o => o.n.p), undefined)
 test(safeChain(STEP[4], o => o[0].p), 'p')
-test(safeChain(STEP[4], o => o[0].v), undefined)
+test(safeChain([{ p: 'p' }], o => o[0].v), undefined)
 
 test(safeChain(STEP[0], o => o.v), 'v')
 test(safeChain(STEP[1], o => o.v), 'v')
