@@ -1,11 +1,22 @@
 const {safeChain} = require('./index')
-const test = (a, b) => console.log(a === b, a, b)
+let fail = 0
+let success = 0
+const test = (a, b) => {
+  const result = a === b
+  console.log(result, a, b)
+  if (result) {
+    success++
+  } else {
+    fail++
+  }
+}
 
 const STEP = [
   { p: 'p', v: 'v' },
   { p: { p: 'p1', v: 'v' }, v: 'v' },
   { p: { p: { p: 'p2', v: 'v' }, v: 'v' }, v: 'v' },
   { n: null },
+  [{ p: 'p' }]
 ]
 
 console.group('dot')
@@ -14,6 +25,8 @@ test(safeChain(STEP[1], o => o.p.p), 'p1')
 test(safeChain(STEP[2], o => o.p.p.p), 'p2')
 test(safeChain(STEP[3], o => o.n), null)
 test(safeChain(STEP[3], o => o.n.p), undefined)
+test(safeChain(STEP[4], o => o[0].p), 'p')
+test(safeChain(STEP[4], o => o[0].v), undefined)
 
 test(safeChain(STEP[0], o => o.v), 'v')
 test(safeChain(STEP[1], o => o.v), 'v')
@@ -62,4 +75,9 @@ console.groupEnd()
 console.group('attack')
 test(safeChain(STEP[1], () => 1), 1)
 test(safeChain(STEP[1], o => o.p.p.p.p.p.p.p), undefined)
+console.groupEnd()
+
+console.group('Total')
+console.log('Success', success)
+console.log('Fail', fail)
 console.groupEnd()
