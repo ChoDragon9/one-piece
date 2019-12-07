@@ -3,7 +3,7 @@ const pack = value => ({ [symbol]: value })
 const unpack = pack => pack[symbol]
 const isPack = pack => typeof pack === 'object' && symbol in pack
 
-const safe = (state, mapper) => {
+const extract = (state, mapper) => {
   const revokes = []
   const proxy = createProxy(state, revokes)
   const mappedResult = mapper(proxy)
@@ -32,4 +32,4 @@ const trap = (revokes) => {
   }
 }
 
-module.exports = {safe}
+module.exports = {extract}
