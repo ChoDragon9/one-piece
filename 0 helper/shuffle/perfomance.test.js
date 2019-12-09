@@ -1,5 +1,6 @@
 const shuffle = require('./shuffle')
 const shuffle2 = require('./shuffle-2')
+const shuffle22 = require('./shuffle-2-2')
 const shuffle3 = require('./shuffle-3')
 
 const run = (fn, len, name) => {
@@ -23,6 +24,7 @@ arr.forEach((len) => {
   console.group(len)
   run(shuffle, len, 'shuffle')
   run(shuffle2, len, 'shuffle2')
+  run(shuffle22, len, 'shuffle22')
   run(shuffle3, len, 'shuffle3')
   console.groupEnd()
 })
