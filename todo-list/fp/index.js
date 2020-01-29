@@ -1,28 +1,28 @@
+class TodoList {
+  constructor(todoList) {
+    this.todoList = todoList
+  }
+  addItem(subject, date) {
+    const todoItem = createTodoItem(subject, date)
+    return new TodoList(this.todoList.concat(todoItem))
+  }
+  toString() {
+    return this.todoList
+      .map(todoItemToString)
+      .join('\n')
+  }
+}
+
 const createTodoItem = (subject, date) => {
   return {subject, date}
 }
-const todoItemToString = (todoItem) => {
-  return `[${todoItem.date}] ${todoItem.subject}`
-}
-const addItem = (todoList, todoItem) => {
-  return [...todoList, todoItem]
-}
-const todoListToString = (todoList) => {
-  return todoList
-    .map(todoItemToString)
-    .join('\n')
+const todoItemToString = ({subject, date}) => {
+  return `[${date}] ${subject}`
 }
 
-const todoList = [
-  ['새해인사', 20200101],
-  ['화분물주기', 20200102],
-  ['분리수거', 20200103],
-]
-  .map(([subject, date]) => createTodoItem(subject, date))
-  .reduce(addItem)
-console.log(todoListToString(todoList))
-/*
-[20200101] 새해인사
-[20200102] 화분물주기
-[20200103] 분리수거
-*/
+const todoList = new TodoList([])
+  .addItem('새해인사', 20200101)
+  .addItem('화분 물주기', 20200102)
+  .addItem('분리수거', 20200103)
+
+console.log(todoList.toString())
