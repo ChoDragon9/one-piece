@@ -9,11 +9,11 @@ const todoListToString = (todoList) => {
 
 const todoList = [
   ['새해인사', 20200101],
-  ['화분물주기', 20200102],
+  ['화분 물주기', 20200102],
 ]
   .reduce(addItem, [])
 
-const todoList2 = addItem(todoList, ['분리수거', 2020010])
+const todoList2 = addItem(todoList, ['분리수거', 20200103])
 
 console.group('todoList')
 console.log(todoListToString(todoList))
@@ -26,9 +26,9 @@ console.groupEnd()
 /* 실행결과
 todoList
   [20200101] 새해인사
-  [20200102] 화분물주기
+  [20200102] 화분 물주기
 todoList2
   [20200101] 새해인사
-  [20200102] 화분물주기
-  [2020010] 분리수거
+  [20200102] 화분 물주기
+  [20200103] 분리수거
  */
