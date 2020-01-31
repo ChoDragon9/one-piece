@@ -23,13 +23,13 @@ class Trie {
   }
   search(word) {
     let current = this.root
-    Array.from(word).forEach(ch => {
+    for(const ch of Array.from(word)) {
       const node = current.children[ch]
       if (!node) {
         return false
       }
       current = node
-    })
+    }
     return current.endOfWord
   }
   delete(word) {

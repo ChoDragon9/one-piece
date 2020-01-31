@@ -39,13 +39,12 @@ class Trie {
   }
   search(word) {
     let current = this.root
-    Array.from(word).forEach(ch => {
-      if (current.hasChild(ch)) {
-        current = current.getChild(ch)
-      } else {
+    for (const ch of Array.from(word)) {
+      if (!current.hasChild(ch)) {
         return false
       }
-    })
+      current = current.getChild(ch)
+    }
     return current.endOfWord
   }
   delete(word) {
@@ -53,11 +52,12 @@ class Trie {
   }
   deleteRecursively(current, word, index) {
     if (index === word.length) {
-      if (!current.endOfWord) {
+      if (current.endOfWord) {
+        current.changeEnd(false)
+        return !current.hasChildren()
+      } else {
         return false
       }
-      current.changeEnd(false)
-      return !current.hasChildren()
     }
     const ch = word[index]
     if (!current.hasChild(ch)) {
