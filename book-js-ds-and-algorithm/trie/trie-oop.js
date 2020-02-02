@@ -76,6 +76,7 @@ class Trie {
   }
 }
 
+console.group('trie-oop')
 const trie = new Trie()
 trie.insert('sammie')
 trie.insert('simran')
@@ -86,3 +87,6 @@ trie.delete('sammie')
 trie.delete('simran')
 console.log(trie.search('sammie') === false)
 console.log(trie.search('simran') === false)
+console.groupEnd('trie-oop')
+
+module.exports = {Trie}
