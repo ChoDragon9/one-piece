@@ -96,5 +96,3 @@ trie.delete('simran')
 console.log(trie.search('sammie') === false)
 console.log(trie.search('simran') === false)
 console.groupEnd('trie-oop')
-
-module.exports = {Trie}

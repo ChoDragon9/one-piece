@@ -67,5 +67,3 @@ trie.delete('simran')
 console.log(trie.search('sammie'))
 console.log(trie.search('simran'))
 console.groupEnd('trie')
-
-module.exports = {Trie}
