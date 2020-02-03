@@ -19,7 +19,7 @@ class TrieNode {
     return this.children.has(key)
   }
   hasChildren() {
-    return this.children.size
+    return !!this.children.size
   }
 }
 
@@ -28,15 +28,13 @@ class Trie {
     this.root = new TrieNode()
   }
   insert(word) {
-    const current = Array
-      .from(word)
-      .reduce((current, ch) => {
-        if (!current.hasChild(ch)) {
-          current.addChild(ch)
-        }
-        return current.getChild(ch)
-      }, this.root)
-
+    let current = this.root
+    Array.from(word).forEach(ch => {
+      if (!current.hasChild(ch)) {
+        current.addChild(ch)
+      }
+      current = current.getChild(ch)
+    })
     current.changeEnd(true)
   }
   search(word) {
