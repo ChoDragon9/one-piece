@@ -3,8 +3,14 @@ class TrieNode {
     this.children = new Map()
     this.endOfWord = false
   }
-  changeEnd(endOfWord) {
-    this.endOfWord = endOfWord
+  isEnd() {
+    return this.endOfWord
+  }
+  setEndWord() {
+    this.endOfWord = true
+  }
+  resetEndWord() {
+    this.endOfWord = false
   }
   addChild(key) {
     this.children.set(key, new TrieNode())
@@ -35,7 +41,7 @@ class Trie {
       }
       current = current.getChild(ch)
     })
-    current.changeEnd(true)
+    current.setEndWord()
   }
   search(word) {
     let current = this.root
@@ -45,15 +51,15 @@ class Trie {
       }
       current = current.getChild(ch)
     }
-    return current.endOfWord
+    return current.isEnd()
   }
   delete(word) {
     this.deleteRecursively(this.root, word, 0)
   }
   deleteRecursively(current, word, index) {
     if (index === word.length) {
-      if (current.endOfWord) {
-        current.changeEnd(false)
+      if (current.isEnd()) {
+        current.resetEndWord()
         return !current.hasChildren()
       } else {
         return false
