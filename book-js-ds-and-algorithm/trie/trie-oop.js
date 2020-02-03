@@ -3,15 +3,6 @@ class TrieNode {
     this.children = new Map()
     this.endOfWord = false
   }
-  isEnd() {
-    return this.endOfWord
-  }
-  setEndWord() {
-    this.endOfWord = true
-  }
-  resetEndWord() {
-    this.endOfWord = false
-  }
   addChild(key) {
     this.children.set(key, new TrieNode())
   }
@@ -26,6 +17,15 @@ class TrieNode {
   }
   hasChildren() {
     return !!this.children.size
+  }
+  isEndWord() {
+    return this.endOfWord
+  }
+  setEndWord() {
+    this.endOfWord = true
+  }
+  resetEndWord() {
+    this.endOfWord = false
   }
 }
 
@@ -51,32 +51,30 @@ class Trie {
       }
       current = current.getChild(ch)
     }
-    return current.isEnd()
+    return current.isEndWord()
   }
   delete(word) {
     this.deleteRecursively(this.root, word, 0)
   }
   deleteRecursively(current, word, index) {
     if (index === word.length) {
-      if (current.isEnd()) {
+      if (current.isEndWord()) {
         current.resetEndWord()
         return !current.hasChildren()
-      } else {
-        return false
       }
-    }
-    const ch = word[index]
-    if (!current.hasChild(ch)) {
-      return false
-    }
-    const shouldDeleteCurrentNode = this.deleteRecursively(
-      current.getChild(ch),
-      word,
-      index + 1
-    )
-    if (shouldDeleteCurrentNode) {
-      current.removeChild(ch)
-      return !current.hasChildren()
+    } else {
+      const ch = word[index]
+      if (current.hasChild(ch)) {
+        const shouldDeleteCurrentNode = this.deleteRecursively(
+          current.getChild(ch),
+          word,
+          index + 1
+        )
+        if (shouldDeleteCurrentNode) {
+          current.removeChild(ch)
+          return !current.hasChildren()
+        }
+      }
     }
     return false
   }
@@ -87,8 +85,12 @@ const trie = new Trie()
 trie.insert('sammie')
 trie.insert('simran')
 trie.insert('sam')
+trie.insert('sarada')
+trie.insert('apple')
 console.log(trie.search('simran') === true)
 console.log(trie.search('sam') === true)
+console.log(trie.search('sarada') === true)
+console.log(trie.search('apple') === true)
 trie.delete('sammie')
 trie.delete('simran')
 console.log(trie.search('sammie') === false)
