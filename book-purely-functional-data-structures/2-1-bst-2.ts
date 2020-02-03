@@ -83,6 +83,8 @@ const three = Tree.insert(4, two)
 const four = Tree.insert(1, three)
 const five = Tree.insert(5, four)
 
-console.log(five)
-console.log(Tree.remove(3, five))
-console.log(five)
+const removed = Tree.remove(4, five)
+five.left.left.value = 0
+
+console.log(Tree.member(4, removed) === false) // 삭제 검사
+console.log(removed.left.left.value === 0) // 영속성 검사
