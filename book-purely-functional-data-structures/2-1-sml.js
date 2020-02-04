@@ -10,8 +10,4 @@ const cons = ([x, xs], ys) => {
 // val zs = xs ++ ys;
 const xs = [0, [1, [2, []]]]
 const ys = [3, [4, [5, []]]]
-const zs = cons(xs, ys)
-
-console.log(xs)
-console.log(ys)
-console.log(JSON.stringify(zs))
+const zs = cons(xs, ys) //[0,[1,[2,[3,[4,[5,[]]]]]]]
