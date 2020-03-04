@@ -5,14 +5,14 @@
       <button @click="onClickPrev" type="button">Prev</button>
       <button @click="onClickNext" type="button">Next</button>
     </div>
-    <div v-for="(week, weekIndex) of days" :key="weekIndex">
+    <div v-for="(week, weekIndex) of monthDays" :key="weekIndex">
       <span
         v-for="(day, dayIndex) of week"
         :key="dayIndex"
         :style="{ fontWeight: isSelectedData(day) ? 'bold' : '' }"
-        @click="onClick(day)"
+        @click="onClickDay(day)"
       >
-        {{ toDayTitle(day) }}
+        {{ day | toDayTitle }}
       </span>
     </div>
   </div>
@@ -81,9 +81,6 @@
   }
   const range = (length: number): number[] => Array.from({ length }, (_, i) => i)
   function chunk<T>(arr: T[], size: number): T[][] {
-    if (!size) {
-      return [arr]
-    }
     const length = Math.ceil(arr.length / size)
     const newArr = Array.from({ length }, () => [])
     arr.forEach((value: number, index) => {
@@ -109,8 +106,7 @@
       WEEK_LENGTH
     )
   }
-
-  const clearHour = (date: Date): Date => {
+  const clearTime = (date: Date): Date => {
     const clonedDate = cloneDate(date)
     clonedDate.setHours(0)
     clonedDate.setMinutes(0)
@@ -123,10 +119,15 @@
     props: {
       value: Date
     },
+    filters: {
+      toDayTitle: (date: Date | null): string => {
+        return date ? String(date.getDate()) : '[ ]'
+      }
+    },
     setup(props: CalendarProps, context) {
       const state = reactive({
         current: props.value,
-        days: computed(() => toMonthDays(state.current)),
+        monthDays: computed(() => toMonthDays(state.current)),
         title: computed(() => {
           const { year, month } = toCalendarOption(state.current)
           return `${year}/${month}`
@@ -138,26 +139,22 @@
       const onClickPrev = () => {
         state.current = toPrevMonth(state.current)
       }
-      const onClick = (date: Date) => {
+      const onClickDay = (date: Date) => {
         state.current = cloneDate(date)
         context.emit('change', cloneDate(date))
-      }
-      const toDayTitle = (date: Date | null): string => {
-        return date ? String(date.getDate()) : '[ ]'
       }
       const isSelectedData = (date: Date): boolean => {
         if (!date) {
           return false
         }
-        return +clearHour(date) === +clearHour(state.current)
+        return +clearTime(date) === +clearTime(state.current)
       }
 
       return {
         ...toRefs(state),
         onClickNext,
         onClickPrev,
-        onClick,
-        toDayTitle,
+        onClickDay,
         isSelectedData
       }
     }
