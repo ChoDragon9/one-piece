@@ -4,7 +4,7 @@ const state = {
 };
 
 const mount = () => {
-  if (!state.isMounted) {
+  if (state.isMounted) {
     return
   }
   state.isMounted = true;

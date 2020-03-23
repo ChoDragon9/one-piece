@@ -10,7 +10,7 @@ export class ContextmenuHelper<T> {
   }
 
   public mounted(): void {
-    if (!this.isMounted) {
+    if (this.isMounted) {
       return
     }
     this.isMounted = true
