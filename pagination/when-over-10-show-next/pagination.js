@@ -41,7 +41,6 @@ const hasNext = () => {
 };
 
 const hasPrev = () => {
-  const groupLength = state.paginationGroup.length;
   return state.paginationGroupIndex > 0;
 };
 
