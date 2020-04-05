@@ -1,15 +1,16 @@
 module.exports = {
   title: 'ChoDragon9 | One Piece',
+  base: '/one-piece/',
   themeConfig: {
     nav: [
       {
         text: 'Functional',
-        link: './src/Functional/Functional/'
+        link: '/src/Functional/Functional/'
       },
       {
         text: 'Javascript',
         items: [
-          {text: 'Array', link: './src/Javascript/Array/'},
+          {text: 'Array', link: '/src/Javascript/Array/'},
           // {
           //   text: 'Array',
           //   items: [
