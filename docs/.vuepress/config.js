@@ -12,6 +12,16 @@ module.exports = {
         ]
       },
       {
+        text: 'Helper',
+        items: [
+          {text: 'Helper', link: '/src/Helper/Helper/'},
+          {text: 'clone', link: '/src/Helper/clone/'},
+          {text: 'produce', link: '/src/Helper/produce/'},
+          {text: 'safe-chain', link: '/src/Helper/safe-chain/'},
+          {text: 'shuffle', link: '/src/Helper/shuffle/'},
+        ]
+      },
+      {
         text: 'Javascript',
         items: [
           {text: 'Array', link: '/src/Javascript/Array/'},
@@ -42,7 +52,6 @@ module.exports = {
         text: 'Reactive',
         link: '/src/Reactive/Reactive/'
       },
-      {text: 'Github', link: 'https://github.com/ChoDragon9', target: '_blank'}
     ]
   },
   plugins: [
