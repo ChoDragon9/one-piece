@@ -41,6 +41,15 @@ module.exports = {
         ]
       },
       {
+        text: 'OpenSources',
+        items: [
+          {text: 'chart-adaptor', link: '/src/OpenSources/chart-adaptor/'},
+          {text: 'editor', link: '/src/OpenSources/editor/'},
+          {text: 'express-server', link: '/src/OpenSources/express-server/'},
+          {text: 'pdfjs-sample', link: '/src/OpenSources/pdfjs-sample/'},
+        ]
+      },
+      {
         text: 'Functional',
         link: '/src/Functional/Functional/'
       },
