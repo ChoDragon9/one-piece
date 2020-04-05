@@ -19,17 +19,15 @@ module.exports = {
           {text: 'Iterable', link: '/src/Javascript/Iterable/'},
           {text: 'Object', link: '/src/Javascript/Object/'},
           {text: 'String', link: '/src/Javascript/String/'},
-          // {
-          //   text: 'Array',
-          //   items: [
-          //     {text: 'Array', link: '/src/Javascript/Array/'},
-          //   ]
-          // },
         ]
       },
       {
         text: 'Functional',
         link: '/src/Functional/Functional/'
+      },
+      {
+        text: 'TodoList',
+        link: '/src/TodoList/'
       },
       {
         text: 'Reactive',
