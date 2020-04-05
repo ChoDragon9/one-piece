@@ -2,7 +2,7 @@
   "name": "one-piece",
   "version": "1.0.0",
   "description": "",
-  "main": "download.js",
+  "main": "src/download.js",
   "scripts": {
     "storybook": "start-storybook"
   },

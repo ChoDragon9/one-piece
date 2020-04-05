@@ -1,5 +1,3 @@
 .idea
 node_modules
-opensources/express-server/node_modules
-opensources/pdfjs-sample/node_modules
-fetch-wrapper/node_modules
+**/node_modules
