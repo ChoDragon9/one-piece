@@ -4,12 +4,12 @@ module.exports = {
     nav: [
       {
         text: 'Functional',
-        link: '/src/Functional/Functional/'
+        link: './src/Functional/Functional/'
       },
       {
         text: 'Javascript',
         items: [
-          {text: 'Array', link: '/src/Javascript/Array/'},
+          {text: 'Array', link: './src/Javascript/Array/'},
           // {
           //   text: 'Array',
           //   items: [
