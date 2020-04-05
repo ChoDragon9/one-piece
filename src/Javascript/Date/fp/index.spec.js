@@ -6,7 +6,7 @@ const {
   toLastDay,
   toDayIndex
 } = require("./index");
-const {specLog, logResult} = require('../../spec-log')
+const {specLog, logResult} = require('../../../spec-log')
 
 specLog('addDay - tomorrow', () => {
   const today = new Date(2019, 0, 1)
