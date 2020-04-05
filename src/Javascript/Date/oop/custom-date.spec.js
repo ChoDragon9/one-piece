@@ -1,5 +1,5 @@
 const {BeeDate} = require('./custom-date')
-const {specLog, logResult} = require('../../spec-log')
+const {specLog, logResult} = require('../../../spec-log')
 
 specLog('create - nothing', function () {
   const nowDate = new Date()

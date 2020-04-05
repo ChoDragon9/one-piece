@@ -1,5 +1,5 @@
-const {toDayIndex, toLastDay} = require('../custom-date/fp')
-const {chunk, range} = require('../fp/fp')
+const {toDayIndex, toLastDay} = require('../../Javascript/Date/fp')
+const {chunk, range} = require('../../Functional/fp')
 
 const toMonthDays = ({year, month}) => {
   const WEEK_LENGTH = 7
