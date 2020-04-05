@@ -4,4 +4,4 @@ sidebar: auto
 ---
 
 ## index.html
-<<< @/docs/src/OpenSources/pdfjs-sample/static/index.html
+<<< @/0_files/pdfjs-sample/static/index.html

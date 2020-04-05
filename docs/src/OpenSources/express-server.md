@@ -4,4 +4,4 @@ sidebar: auto
 ---
 
 ## server.js
-<<< @/docs/src/OpenSources/express-server/server.js
+<<< @/0_files/express-server/server.js
