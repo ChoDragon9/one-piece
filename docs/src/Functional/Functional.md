@@ -23,7 +23,7 @@ sidebar: auto
 <<< @/docs/src/Functional/memoize.js
 
 ## once
-<<< @/docs/src/Functional/once.js
+<<< @/docs/src/Functional/once.ts
 
 ## partial
 <<< @/docs/src/Functional/partial.js
@@ -38,7 +38,7 @@ sidebar: auto
 <<< @/docs/src/Functional/range.js
 
 ## tab
-<<< @/docs/src/Functional/tab.ts
+<<< @/docs/src/Functional/tap.ts
 
 ## fp
 <<< @/docs/src/Functional/fp.js
