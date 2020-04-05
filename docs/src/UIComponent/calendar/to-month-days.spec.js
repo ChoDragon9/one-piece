@@ -1,4 +1,4 @@
-const {specLog, logResult} = require('../../spec-log')
+const {specLog, logResult} = require('../../../../0 todo/spec-log')
 const toMonthDays = require('./to-month-days')
 
 specLog('toMonthDays - 2019/9', function () {

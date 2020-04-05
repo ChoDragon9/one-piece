@@ -24,7 +24,7 @@
     defineComponent,
     reactive,
     toRefs
-  } from '~/plugins/composition-api/adaptor'
+  } from '@vue/composition-api'
 
   interface CalendarProps {
     value: Date

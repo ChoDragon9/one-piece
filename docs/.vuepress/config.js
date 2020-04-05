@@ -4,8 +4,12 @@ module.exports = {
   themeConfig: {
     nav: [
       {
-        text: 'Functional',
-        link: '/src/Functional/Functional/'
+        text: 'UIComponent',
+        items: [
+          {text: 'Pagination', link: '/src/UIComponent/Pagination/'},
+          {text: 'Calendar', link: '/src/UIComponent/Calendar/'},
+          {text: 'InfiniteScrolling', link: '/src/UIComponent/InfiniteScrolling/'},
+        ]
       },
       {
         text: 'Javascript',
@@ -18,6 +22,10 @@ module.exports = {
           //   ]
           // },
         ]
+      },
+      {
+        text: 'Functional',
+        link: '/src/Functional/Functional/'
       },
       {
         text: 'Reactive',
@@ -41,5 +49,13 @@ module.exports = {
         notFoundPath: '/404.html',
       },
     ],
+    [
+      'vuepress-plugin-typescript',
+      {
+        tsLoaderOptions: {
+          transpileOnly: true,
+        },
+      },
+    ]
   ]
 }
