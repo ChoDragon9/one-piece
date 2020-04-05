@@ -16,6 +16,8 @@ module.exports = {
         items: [
           {text: 'Array', link: '/src/Javascript/Array/'},
           {text: 'Date', link: '/src/Javascript/Date/'},
+          {text: 'Iterable', link: '/src/Javascript/Iterable/'},
+          {text: 'Object', link: '/src/Javascript/Object/'},
           // {
           //   text: 'Array',
           //   items: [
