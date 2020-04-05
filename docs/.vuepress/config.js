@@ -22,6 +22,15 @@ module.exports = {
         ]
       },
       {
+        text: 'HTML5',
+        items: [
+          {text: 'HTML5', link: '/src/HTML5/HTML5/'},
+          {text: 'FetchApi', link: '/src/HTML5/FetchApi/'},
+          {text: 'FileReader', link: '/src/HTML5/FileReader/'},
+          {text: 'SVG', link: '/src/HTML5/SVG/'},
+        ]
+      },
+      {
         text: 'Functional',
         link: '/src/Functional/Functional/'
       },
