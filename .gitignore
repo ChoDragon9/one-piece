@@ -1,3 +1,6 @@
-.idea
+# Created by .ignore support plugin (hsz.mobi)
 node_modules
-**/node_modules
+_site
+*.iml
+.idea
+docs/.vuepress/dist

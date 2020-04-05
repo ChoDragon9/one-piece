@@ -1,0 +1,31 @@
+{
+  "name": "one-piece",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "dev": "docs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@vuepress/plugin-google-analytics": "^1.3.1",
+    "vuepress": "^1.3.1",
+    "vuepress-plugin-clean-urls": "^1.1.1"
+  },
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs",
+    "release": "rm -rf about assets blog && mv docs/.vuepress/dist/* .",
+    "push": "npm run build && npm run release && git add -A && git commit -m \"설명 수정\" && git push origin master"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChoDragon9/one-piece.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChoDragon9/one-piece/issues"
+  },
+  "homepage": "https://github.com/ChoDragon9/one-piece#readme"
+}
