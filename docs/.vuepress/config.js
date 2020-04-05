@@ -64,12 +64,12 @@ module.exports = {
     ]
   },
   plugins: [
-    // [
-    //   '@vuepress/google-analytics',
-    //   {
-    //     'ga': 'UA-135042351-1'
-    //   }
-    // ],
+    [
+      '@vuepress/google-analytics',
+      {
+        'ga': 'UA-135042351-4'
+      }
+    ],
     [
       'vuepress-plugin-clean-urls',
       {
