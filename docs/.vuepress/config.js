@@ -8,6 +8,7 @@ module.exports = {
         items: [
           {text: 'Pagination', link: '/src/UIComponent/Pagination/'},
           {text: 'Calendar', link: '/src/UIComponent/Calendar/'},
+          {text: 'TimePicker', link: '/src/UIComponent/TimePicker/'},
           {text: 'InfiniteScrolling', link: '/src/UIComponent/InfiniteScrolling/'},
         ]
       },
