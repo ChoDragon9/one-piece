@@ -1,10 +1,16 @@
 const HOURS_OPTION = Array.from({length: 24}, (_value, index) => index);
 const MINUTES_OPTION = Array.from({length: 6}, (_value, index) => index * 10);
 
-const setTime = ({baseDate, hours = 0, minutes = 0}) => {
+const setMinutes = ({baseDate, minutes = 0}) => {
   const date = new Date(baseDate);
   date.setMilliseconds(0);
+  date.setSeconds(0);
   date.setMinutes(minutes);
+  return date;
+};
+
+const setTime = ({baseDate, hours = 0, minutes = 0}) => {
+  const date = setMinutes({baseDate, minutes});
   date.setHours(hours);
   return date;
 };
@@ -27,13 +33,11 @@ const toTimeOptions = ({baseDate = new Date(), minTime, maxTime} = {}) => {
     minutes: null,
     get hoursOptions() {
       const options = HOURS_OPTION
-        .map((hours) => {
-          return setTime({
-            baseDate,
-            hours
-          })
-        })
-      return filterDate({options, minTime, maxTime})
+        .map((hours) => setTime({baseDate, hours}));
+      const minutes = 0;
+      const hourMinTime = setMinutes({minutes, baseDate: minTime});
+      const hourMaxTime = setMinutes({minutes, baseDate: maxTime});
+      return filterDate({options, minTime: hourMinTime, maxTime: hourMaxTime})
     },
     get minutesOptions() {
       const options = MINUTES_OPTION
