@@ -10,27 +10,31 @@
 <body>
   <div id="pagination"></div>
 
-  <script src="pagination.js"></script>
+  <script src="pagination2.js"></script>
   <script>
     const render = () => {
-      const nextButton = hasNext() ?
-        '<button onclick="handleNext(); render()">Next</button>' :
+      const nextButton = state.hasNext ?
+        '<button onclick="actions.handleNext(); render()">Next</button>' :
         '';
-      const prevButton = hasPrev() ?
-        '<button onclick="handlePrev(); render()">Prev</button>' :
+      const prevButton = state.hasPrev ?
+        '<button onclick="actions.handlePrev(); render()">Prev</button>' :
         '';
+      const pagination = `<ul>${state.pages.map(v => {
+        const button = `<button onclick="mutation.changeCurrentPage(${v}); render()">
+          ${v}: ${v === state.currentPage ? 'Selected' : ''}
+        </button>`;
+        return `<li>${button}</li>`
+      }).join('')}</ul>`
+
       const html = `
         ${prevButton}
         ${nextButton}
-        <ul>${state.pages.map(v => {
-        return `<li onclick="changeCurrentPage(${v}); render()">${v}: ${v === state.currentPage ? 'Selected' : ''}</li>`
-      }).join('')}</ul>`;
-
+        ${pagination}
+      `;
       document.querySelector('#pagination').innerHTML = html
     };
 
     window.onload = () => {
-      calibratePage();
       render()
     }
   </script>
