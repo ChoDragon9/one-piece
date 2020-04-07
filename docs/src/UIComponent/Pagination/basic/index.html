@@ -8,22 +8,21 @@
   <title>Document</title>
 </head>
 <body>
-  <button onclick="handlePrev(); render()">Prev</button>
-  <button onclick="handleNext(); render()">Next</button>
+  <button onclick="actions.handlePrev(); render()">Prev</button>
+  <button onclick="actions.handleNext(); render()">Next</button>
 
   <div id="pagination"></div>
 
   <script src="pagination.js"></script>
   <script>
     const render = () => {
-      const html = `<ul>${pages.map(v => {
-        return `<li>${v}: ${v === currentPage ? 'Selected' : ''}</li>`
+      const html = `<ul>${state.pages.map(v => {
+        return `<li>${v}: ${v === state.currentPage ? 'Selected' : ''}</li>`
       }).join('')}</ul>`
       document.querySelector('#pagination').innerHTML = html
     }
 
     window.onload = () => {
-      calibratePage()
       render()
     }
   </script>
