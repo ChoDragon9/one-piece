@@ -9,10 +9,6 @@ sidebar: auto
 ## boolean
 <<< @/docs/src/Functional/boolean.ts
 
-## chunk
-<<< @/docs/src/Functional/chunk.js
-<<< @/docs/src/Functional/chunk.spec.js
-
 ## curry
 <<< @/docs/src/Functional/curry.js
 
