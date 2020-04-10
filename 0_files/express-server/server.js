@@ -35,6 +35,10 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+app.get('/500', (req, res) => {
+  res.status(500).send({})
+})
+
 // 파일 업로드
 app.post('/upload', upload.any(), (req, res) => {
   const name = req.files[0].originalname
