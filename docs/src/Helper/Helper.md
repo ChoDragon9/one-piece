@@ -18,6 +18,9 @@ sidebar: auto
 ## is-primitive.js
 <<< @/docs/src/Helper/is-primitive.js
 
+## is-object.js
+<<< @/docs/src/Helper/is-object.js
+
 ## is-valid-url.js
 <<< @/docs/src/Helper/is-valid-url.js
 
