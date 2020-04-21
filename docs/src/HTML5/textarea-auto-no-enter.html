@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    .wrap {
+      width: 200px;
+      background-color: #f9f9f9;
+    }
+
+    .wrap textarea {
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <textarea
+    onkeydown="action.onKeyDown(event)"
+    oninput="action.onInput()"
+  ></textarea>
+</div>
+
+<script>
+  const ONE_LINE = 25
+  const textarea = document.querySelector('textarea');
+
+  const renderHeight = () => {
+    textarea.style.height = state.height
+  }
+
+  const state = {
+    lineLength: 1,
+    get height () {
+      return `${state.lineLength * ONE_LINE}px`
+    },
+  }
+
+  const mutation = {
+    mutateLineLength: length => {
+      state.lineLength = length
+      renderHeight();
+    }
+  }
+
+  const action = {
+    onKeyDown: (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+      }
+    },
+    onInput: () => {
+      mutation.mutateLineLength(1)
+
+      requestAnimationFrame(() => {
+        const scrollHeight = textarea.scrollHeight
+        const lineLength = Math.round(scrollHeight / ONE_LINE)
+
+        mutation.mutateLineLength(lineLength)
+      })
+    },
+  }
+
+  renderHeight()
+</script>
+</body>
+</html>

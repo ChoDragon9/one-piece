@@ -21,3 +21,6 @@ sidebar: auto
 ## textarea-auto.html
 <<< @/docs/src/HTML5/textarea-auto.html
 
+## textarea-auto-no-enter.html
+<<< @/docs/src/HTML5/textarea-auto-no-enter.html
+
