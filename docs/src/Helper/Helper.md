@@ -12,6 +12,9 @@ sidebar: auto
 ## debounce.js
 <<< @/docs/src/Helper/debounce.js
 
+## debounce.ts
+<<< @/docs/src/Helper/debounce.ts
+
 ## highlight.js
 <<< @/docs/src/Helper/highlight.js
 
@@ -41,6 +44,9 @@ sidebar: auto
 
 ## throttle.js
 <<< @/docs/src/Helper/throttle.js
+
+## throttle.ts
+<<< @/docs/src/Helper/throttle.ts
 
 ## toggle.ts
 <<< @/docs/src/Helper/toggle.ts
