@@ -30,6 +30,7 @@ module.exports = {
           {text: 'Iterable', link: '/src/Javascript/Iterable/'},
           {text: 'Object', link: '/src/Javascript/Object/'},
           {text: 'String', link: '/src/Javascript/String/'},
+          {text: 'RegExp', link: '/src/Javascript/RegExp/'},
         ]
       },
       {
