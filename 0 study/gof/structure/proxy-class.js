@@ -18,19 +18,19 @@ class GeoCoder {
 class GeoProxy {
   constructor() {
     this.geoCoder = new GeoCoder();
-    this.geocache = new Map();
+    this.geoCache = new Map();
   }
 
   getLatLng(address) {
-    if (!this.geocache.has(address)) {
-      this.geocache.set(address, this.geoCoder.getLatLng(address));
+    if (!this.geoCache.has(address)) {
+      this.geoCache.set(address, this.geoCoder.getLatLng(address));
     }
-    console.log(`${address}: ${this.geocache.get(address)}`);
-    return this.geocache.get(address);
+    console.log(`${address}: ${this.geoCache.get(address)}`);
+    return this.geoCache.get(address);
   }
 
   getCount() {
-    return this.geocache.size;
+    return this.geoCache.size;
   }
 }
 
