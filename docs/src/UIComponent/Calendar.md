@@ -3,6 +3,9 @@ title: Calendar
 sidebar: auto
 ---
 
+## calendar.html
+<<< @/docs/src/UIComponent/calendar/calendar.html
+
 ## common-calendar.vue
 <<< @/docs/src/UIComponent/calendar/common-calendar.vue
 
