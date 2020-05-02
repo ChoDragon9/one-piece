@@ -1,10 +1,5 @@
 const isLeapYear = (year) => {
-  const LEAP_YEAR = 2000
-  const LEAP_YEAR_PERIOD = 4
-
-  const diffYear = Math.abs(year - LEAP_YEAR)
-
-  return diffYear % LEAP_YEAR_PERIOD === 0
+  return new Date(year, 2, 0).getDate() === 29;
 }
 
 module.exports = isLeapYear

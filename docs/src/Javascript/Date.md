@@ -6,24 +6,28 @@ sidebar: auto
 ## toLocalString.js
 <<< @/docs/src/Javascript/Date/toLocalString.js
 
-## fp/add-day.js
+## produce-date.js
+<<< @/docs/src/Javascript/Date/fp/produce-date.js
+Date 객체를 다룰 때 불변성을 지키기 위한 함수이다.
+
+## add-day.js
 <<< @/docs/src/Javascript/Date/fp/add-day.js
 
-## fp/diff-day.js
+## diff-day.js
 <<< @/docs/src/Javascript/Date/fp/diff-day.js
 
-## fp/is-leap-year.js
+## is-leap-year.js
 <<< @/docs/src/Javascript/Date/fp/is-leap-year.js
 
-## fp/subtract-day.js
+## subtract-day.js
 <<< @/docs/src/Javascript/Date/fp/subtract-day.js
 
-## fp/to-day-index.js
+## to-day-index.js
 <<< @/docs/src/Javascript/Date/fp/to-day-index.js
 
-## fp/to-last-day.js
+## to-last-day.js
 <<< @/docs/src/Javascript/Date/fp/to-last-day.js
 
-## oop/custom-date.js
-<<< @/docs/src/Javascript/Date/oop/custom-date.js
+## custom-date.js
+<<< @/docs/src/Javascript/Date/fp/custom-date.js
 
