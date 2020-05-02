@@ -108,10 +108,7 @@
   }
   const clearTime = (date: Date): Date => {
     const clonedDate = cloneDate(date)
-    clonedDate.setHours(0)
-    clonedDate.setMinutes(0)
-    clonedDate.setSeconds(0)
-    clonedDate.setMilliseconds(0)
+    clonedDate.setHours(0, 0, 0, 0)
     return clonedDate
   }
 
