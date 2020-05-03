@@ -21,6 +21,7 @@ module.exports = {
           {text: 'safe-chain', link: '/src/Helper/safe-chain/'},
           {text: 'shuffle', link: '/src/Helper/shuffle/'},
           {text: 'Router', link: '/src/Helper/router/'},
+          {text: 'Observer', link: '/src/Helper/observer/'},
         ]
       },
       {
