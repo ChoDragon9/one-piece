@@ -23,6 +23,7 @@ module.exports = {
           {text: 'Router', link: '/src/Helper/router/'},
           {text: 'Observer', link: '/src/Helper/observer/'},
           {text: 'Component', link: '/src/Helper/component/'},
+          {text: 'Directive', link: '/src/Helper/directive/'},
         ]
       },
       {
