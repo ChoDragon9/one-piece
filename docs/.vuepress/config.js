@@ -20,6 +20,7 @@ module.exports = {
           {text: 'produce', link: '/src/Helper/produce/'},
           {text: 'safe-chain', link: '/src/Helper/safe-chain/'},
           {text: 'shuffle', link: '/src/Helper/shuffle/'},
+          {text: 'Router', link: '/src/Helper/router/'},
         ]
       },
       {
