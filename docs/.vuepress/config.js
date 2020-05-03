@@ -22,6 +22,7 @@ module.exports = {
           {text: 'shuffle', link: '/src/Helper/shuffle/'},
           {text: 'Router', link: '/src/Helper/router/'},
           {text: 'Observer', link: '/src/Helper/observer/'},
+          {text: 'Component', link: '/src/Helper/component/'},
         ]
       },
       {
