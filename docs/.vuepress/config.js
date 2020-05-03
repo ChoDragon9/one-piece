@@ -24,6 +24,7 @@ module.exports = {
           {text: 'Observer', link: '/src/Helper/observer/'},
           {text: 'Component', link: '/src/Helper/component/'},
           {text: 'Directive', link: '/src/Helper/directive/'},
+          {text: 'Template Binding', link: '/src/Helper/template-binding/'},
         ]
       },
       {
