@@ -1,18 +1,18 @@
 const lexer = code => {
-  return code
-    .split(/\s+/)
-    .map(token => {
-      return isNaN(token)
-        ? {type: 'word', value: token}
-        : {type: 'number', value: token};
-    });
+  const [, start, template, end] = code.match(/(<h[1-6]>)(.*?)(<\/h[1-6]>)/);
+  return [
+    { type: 'start', value: start },
+    { type: 'template', value: template },
+    { type: 'end', value: end }
+  ]
 };
 
-const input = 'Paper 100';
+const input = '<h1>{{text}}</h1>';
 const output = lexer(input);
 // [
-//   { type: 'word', value: 'Paper' },
-//   { type: 'number', value: '100' }
+//   { type: 'start', value: '<h1>' },
+//   { type: 'template', value: '{{text}}' },
+//   { type: 'end', value: '</h1>' }
 // ]
 
 module.exports = {lexer}
