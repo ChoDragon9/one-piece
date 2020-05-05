@@ -9,6 +9,7 @@ const lexer = code => {
 
 const input = '<h1>{{text}}</h1>';
 const output = lexer(input);
+// console.log(output)
 // [
 //   { type: 'start', value: '<h1>' },
 //   { type: 'template', value: '{{text}}' },
