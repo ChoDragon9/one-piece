@@ -1,55 +1,36 @@
-const AST_TYPE = {
-  CALL_EXPRESSION: 'CallExpression',
-  NUMBER_LITERAL: 'NumberLiteral',
-};
-
 const parser = tokens => {
-  const body = [];
-  while (tokens.length > 0) {
-    const currentToken = tokens.shift();
-    if (currentToken.type === 'word') {
-      switch (currentToken.value) {
-        case 'Paper' :
-          const expression = {
-            type: AST_TYPE.CALL_EXPRESSION,
-            name: 'Paper',
-            arguments: []
-          };
-          const argument = tokens.shift();
-          if (argument.type === 'number') {
-            expression.arguments.push({
-              type: AST_TYPE.NUMBER_LITERAL,
-              value: argument.value
-            });
-            body.push(expression)
-          }
-          break;
-      }
-    }
-  }
   const AST = {
-    body,
-    type: 'Drawing',
+    type: 'MarkupLanguage',
+    value: '',
+    children: []
   };
+  tokens.forEach(({type, value}) => {
+    if (type === 'start') {
+      AST.value = value.replace(/[<>]/g, '');
+    }
+    if (type === 'template') {
+      AST.children.push({
+        type: 'Template',
+        value,
+      })
+    }
+  });
   return AST
 };
 
 const input = [
-  {type: 'word', value: 'Paper'},
-  {type: 'number', value: '100'}
+  { type: 'start', value: '<h1>' },
+  { type: 'template', value: '{{text}}' },
+  { type: 'end', value: '</h1>' }
 ];
 const output = parser(input);
+console.log(output);
 // {
-//   body: [
-//     {
-//       type: 'CallExpression',
-//       name: 'Paper',
-//       arguments: [
-//         {type: 'NumberLiteral', value: '100'}
-//       ]
-//     }
-//   ],
-//   type: 'Drawing'
+//   type: 'MarkupLanguage',
+//   value: 'h1',
+//   children: [
+//     {type: 'Template', value: '{{text}}'}
+//   ]
 // }
 
 module.exports = {parser}
