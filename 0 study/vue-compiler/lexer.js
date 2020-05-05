@@ -1,24 +1,17 @@
-const LEXER_TYPES = {
-  START: 'start',
-  END: 'end',
-  TEMPLATE: 'template',
-  TEXT: 'text',
-};
-
 export const lexer = code => {
   const matched = code.match(/(<h[1-6]>)|(\{\{[a-zA-Z]{0,}\}\})|(<\/h[1-6]>)/g);
   if (matched) {
     return matched.map((value) => {
-      let type = LEXER_TYPES.TEXT;
+      let type = '';
       switch (true) {
         case value.startsWith('</') && value.endsWith('>'):
-          type = LEXER_TYPES.END;
+          type = 'end';
           break;
         case value.startsWith('<') && value.endsWith('>'):
-          type = LEXER_TYPES.START;
+          type = 'start';
           break;
         case value.startsWith('{{') && value.endsWith('}}'):
-          type = LEXER_TYPES.TEMPLATE;
+          type = 'template';
           break;
       }
       return {type, value}
