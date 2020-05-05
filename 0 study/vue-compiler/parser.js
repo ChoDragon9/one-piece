@@ -24,7 +24,7 @@ const input = [
   { type: 'end', value: '</h1>' }
 ];
 const output = parser(input);
-console.log(output);
+// console.log(output);
 // {
 //   type: 'MarkupLanguage',
 //   value: 'h1',
