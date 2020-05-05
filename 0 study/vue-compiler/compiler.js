@@ -52,4 +52,6 @@ const compiler = (code) => {
 
 const input = '<h1>{{text}}</h1>';
 const output = compiler(input);
-
+// (createElement, state) => {
+//   return createElement('h1', state.text)
+// }
