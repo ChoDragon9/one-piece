@@ -52,3 +52,4 @@ const output = parser(input);
 //   type: 'Drawing'
 // }
 
+module.exports = {parser}

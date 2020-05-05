@@ -14,3 +14,5 @@ const output = lexer(input);
 //   { type: 'word', value: 'Paper' },
 //   { type: 'number', value: '100' }
 // ]
+
+module.exports = {lexer}
