@@ -16,29 +16,13 @@ const generator = svgAst => {
 };
 
 const input = {
-  tag: 'svg',
-  attr: {
-    xmlns: 'http://www.w3.org/2000/svg',
-    viewBox: '0 0 100 100',
-    version: '1.1',
-    width: 100,
-    height: 100
-  },
-  body: [
-    {
-      tag: 'rect',
-      attr: {
-        x: 0, y: 0,
-        width: 100, height: 100,
-        fill: 'rgb(0%,0%,0%)'
-      }
-    }
+  tag: 'h1',
+  children: [
+    {type: 'Template', value: 'text'}
   ]
-};
+}
 const output = generator(input);
-// <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" version="1.1" width="100" height="100">
-//   <rect x="0" y="0" width="100" height="100" fill="rgb(0%,0%,0%)"></rect>
-// </svg>
+// return createElement('h1', state.text)
 
 module.exports = {generator}
 
