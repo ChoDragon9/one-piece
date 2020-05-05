@@ -1,9 +1,15 @@
-const generator = htmlAst => {
+const createElement = (tag, text) => `<${tag}>${text}</${tag}>`;
+
+export const generator = htmlAst => {
   const [child] = htmlAst.children;
   const text = child.type === 'TemplateBinding'
     ? `state.${child.value}`
     : `'${child.value}'`;
-  return `return createElement('${htmlAst.tag}', ${text})`
+  return (state) => new Function(
+    'createElement',
+    'state',
+    `return createElement('${htmlAst.tag}', ${text})`
+  )(createElement, state);
 };
 
 const input = {
@@ -13,9 +19,7 @@ const input = {
   ]
 }
 const output = generator(input);
-// console.log(output);
-// return createElement('h1', state.text)
-
-module.exports = {generator}
+// console.log(output)
+// (state) => createElement('h1', state.text)
 
 

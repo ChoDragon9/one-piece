@@ -5,7 +5,7 @@ const LEXER_TYPES = {
   TEXT: 'text',
 };
 
-const lexer = code => {
+export const lexer = code => {
   const matched = code.match(/(<h[1-6]>)|(\{\{[a-zA-Z]{0,}\}\})|(<\/h[1-6]>)/g);
   if (matched) {
     return matched.map((value) => {
@@ -34,5 +34,3 @@ const output = lexer(input);
 //   { type: 'template', value: '{{text}}' },
 //   { type: 'end', value: '</h1>' }
 // ]
-
-module.exports = {lexer}

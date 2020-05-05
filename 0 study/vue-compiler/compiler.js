@@ -1,9 +1,9 @@
-const {lexer} = require('./lexer');
-const {parser} = require('./parser');
-const {transformer} = require('./transformer');
-const {generator} = require('./generator');
+import {lexer} from './lexer.js';
+import {parser} from './parser.js';
+import {transformer} from './transformer.js';
+import {generator} from './generator.js';
 
-const compiler = (code) => {
+export const compiler = (code) => {
   // '<h1>{{text}}</h1>'
   const tokens = lexer(code);
   // [
@@ -26,12 +26,12 @@ const compiler = (code) => {
   //     {type: 'TemplateBinding', value: 'text'}
   //   ]
   // }
-  const renderFunction = generator(htmlAst);
-  // return createElement('h1', state.text)
-  return renderFunction;
+  const renderFn = generator(htmlAst);
+  // (state) => createElement('h1', state.text)
+  return renderFn;
 };
 
 const input = '<h1>{{text}}</h1>';
 const output = compiler(input);
 // console.log(output);
-// return createElement('h1', state.text)
+// (state) => createElement('h1', state.text)

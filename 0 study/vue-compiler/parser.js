@@ -1,4 +1,4 @@
-const parser = tokens => {
+export const parser = tokens => {
   const AST = {
     type: 'MarkupLanguage',
     value: '',
@@ -32,5 +32,3 @@ const output = parser(input);
 //     {type: 'Template', value: '{{text}}'}
 //   ]
 // }
-
-module.exports = {parser}

@@ -1,4 +1,4 @@
-const transformer = ast => {
+export const transformer = ast => {
   const htmlAst = {
     tag: ast.value,
     children: ast.children.map(({type, value}) => {
@@ -29,6 +29,4 @@ const output = transformer(input);
 //     {type: 'TemplateBinding', value: 'text'}
 //   ]
 // }
-
-module.exports = {transformer}
 
