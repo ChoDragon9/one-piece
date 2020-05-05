@@ -4,7 +4,7 @@ const transformer = ast => {
     children: ast.children.map(({type, value}) => {
       if (type === 'Template') {
         return {
-          type: 'Template',
+          type: 'TemplateBinding',
           value: value.replace(/{{|}}/g, '')
         }
       }
@@ -26,7 +26,7 @@ const output = transformer(input);
 // {
 //   tag: 'h1',
 //   children: [
-//     {type: 'Template', value: 'text'}
+//     {type: 'TemplateBinding', value: 'text'}
 //   ]
 // }
 

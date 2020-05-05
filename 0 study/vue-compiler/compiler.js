@@ -23,7 +23,7 @@ const compiler = (code) => {
   // {
   //   tag: 'h1',
   //   children: [
-  //     {type: 'Template', value: 'text'}
+  //     {type: 'TemplateBinding', value: 'text'}
   //   ]
   // }
   const renderFunction = generator(htmlAst);
@@ -33,4 +33,5 @@ const compiler = (code) => {
 
 const input = '<h1>{{text}}</h1>';
 const output = compiler(input);
+// console.log(output);
 // return createElement('h1', state.text)
