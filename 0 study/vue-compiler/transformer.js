@@ -1,65 +1,32 @@
 const transformer = ast => {
-  const body = ast.body.map((node) => {
-    switch (node.name) {
-      case 'Paper' :
-        const paperColor = 100 - Number(node.arguments[0].value);
+  const htmlAst = {
+    tag: ast.value,
+    children: ast.children.map(({type, value}) => {
+      if (type === 'Template') {
         return {
-          tag: 'rect',
-          attr: {
-            x: 0,
-            y: 0,
-            width: 100,
-            height: 100,
-            fill: `rgb(${paperColor}%,${paperColor}%,${paperColor}%)`
-          }
+          type: 'Template',
+          value: value.replace(/{{|}}/g, '')
         }
-    }
-  });
-  const svgAst = {
-    tag: 'svg',
-    attr: {
-      xmlns: 'http://www.w3.org/2000/svg',
-      viewBox: '0 0 100 100',
-      version: '1.1',
-      width: 100,
-      height: 100,
-    },
-    body,
+      }
+      return {type, value}
+    })
   };
-  return svgAst
+  return htmlAst
 };
 
 const input = {
-  body: [
-    {
-      type: 'CallExpression',
-      name: 'Paper',
-      arguments: [
-        {type: 'NumberLiteral', value: '100'}
-      ]
-    }
-  ],
-  type: 'Drawing'
-};
+  type: 'MarkupLanguage',
+  value: 'h1',
+  children: [
+    {type: 'Template', value: '{{text}}'}
+  ]
+}
 const output = transformer(input);
+// console.log(output)
 // {
-//   tag: 'svg',
-//   attr: {
-//     xmlns: 'http://www.w3.org/2000/svg',
-//     viewBox: '0 0 100 100',
-//     version: '1.1',
-//     width: 100,
-//     height: 100
-//   },
-//   body: [
-//     {
-//       tag: 'rect',
-//       attr: {
-//         x: 0, y: 0,
-//         width: 100, height: 100,
-//         fill: 'rgb(0%,0%,0%)'
-//       }
-//     }
+//   tag: 'h1',
+//   children: [
+//     {type: 'Template', value: 'text'}
 //   ]
 // }
 
