@@ -4,21 +4,31 @@ import {transformer} from './transformer.js';
 import {generator} from './generator.js';
 
 export const compiler = (code) => {
-  // '<h1>{{text}}</h1>'
+  `<div>
+    {{text}} Text
+    <div>{{text}}</div>
+  </div>`
   const tokens = lexer(code);
   // [
-  //   { type: 'start', value: '<h1>' },
-  //   { type: 'template', value: '{{text}}' }
-  //   { type: 'end', value: '</h1>' }
+  //   { type: 'start', value: '<div>' },
+  //   { type: 'text', value: '{{text}} Text' },
+  //   { type: 'start', value: '<div>' },
+  //   { type: 'text', value: '{{text}}' },
+  //   { type: 'end', value: '</div>' },
+  //   { type: 'end', value: '</div>' }
   // ]
   const ast = parser(tokens);
-  // {
-  //   type: 'MarkupLanguage',
-  //   value: 'h1',
-  //   children: [
-  //     {type: 'Template', value: '{{text}}'}
-  //   ]
-  // }
+  {
+    type: 'MarkupLanguage',
+    body: [
+      { type: 'StartTag', value: '<div>' },
+      { type: 'Content', value: '{{text}} Text' },
+      { type: 'StartTag', value: '<div>' },
+      { type: 'Content', value: '{{text}}' },
+      { type: 'EndTag', value: '</div>' },
+      { type: 'EndTag', value: '</div>' }
+    ]
+  }
   const htmlAst = transformer(ast);
   // {
   //   tag: 'h1',
