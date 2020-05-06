@@ -4,10 +4,10 @@ import {transformer} from './transformer.js';
 import {generator} from './generator.js';
 
 export const compiler = (code) => {
-  `<div>
-    {{text}} Text
-    <div>{{text}}</div>
-  </div>`
+  // `<div>
+  //   {{text}} Text
+  //   <div>{{text}}</div>
+  // </div>`
   const tokens = lexer(code);
   // [
   //   { type: 'start', value: '<div>' },
@@ -18,17 +18,17 @@ export const compiler = (code) => {
   //   { type: 'end', value: '</div>' }
   // ]
   const ast = parser(tokens);
-  {
-    type: 'MarkupLanguage',
-    body: [
-      { type: 'StartTag', value: '<div>' },
-      { type: 'Content', value: '{{text}} Text' },
-      { type: 'StartTag', value: '<div>' },
-      { type: 'Content', value: '{{text}}' },
-      { type: 'EndTag', value: '</div>' },
-      { type: 'EndTag', value: '</div>' }
-    ]
-  }
+  // {
+  //   type: 'MarkupLanguage',
+  //   body: [
+  //     { type: 'StartTag', value: '<div>' },
+  //     { type: 'Content', value: '{{text}} Text' },
+  //     { type: 'StartTag', value: '<div>' },
+  //     { type: 'Content', value: '{{text}}' },
+  //     { type: 'EndTag', value: '</div>' },
+  //     { type: 'EndTag', value: '</div>' }
+  //   ]
+  // }
   const htmlAst = transformer(ast);
   // {
   //   tag: 'h1',
