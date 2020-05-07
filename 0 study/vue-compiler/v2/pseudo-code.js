@@ -8,6 +8,7 @@ const compiler = (originCode) => {
 
 // Step 1
 const syntaxAnalyzer = (originCode) => {
+  // ast: Abstract Syntax Tree
   const ast = pipe(
     tokenizer,
     parser
@@ -21,6 +22,7 @@ const tokenizer = (originCode) => {
 }
 
 const parser = (tokens) => {
+  // ast: Abstract Syntax Tree
   const ast = {}
   return ast
 }
