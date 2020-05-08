@@ -1,3 +1,5 @@
+import {useLoopGuard} from './helper.mjs';
+
 const SYMBOL = {
   START_OPEN: '<',
   END_OPEN: '</',
@@ -6,12 +8,6 @@ const SYMBOL = {
   CLOSE_TEMPLATE: '}}',
 };
 
-const useLoopGuard = () => {
-  const MAX_LOOP = 10000;
-  let num = 0;
-  const isMaxLoop = () => num++ > MAX_LOOP;
-  return {isMaxLoop}
-};
 const startsWith = (context, symbol) => {
   return context.originCode.startsWith(symbol)
 };
@@ -83,5 +79,5 @@ export const tokenizer = originCode => {
 
 const input = `<div>{{text}} Text<div>{{text}}</div></div>`;
 const output = tokenizer(input);
-// console.log(output);
+console.log(output);
 // ['<', 'div', '>', 'Text', '</', 'div', '>']
