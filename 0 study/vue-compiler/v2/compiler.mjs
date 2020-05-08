@@ -17,9 +17,9 @@ export const compiler = (originCode) => {
   return renderFn;
 };
 
-const input = `<div>
-  {{text}} Text
-  <div>{{text}}</div>
-</div>`;
-const output = compiler(input);
-console.log(output({ text: 'Text' }));
+// const input = `<div>
+//   {{text}} Text
+//   <div>{{text}}</div>
+// </div>`;
+// const output = compiler(input);
+// console.log(output({ text: 'Text' }));
