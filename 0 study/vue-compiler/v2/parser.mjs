@@ -44,18 +44,16 @@ export const parser = tokens => {
         pushTag(currentAst, tokens)
       }
     } else if(tokens[0] === '{{') {
-      currentAst.body.push({
-        type: 'Symbol',
-        value: tokens.shift()
-      });
-      currentAst.body.push({
-        type: 'Keyword',
-        value: tokens.shift()
-      });
-      currentAst.body.push({
-        type: 'Symbol',
-        value: tokens.shift()
-      })
+      const newAst = {
+        type: 'Template',
+        body: [
+          { type: 'Symbol', value: tokens.shift() },
+          { type: 'Keyword', value: tokens.shift() },
+          { type: 'Symbol', value: tokens.shift() },
+        ],
+        parent: currentAst
+      };
+      currentAst.body.push(newAst);
     } else {
       currentAst.body.push({
         type: 'StringConstant',
