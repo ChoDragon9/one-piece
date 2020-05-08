@@ -1,17 +1,30 @@
 import {useLoopGuard} from '../helper.mjs';
 
-const pushTag = (currentAst, tokens) => {
-  currentAst.body.push({
-    type: 'Symbol',
-    value: tokens.shift()
+const SYMBOL = {
+  START_OPEN: '<',
+  END_OPEN: '</',
+  OPEN_TEMPLATE: '{{',
+};
+const SYNTAX_TYPE = {
+  SYMBOL: 'Symbol',
+  KEYWORD: 'Keyword',
+  TAG: 'Tag',
+  TEMPLATE: 'Template',
+  STRING_CONSTANT: 'StringConstant',
+};
+
+const pushTag = (context) => {
+  context.currentAst.body.push({
+    type: SYNTAX_TYPE.SYMBOL,
+    value: context.tokens.shift()
   });
-  currentAst.body.push({
-    type: 'Keyword',
-    value: tokens.shift()
+  context.currentAst.body.push({
+    type: SYNTAX_TYPE.KEYWORD,
+    value: context.tokens.shift()
   });
-  currentAst.body.push({
-    type: 'Symbol',
-    value: tokens.shift()
+  context.currentAst.body.push({
+    type: SYNTAX_TYPE.SYMBOL,
+    value: context.tokens.shift()
   })
 };
 
@@ -21,43 +34,46 @@ export const parser = tokens => {
     body: [],
     parent: null
   };
+  const context = {
+    tokens,
+    currentAst: ast
+  };
   const loopGuard = useLoopGuard();
-  let currentAst = ast;
 
-  while(tokens.length) {
-    if (tokens[0].startsWith('<')) {
-      if (tokens[0] === '</') {
-        pushTag(currentAst, tokens);
-        currentAst = currentAst.parent
+  while(context.tokens.length) {
+    if (context.tokens[0].startsWith(SYMBOL.START_OPEN)) {
+      if (context.tokens[0] === SYMBOL.END_OPEN) {
+        pushTag(context);
+        context.currentAst = context.currentAst.parent
       } else {
-        if (currentAst.type === '') {
-          currentAst.type = 'Tag'
+        if (context.currentAst.type === '') {
+          context.currentAst.type = SYNTAX_TYPE.TAG
         } else {
           const newAst = {
-            type: 'Tag',
+            type: SYNTAX_TYPE.TAG,
             body: [],
-            parent: currentAst
+            parent: context.currentAst
           };
-          currentAst.body.push(newAst);
-          currentAst = newAst
+          context.currentAst.body.push(newAst);
+          context.currentAst = newAst
         }
-        pushTag(currentAst, tokens)
+        pushTag(context)
       }
-    } else if(tokens[0] === '{{') {
+    } else if(context.tokens[0] === SYMBOL.OPEN_TEMPLATE) {
       const newAst = {
-        type: 'Template',
+        type: SYNTAX_TYPE.TEMPLATE,
         body: [
-          { type: 'Symbol', value: tokens.shift() },
-          { type: 'Keyword', value: tokens.shift() },
-          { type: 'Symbol', value: tokens.shift() },
+          { type: SYNTAX_TYPE.SYMBOL, value: context.tokens.shift() },
+          { type: SYNTAX_TYPE.KEYWORD, value: context.tokens.shift() },
+          { type: SYNTAX_TYPE.SYMBOL, value: context.tokens.shift() },
         ],
-        parent: currentAst
+        parent: context.currentAst
       };
-      currentAst.body.push(newAst);
+      context.currentAst.body.push(newAst);
     } else {
-      currentAst.body.push({
-        type: 'StringConstant',
-        value: tokens.shift()
+      context.currentAst.body.push({
+        type: SYNTAX_TYPE.STRING_CONSTANT,
+        value: context.tokens.shift()
       })
     }
 
@@ -70,15 +86,15 @@ export const parser = tokens => {
   return ast
 };
 
-// const input = [
-//   '<','div','>',
-//   '{{','text','}}',
-//   ' Text',
-//   '<','div','>',
-//   '{{','text','}}',
-//   '</','div','>',
-//   '</','div','>'
-// ];
-// const output = parser(input);
-//
-// console.log(output);
+const input = [
+  '<','div','>',
+  '{{','text','}}',
+  ' Text',
+  '<','div','>',
+  '{{','text','}}',
+  '</','div','>',
+  '</','div','>'
+];
+const output = parser(input);
+
+console.log(output);
