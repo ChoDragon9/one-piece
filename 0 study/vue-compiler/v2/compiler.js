@@ -55,6 +55,14 @@ export const compiler = (code) => {
   //     { type: 'Symbol', value: '>' },
   //     { type: 'Symbol', value: '</' },
   //     { type: 'StringConstant', value: 'Text' },
+  //     {
+  //       type: 'Template',
+  //       body: [
+  //         { type: 'Symbol', value: '{{' },
+  //         { type: 'StringConstant', value: 'text' },
+  //         { type: 'Symbol', value: '}}' },
+  //       ]
+  //     },
   //     { type: 'Symbol', value: '</' },
   //     { type: 'Keyword', value: 'div' },
   //     { type: 'Symbol', value: '>' },
