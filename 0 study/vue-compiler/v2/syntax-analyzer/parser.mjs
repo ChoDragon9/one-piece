@@ -1,4 +1,4 @@
-import {useLoopGuard} from './helper.mjs';
+import {useLoopGuard} from '../helper.mjs';
 
 const pushTag = (currentAst, tokens) => {
   currentAst.body.push({

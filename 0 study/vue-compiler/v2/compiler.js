@@ -1,7 +1,6 @@
-import {tokenizer} from './tokenizer.mjs';
-import {parser} from './parser.mjs';
-import {transformer} from './transformer.mjs';
-import {generator} from './generator.mjs';
+import {syntaxAnalyzer} from './syntax-analyzer/index.mjs';
+import {transformer} from './code-generator/transformer.mjs';
+import {generator} from './code-generator/generator.mjs';
 
 /*
 Grammar
@@ -13,72 +12,21 @@ Tag: '<' keyword '>' (Tag | Template | StringConstant) '</' keyword '>'
 Template: '{{' stringConstant '}}'
 */
 
-export const compiler = (code) => {
-  // Step 1.
-  // `<div>Text</div>`
-  // Step 2.
-  // `<div>{{text}} Text</div>`
-  // Step 3.
-  // `<div>{{text}} Text<div>{{text}}</div></div>`
-  // Step 4.
-  // `<div>
-  //   {{text}} Text
-  //   <div>{{text}}</div>
-  // </div>`
-  const tokens = tokenizer(code);
-  // Step 1.
-  // ['<', 'div', '>', 'Text', '</', 'div', '>']
-  // Step 2.
-  // [
-  //   '<','div','>',
-  //   '{{','text','}}',
-  //   ' Text',
-  //   '</','div','>'
-  // ]
-  // Step 3.
-  // [
-  //   '<','div','>',
-  //   '{{','text','}}',
-  //   ' Text',
-  //   '<','div','>',
-  //   '{{','text','}}',
-  //   '</','div','>',
-  //   '</','div','>'
-  // ]
-  const ast = parser(tokens);
-  // Step 1.
-  // {
-  //   type: 'Tag',
-  //   body: [
-  //     { type: 'Symbol', value: '<' },
-  //     { type: 'Keyword', value: 'div' },
-  //     { type: 'Symbol', value: '>' },
-  //     { type: 'Symbol', value: '</' },
-  //     { type: 'StringConstant', value: 'Text' },
-  //     {
-  //       type: 'Template',
-  //       body: [
-  //         { type: 'Symbol', value: '{{' },
-  //         { type: 'StringConstant', value: 'text' },
-  //         { type: 'Symbol', value: '}}' },
-  //       ]
-  //     },
-  //     { type: 'Symbol', value: '</' },
-  //     { type: 'Keyword', value: 'div' },
-  //     { type: 'Symbol', value: '>' },
-  //   ]
-  // }
+export const compiler = (originCode) => {
+  const ast = syntaxAnalyzer(originCode);
   const htmlAst = transformer(ast);
   // Step 1.
   // createElement([
   //   createStartElement('div'),
   //   createText('Text')
+  //   createTemplate('text')
   //   createEndElement('div'),
   // ])
   const renderFn = generator(htmlAst);
   // (state) => createElement([
   //   createStartElement('div'),
   //   createText('Text')
+  //   createTemplate(state.text)
   //   createEndElement('div'),
   // ])
   return renderFn;
