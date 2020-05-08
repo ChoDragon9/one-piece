@@ -29,7 +29,22 @@ export const compiler = (code) => {
   // Step 1.
   // ['<', 'div', '>', 'Text', '</', 'div', '>']
   // Step 2.
-  // ['<','div','>','{{','text','}}',' Text','</','div','>',]
+  // [
+  //   '<','div','>',
+  //   '{{','text','}}',
+  //   ' Text',
+  //   '</','div','>'
+  // ]
+  // Step 3.
+  // [
+  //   '<','div','>',
+  //   '{{','text','}}',
+  //   ' Text',
+  //   '<','div','>',
+  //   '{{','text','}}',
+  //   '</','div','>',
+  //   '</','div','>'
+  // ]
   const ast = parser(tokens);
   // Step 1.
   // {
