@@ -76,7 +76,7 @@ const input = {
   ]
 };
 const output = virtualCodeGenerator(input);
-console.log(output);
+// console.log(output);
 // Step 1.
 // [
 //   'element([',
