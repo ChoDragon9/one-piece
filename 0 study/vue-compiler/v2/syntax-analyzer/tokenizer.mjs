@@ -51,7 +51,7 @@ const tokenizeString = (context) => {
 
 export const tokenizer = originCode => {
   const context = {
-    originCode,
+    originCode: originCode.replace(/\n/g, ''),
     tokens: []
   };
   const loopGuard = useLoopGuard();
@@ -77,7 +77,10 @@ export const tokenizer = originCode => {
   return context.tokens
 };
 
-// const input = `<div>{{text}} Text<div>{{text}}</div></div>`;
+// const input = `<div>
+//   {{text}} Text
+//   <div>{{text}}</div>
+// </div>`;
 // const output = tokenizer(input);
 // console.log(output);
 // ['<', 'div', '>', 'Text', '</', 'div', '>']
