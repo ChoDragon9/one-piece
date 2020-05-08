@@ -1,7 +1,7 @@
-import {tokenizer} from './tokenizer.js';
-import {parser} from './parser.js';
-import {transformer} from './transformer.js';
-import {generator} from './generator.js';
+import {tokenizer} from './tokenizer.mjs';
+import {parser} from './parser.mjs';
+import {transformer} from './transformer.mjs';
+import {generator} from './generator.mjs';
 
 /*
 Grammar
