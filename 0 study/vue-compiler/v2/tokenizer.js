@@ -38,9 +38,11 @@ const tokenizeTag = (context) => {
   pushToken(context, SYMBOL.CLOSE)
 }
 const tokenizeTemplate = (context) => {
-  const templateEnd = context.originCode.indexOf(SYMBOL.CLOSE_TEMPLATE) + SYMBOL.CLOSE_TEMPLATE.length
-  const template = context.originCode.substr(0, templateEnd)
+  pushToken(context, SYMBOL.OPEN_TEMPLATE)
+  const endIndex = context.originCode.indexOf(SYMBOL.CLOSE_TEMPLATE)
+  const template = context.originCode.substr(0, endIndex)
   pushToken(context, template)
+  pushToken(context, SYMBOL.CLOSE_TEMPLATE)
 }
 const tokenizeString = (context) => {
   const nextSymbolIndex = Math.min(...[
