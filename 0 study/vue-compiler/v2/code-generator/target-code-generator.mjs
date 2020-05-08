@@ -1,33 +1,61 @@
-const createElement = (tag, text) => `<${tag}>${text}</${tag}>`;
+const create = {
+  element: (children) => children.join(','),
+  startElement: (tag) => `<${tag}>`,
+  endElement: (tag) => `</${tag}>`,
+  text: (txt) => txt,
+  template: (value) => value
+}
 
-export const targetCodeGenerator = htmlAst => {
-  const [child] = htmlAst.children;
-  const text = child.type === 'TemplateBinding'
-    ? `state.${child.value}`
-    : `'${child.value}'`;
+export const targetCodeGenerator = virtualCode => {
+  const targetCode = virtualCode
+    .map(code => {
+      const comma = code.endsWith(')') ? ',' : '';
+      switch (true) {
+        case code.startsWith('element'):
+          return `create.${code}${comma}`
+        case code.startsWith('startElement'):
+          return `create.${code}${comma}`
+        case code.startsWith('endElement'):
+          return `create.${code}${comma}`
+        case code.startsWith('text'):
+          return `create.${code}${comma}`
+        case code.startsWith('template'):
+          return `create.${code.replace(`('`, `(state.`).replace(`')`, `)`)}${comma}`
+        default:
+          return `${code}${comma}`
+      }
+    })
+    .join('')
   return (state) => new Function(
-    'createElement',
+    'create',
     'state',
-    `return createElement('${htmlAst.tag}', ${text})`
-  )(createElement, state);
+    `return ${targetCode}`
+  )(create, state);
 };
 
-const input = [
-  "createElement([",
-  "createText('Text')",
-  "createTemplate('text')",
-  "createElement([",
-  "createText('Text')",
-  "])",
-  "])"
-]
-const output = targetCodeGenerator(input);
+// const input = [
+//   'element([',
+//   "startElement('div')",
+//   "text('Text')",
+//   "template('text')",
+//   'element([',
+//   "startElement('div')",
+//   "text('Text')",
+//   "endElement('div')",
+//   '])',
+//   "endElement('div')",
+//   '])'
+// ];
+// const output = targetCodeGenerator(input);
 // console.log(output)
-// (state) => createElement([
-//   createStartElement('div'),
-//   createText('Text')
-//   createTemplate(state.text)
-//   createEndElement('div'),
-// ])
-
-
+// (state) => create.element([
+//   create.startElement('div'),
+//   create.text('Text'),
+//   create.template(state.text),
+//   create.element([
+//     create.startElement('div'),
+//     create.text('Text'),
+//     create.endElement('div'),
+//   ]),
+//   create.endElement('div'),
+// ]),

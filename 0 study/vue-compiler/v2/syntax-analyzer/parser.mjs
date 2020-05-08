@@ -70,15 +70,15 @@ export const parser = tokens => {
   return ast
 };
 
-const input = [
-  '<','div','>',
-  '{{','text','}}',
-  ' Text',
-  '<','div','>',
-  '{{','text','}}',
-  '</','div','>',
-  '</','div','>'
-];
-const output = parser(input);
-
-console.log(output);
+// const input = [
+//   '<','div','>',
+//   '{{','text','}}',
+//   ' Text',
+//   '<','div','>',
+//   '{{','text','}}',
+//   '</','div','>',
+//   '</','div','>'
+// ];
+// const output = parser(input);
+//
+// console.log(output);
