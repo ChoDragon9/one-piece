@@ -6,65 +6,81 @@ const SYMBOL = {
   CLOSE_TEMPLATE: '}}',
 }
 
-const tokenizeTag = (originCode, tokens) => {
-  const endIndex = originCode.indexOf(SYMBOL.CLOSE)
-  const keyword = originCode.substr(0, endIndex)
-  tokens.push(keyword)
-  tokens.push(SYMBOL.CLOSE)
-  return originCode.substr(endIndex + SYMBOL.CLOSE.length)
+const useLoopGuard = () => {
+  let num = 0
+  const MAX_LOOP = 10000
+  const isMaxLoop = () => num++ > MAX_LOOP
+  return isMaxLoop
 }
-const tokenizeEndTag = (originCode, tokens) => {
-  tokens.push(SYMBOL.END_OPEN)
-  originCode = originCode.substr(SYMBOL.END_OPEN.length)
-  return tokenizeTag(originCode, tokens)
+const startsWith = (context, symbol) => {
+  return context.originCode.startsWith(symbol)
 }
-const tokenizeStartTag = (originCode, tokens) => {
-  tokens.push(SYMBOL.START_OPEN)
-  originCode = originCode.substr(SYMBOL.START_OPEN.length)
-  return tokenizeTag(originCode, tokens)
+
+const tokenizeEndTag = (context) => {
+  context.tokens.push(SYMBOL.END_OPEN)
+  context.originCode = context.originCode.substr(SYMBOL.END_OPEN.length)
 }
-const tokenizeTemplate = (originCode, tokens) => {
-  const templateEnd = originCode.indexOf(SYMBOL.CLOSE_TEMPLATE) + SYMBOL.CLOSE_TEMPLATE.length
-  const template = originCode.substr(0, templateEnd)
-  tokens.push(template)
-  return originCode.substr(templateEnd)
+const tokenizeStartTag = (context) => {
+  context.tokens.push(SYMBOL.START_OPEN)
+  context.originCode = context.originCode.substr(SYMBOL.START_OPEN.length)
 }
-const tokenizeString = (originCode, tokens) => {
+const tokenizeTag = (context) => {
+  if (startsWith(context, SYMBOL.END_OPEN)) {
+    tokenizeEndTag(context)
+  } else {
+    tokenizeStartTag(context)
+  }
+  const endIndex = context.originCode.indexOf(SYMBOL.CLOSE)
+  const keyword = context.originCode.substr(0, endIndex)
+  context.tokens.push(keyword)
+  context.tokens.push(SYMBOL.CLOSE)
+  context.originCode = context.originCode.substr(endIndex + SYMBOL.CLOSE.length)
+}
+const tokenizeTemplate = (context) => {
+  const templateEnd = context.originCode.indexOf(SYMBOL.CLOSE_TEMPLATE) + SYMBOL.CLOSE_TEMPLATE.length
+  const template = context.originCode.substr(0, templateEnd)
+  context.tokens.push(template)
+  context.originCode = context.originCode.substr(templateEnd)
+}
+const tokenizeString = (context) => {
   const nextSymbolIndex = Math.min(...[
-    originCode.indexOf(SYMBOL.START_OPEN),
-    originCode.indexOf(SYMBOL.OPEN_TEMPLATE),
+    context.originCode.indexOf(SYMBOL.START_OPEN),
+    context.originCode.indexOf(SYMBOL.OPEN_TEMPLATE),
   ].filter(num => num > 0));
-  const stringConstant = originCode.substr(0, nextSymbolIndex)
-  tokens.push(stringConstant)
-  return originCode.substr(nextSymbolIndex)
+  const stringConstant = context.originCode.substr(0, nextSymbolIndex)
+  context.tokens.push(stringConstant)
+  context.originCode = context.originCode.substr(nextSymbolIndex)
 }
 
 const tokenizer = originCode => {
-  const tokens = []
-  let num = 0
-  const MAX_LOOP = 10000
-  while (originCode) {
-    if (originCode.startsWith(SYMBOL.START_OPEN)) {
-      if (originCode.startsWith(SYMBOL.END_OPEN)) {
-        originCode = tokenizeEndTag(originCode, tokens)
-      } else {
-        originCode = tokenizeStartTag(originCode, tokens)
-      }
-    } else if (originCode.startsWith(SYMBOL.OPEN_TEMPLATE)) {
-      originCode = tokenizeTemplate(originCode, tokens)
-    } else {
-      originCode = tokenizeString(originCode, tokens)
+  const context = {
+    originCode,
+    tokens: []
+  }
+  const isMaxLoop = useLoopGuard()
+
+  while (context.originCode) {
+    switch (true) {
+      case startsWith(context, SYMBOL.START_OPEN):
+        tokenizeTag(context)
+        break
+      case startsWith(context, SYMBOL.OPEN_TEMPLATE):
+        tokenizeTemplate(context)
+        break
+      default:
+        tokenizeString(context)
+        break
     }
 
-    if (num++ > MAX_LOOP) {
+    if (isMaxLoop()) {
       console.error('MAX_LOOP')
       break
     }
   }
-  return tokens
+  return context.tokens
 };
 
-const input = `<div>Text {{text}} Text</div>`
+const input = `<div>{{text}} Text<div>{{text}}</div></div>`
 const output = tokenizer(input);
 console.log(output)
 // ['<', 'div', '>', 'Text', '</', 'div', '>']
