@@ -83,5 +83,5 @@ const tokenizer = originCode => {
 
 const input = `<div>{{text}} Text<div>{{text}}</div></div>`;
 const output = tokenizer(input);
-console.log(output);
+// console.log(output);
 // ['<', 'div', '>', 'Text', '</', 'div', '>']
