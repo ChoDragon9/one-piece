@@ -1,4 +1,4 @@
-import {lexer} from './lexer.js';
+import {tokenizer} from './tokenizer.js';
 import {parser} from './parser.js';
 import {transformer} from './transformer.js';
 import {generator} from './generator.js';
@@ -25,7 +25,7 @@ export const compiler = (code) => {
   //   {{text}} Text
   //   <div>{{text}}</div>
   // </div>`
-  const tokens = lexer(code);
+  const tokens = tokenizer(code);
   // Step 1.
   // ['<', 'div', '>', 'Text', '</', 'div', '>']
   const ast = parser(tokens);
