@@ -16,12 +16,6 @@ export const compiler = (originCode) => {
   const ast = syntaxAnalyzer(originCode);
   const htmlAst = virtualCodeGenerator(ast);
   const renderFn = targetCodeGenerator(htmlAst);
-  // (state) => createElement([
-  //   createStartElement('div'),
-  //   createText('Text')
-  //   createTemplate(state.text)
-  //   createEndElement('div'),
-  // ])
   return renderFn;
 };
 

@@ -12,14 +12,22 @@ export const targetCodeGenerator = htmlAst => {
   )(createElement, state);
 };
 
-const input = {
-  tag: 'h1',
-  children: [
-    {type: 'TemplateBinding', value: 'text'}
-  ]
-}
+const input = [
+  "createElement([",
+  "createText('Text')",
+  "createTemplate('text')",
+  "createElement([",
+  "createText('Text')",
+  "])",
+  "])"
+]
 const output = targetCodeGenerator(input);
 // console.log(output)
-// (state) => createElement('h1', state.text)
+// (state) => createElement([
+//   createStartElement('div'),
+//   createText('Text')
+//   createTemplate(state.text)
+//   createEndElement('div'),
+// ])
 
 
