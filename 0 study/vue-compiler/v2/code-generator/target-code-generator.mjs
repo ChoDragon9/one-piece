@@ -1,5 +1,5 @@
 const create = {
-  element: (children) => children.join(','),
+  element: (children) => children.join(''),
   startElement: (tag) => `<${tag}>`,
   endElement: (tag) => `</${tag}>`,
   text: (txt) => txt,
@@ -26,6 +26,7 @@ export const targetCodeGenerator = virtualCode => {
       }
     })
     .join('')
+    .replace(/,$/, '')
   return (state) => new Function(
     'create',
     'state',
