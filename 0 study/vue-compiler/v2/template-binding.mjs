@@ -1,6 +1,9 @@
-import {compiler} from './compiler.js';
+import {compiler} from './compiler.mjs';
 
-const template = '<h1>{{text}}</h1>';
+const template = `<div>
+  {{text}} Text
+  <div>{{text}}</div>
+</div>`;
 const render = compiler(template);
 
 console.log(render({ text: 'Message' }));

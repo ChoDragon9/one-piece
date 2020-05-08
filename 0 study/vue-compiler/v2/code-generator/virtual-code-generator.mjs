@@ -18,6 +18,14 @@ export const virtualCodeGenerator = ast => {
       currentAst.body.shift();
       currentAst.body.shift()
       virtualCode.push('])');
+      if (currentAst.parent) {
+        currentAst = currentAst.parent
+        currentAst.body.shift();
+      }
+    } else if (currentAst.body[0].type === 'Tag') {
+      const newAst = currentAst.body[0];
+      newAst.parent = currentAst
+      currentAst = newAst
     } else if (currentAst.body[0].type === 'Template') {
       virtualCode.push(`template('${currentAst.body[0].body[1].value}')`);
       currentAst.body.shift()
@@ -50,20 +58,25 @@ const input = {
         { type: 'Symbol', value: '}}' },
       ]
     },
-    { type: 'Symbol', value: '<' },
-    { type: 'Keyword', value: 'div' },
-    { type: 'Symbol', value: '>' },
-    { type: 'StringConstant', value: 'Text' },
-    { type: 'Symbol', value: '</' },
-    { type: 'Keyword', value: 'div' },
-    { type: 'Symbol', value: '>' },
+    {
+      type: 'Tag',
+      body: [
+        { type: 'Symbol', value: '<' },
+        { type: 'Keyword', value: 'div' },
+        { type: 'Symbol', value: '>' },
+        { type: 'StringConstant', value: 'Text' },
+        { type: 'Symbol', value: '</' },
+        { type: 'Keyword', value: 'div' },
+        { type: 'Symbol', value: '>' },
+      ]
+    },
     { type: 'Symbol', value: '</' },
     { type: 'Keyword', value: 'div' },
     { type: 'Symbol', value: '>' },
   ]
 };
 const output = virtualCodeGenerator(input);
-// console.log(output);
+console.log(output);
 // Step 1.
 // [
 //   'element([',
