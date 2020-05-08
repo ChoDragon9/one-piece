@@ -70,7 +70,7 @@ export const tokenizer = originCode => {
     }
 
     if (loopGuard.isMaxLoop()) {
-      console.error('MAX_LOOP');
+      loopGuard.log();
       break
     }
   }
