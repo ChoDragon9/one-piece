@@ -1,51 +1,43 @@
-const compiler = (originCode) => {
-  const targetCode = pipe(
-    syntaxAnalyzer,
-    codeGenerator
-  )(originCode)
+function compiler (originCode) {
+  var ast = syntaxAnalyzer(originCode)
+  var targetCode = codeGenerator(ast)
   return targetCode
 }
 
 // Step 1
-const syntaxAnalyzer = (originCode) => {
-  // ast: Abstract Syntax Tree
-  const ast = pipe(
-    tokenizer,
-    parser
-  )(originCode)
+// ast: Abstract Syntax Tree
+function syntaxAnalyzer(originCode) {
+  var tokens = tokenizer(originCode)
+  var ast = parser(tokens)
   return ast
 }
 
-const tokenizer = (originCode) => {
-  const tokens = []
+function tokenizer(originCode) {
+  var tokens = [] // logic
   return tokens
 }
 
-const parser = (tokens) => {
-  // ast: Abstract Syntax Tree
-  const ast = {}
+// ast: Abstract Syntax Tree
+function parser(tokens) {
+  var ast = {} // logic
   return ast
 }
 
 // Step 2
-const codeGenerator = (ast) => {
-  const targetCode = pipe(
-    virtualCodeGenerator,
-    targetCodeGenerator,
-  )(ast)
+function codeGenerator(ast) {
+  var virtualCode = virtualCodeGenerator(ast)
+  var targetCode = targetCodeGenerator(virtualCode)
   return targetCode
 }
 
-const virtualCodeGenerator = (ast) => {
-  const virtualCode = {}
+function virtualCodeGenerator(ast) {
+  var virtualCode = {} // logic
   return virtualCode
 }
 
-const targetCodeGenerator = (virtualCode) => {
-  const targetCode = ''
+function targetCodeGenerator(virtualCode) {
+  var targetCode = '' // logic
   return targetCode
 }
 
-const pipe = (...fns) => (arg) =>
-  fns.reduce((result, fn) => fn(result), arg)
 console.log(compiler())
