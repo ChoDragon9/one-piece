@@ -1,6 +1,6 @@
 const createElement = (tag, text) => `<${tag}>${text}</${tag}>`;
 
-export const generator = htmlAst => {
+export const targetCodeGenerator = htmlAst => {
   const [child] = htmlAst.children;
   const text = child.type === 'TemplateBinding'
     ? `state.${child.value}`
@@ -18,7 +18,7 @@ const input = {
     {type: 'TemplateBinding', value: 'text'}
   ]
 }
-const output = generator(input);
+const output = targetCodeGenerator(input);
 // console.log(output)
 // (state) => createElement('h1', state.text)
 

@@ -1,6 +1,6 @@
 import {syntaxAnalyzer} from './syntax-analyzer/index.mjs';
-import {transformer} from './code-generator/transformer.mjs';
-import {generator} from './code-generator/generator.mjs';
+import {virtualCodeGenerator} from './code-generator/virtual-code-generator.mjs';
+import {targetCodeGenerator} from './code-generator/target-code-generator.mjs';
 
 /*
 Grammar
@@ -14,15 +14,8 @@ Template: '{{' stringConstant '}}'
 
 export const compiler = (originCode) => {
   const ast = syntaxAnalyzer(originCode);
-  const htmlAst = transformer(ast);
-  // Step 1.
-  // createElement([
-  //   createStartElement('div'),
-  //   createText('Text')
-  //   createTemplate('text')
-  //   createEndElement('div'),
-  // ])
-  const renderFn = generator(htmlAst);
+  const htmlAst = virtualCodeGenerator(ast);
+  const renderFn = targetCodeGenerator(htmlAst);
   // (state) => createElement([
   //   createStartElement('div'),
   //   createText('Text')

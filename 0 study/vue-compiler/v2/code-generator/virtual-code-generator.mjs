@@ -1,6 +1,6 @@
 import {useLoopGuard} from '../helper.mjs';
 
-export const transformer = ast => {
+export const virtualCodeGenerator = ast => {
   const virtualCode = []
   const loopGuard = useLoopGuard();
   let currentAst = ast
@@ -30,7 +30,7 @@ export const transformer = ast => {
     }
   }
 
-  return virtualCode.join(',\n')
+  return virtualCode
 };
 
 const input = {
@@ -60,6 +60,15 @@ const input = {
     { type: 'Symbol', value: '>' },
   ]
 }
-const output = transformer(input);
+const output = virtualCodeGenerator(input);
 console.log(output)
-
+// Step 1.
+// [
+//   "createElement([",
+//   "createText('Text')",
+//   "createTemplate('text')",
+//   "createElement([",
+//   "createText('Text')",
+//   "])",
+//   "])"
+// ]
