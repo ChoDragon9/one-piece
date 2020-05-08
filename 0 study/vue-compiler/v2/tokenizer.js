@@ -15,14 +15,16 @@ const useLoopGuard = () => {
 const startsWith = (context, symbol) => {
   return context.originCode.startsWith(symbol)
 }
+const pushToken = (context, token) => {
+  context.tokens.push(token)
+  context.originCode = context.originCode.substr(token.length)
+}
 
 const tokenizeEndTag = (context) => {
-  context.tokens.push(SYMBOL.END_OPEN)
-  context.originCode = context.originCode.substr(SYMBOL.END_OPEN.length)
+  pushToken(context, SYMBOL.END_OPEN)
 }
 const tokenizeStartTag = (context) => {
-  context.tokens.push(SYMBOL.START_OPEN)
-  context.originCode = context.originCode.substr(SYMBOL.START_OPEN.length)
+  pushToken(context, SYMBOL.START_OPEN)
 }
 const tokenizeTag = (context) => {
   if (startsWith(context, SYMBOL.END_OPEN)) {
@@ -32,15 +34,13 @@ const tokenizeTag = (context) => {
   }
   const endIndex = context.originCode.indexOf(SYMBOL.CLOSE)
   const keyword = context.originCode.substr(0, endIndex)
-  context.tokens.push(keyword)
-  context.tokens.push(SYMBOL.CLOSE)
-  context.originCode = context.originCode.substr(endIndex + SYMBOL.CLOSE.length)
+  pushToken(context, keyword)
+  pushToken(context, SYMBOL.CLOSE)
 }
 const tokenizeTemplate = (context) => {
   const templateEnd = context.originCode.indexOf(SYMBOL.CLOSE_TEMPLATE) + SYMBOL.CLOSE_TEMPLATE.length
   const template = context.originCode.substr(0, templateEnd)
-  context.tokens.push(template)
-  context.originCode = context.originCode.substr(templateEnd)
+  pushToken(context, template)
 }
 const tokenizeString = (context) => {
   const nextSymbolIndex = Math.min(...[
@@ -48,8 +48,7 @@ const tokenizeString = (context) => {
     context.originCode.indexOf(SYMBOL.OPEN_TEMPLATE),
   ].filter(num => num > 0));
   const stringConstant = context.originCode.substr(0, nextSymbolIndex)
-  context.tokens.push(stringConstant)
-  context.originCode = context.originCode.substr(nextSymbolIndex)
+  pushToken(context, stringConstant)
 }
 
 const tokenizer = originCode => {
