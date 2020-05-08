@@ -28,6 +28,8 @@ export const compiler = (code) => {
   const tokens = tokenizer(code);
   // Step 1.
   // ['<', 'div', '>', 'Text', '</', 'div', '>']
+  // Step 2.
+  // ['<','div','>','{{','text','}}',' Text','</','div','>',]
   const ast = parser(tokens);
   // Step 1.
   // {

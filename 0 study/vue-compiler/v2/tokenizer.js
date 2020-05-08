@@ -53,7 +53,7 @@ const tokenizeString = (context) => {
   pushToken(context, stringConstant)
 };
 
-const tokenizer = originCode => {
+export const tokenizer = originCode => {
   const context = {
     originCode,
     tokens: []
