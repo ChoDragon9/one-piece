@@ -13,19 +13,20 @@ const SYNTAX_TYPE = {
   STRING_CONSTANT: 'StringConstant',
 };
 
-const pushTag = (context) => {
-  context.currentAst.body.push({
-    type: SYNTAX_TYPE.SYMBOL,
-    value: context.tokens.shift()
-  });
-  context.currentAst.body.push({
-    type: SYNTAX_TYPE.KEYWORD,
-    value: context.tokens.shift()
-  });
-  context.currentAst.body.push({
-    type: SYNTAX_TYPE.SYMBOL,
-    value: context.tokens.shift()
+const pushType = (context, types) => {
+  types.forEach(type => {
+    context.currentAst.body.push({
+      type,
+      value: context.tokens.shift()
+    });
   })
+}
+const pushTag = (context) => {
+  pushType(context, [
+    SYNTAX_TYPE.SYMBOL,
+    SYNTAX_TYPE.KEYWORD,
+    SYNTAX_TYPE.SYMBOL,
+  ]);
 };
 
 export const parser = tokens => {
