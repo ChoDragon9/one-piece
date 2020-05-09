@@ -44,10 +44,17 @@ const isType = (context, type) => firstNode(context).type === type;
 const generateStartTag = context => {
   context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.ELEMENT}([`);
   context.currentAst.body.shift();
-  context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.START_ELEMENT}('${firstNode(context).value}')`);
-  context.currentAst.body.shift();
-  while(context.currentAst.body[0].type === SYNTAX_TYPE.ATTRIBUTE) {
-    generateAttribute(context)
+  const tag = context.currentAst.body.shift();
+  const hasAttribute = firstNode(context).type === SYNTAX_TYPE.ATTRIBUTE
+
+  if (hasAttribute) {
+    context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.START_ELEMENT}('${tag.value}', [`);
+    while(context.currentAst.body[0].type === SYNTAX_TYPE.ATTRIBUTE) {
+      generateAttribute(context)
+    }
+    context.virtualCode.push(`])`);
+  } else {
+    context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.START_ELEMENT}('${tag.value}')`);
   }
   context.currentAst.body.shift()
 };

@@ -7,10 +7,17 @@ const TARGET_CODE_SYNTAX = {
 
 const create = {
   element: (children) => children.join(''),
-  startElement: (tag) => `<${tag}>`,
+  startElement: (tag, attrs = []) => {
+    const attrStr = attrs.map(attr => ` ${attr}`).join('');
+    return `<${tag}${attrStr}>`
+  },
   endElement: (tag) => `</${tag}>`,
   text: (txt) => txt,
-  template: (value) => value
+  template: (value) => value,
+  attribute: (key, value = '') => {
+    const valueStr = value ? `="${value}"` : '';
+    return `${key}${valueStr}`
+  }
 };
 
 export const targetCodeGenerator = virtualCode => {
@@ -22,6 +29,7 @@ export const targetCodeGenerator = virtualCode => {
         case code.startsWith(VIRTUAL_CODE_SYNTAX.START_ELEMENT):
         case code.startsWith(VIRTUAL_CODE_SYNTAX.END_ELEMENT):
         case code.startsWith(VIRTUAL_CODE_SYNTAX.TEXT):
+        case code.startsWith(VIRTUAL_CODE_SYNTAX.ATTRIBUTE):
           return `${TARGET_CODE_SYNTAX.CREATE}.${code}${comma}`;
         case code.startsWith(VIRTUAL_CODE_SYNTAX.TEMPLATE):
           const templateFn = code
