@@ -1,6 +1,6 @@
-import {SYMBOL, SYNTAX_TYPE} from '../syntax.mjs';
-import {VIRTUAL_CODE_SYNTAX} from './virtual-code-syntax.mjs';
-import {useLoopGuard} from '../helper.mjs';
+import {SYMBOL, SYNTAX_TYPE} from '../syntax.js';
+import {VIRTUAL_CODE_SYNTAX} from './virtual-code-syntax.js';
+import {useLoopGuard} from '../helper.js';
 
 export const virtualCodeGenerator = ast => {
   const context = {
@@ -72,52 +72,3 @@ const generateStringConstant = context => {
   context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.TEXT}('${firstNode(context).value}')`);
   context.currentAst.body.shift()
 };
-
-// const input = {
-//   type: 'Tag',
-//   body: [
-//     { type: 'Symbol', value: '<' },
-//     { type: 'Keyword', value: 'div' },
-//     { type: 'Symbol', value: '>' },
-//     { type: 'StringConstant', value: 'Text' },
-//     {
-//       type: 'Template',
-//       body: [
-//         { type: 'Symbol', value: '{{' },
-//         { type: 'StringConstant', value: 'text' },
-//         { type: 'Symbol', value: '}}' },
-//       ]
-//     },
-//     {
-//       type: 'Tag',
-//       body: [
-//         { type: 'Symbol', value: '<' },
-//         { type: 'Keyword', value: 'div' },
-//         { type: 'Symbol', value: '>' },
-//         { type: 'StringConstant', value: 'Text' },
-//         { type: 'Symbol', value: '</' },
-//         { type: 'Keyword', value: 'div' },
-//         { type: 'Symbol', value: '>' },
-//       ]
-//     },
-//     { type: 'Symbol', value: '</' },
-//     { type: 'Keyword', value: 'div' },
-//     { type: 'Symbol', value: '>' },
-//   ]
-// };
-// const output = virtualCodeGenerator(input);
-// console.log(output);
-// Step 1.
-// [
-//   'element([',
-//   "startElement('div')",
-//   "text('Text')",
-//   "template('text')",
-//   'element([',
-//   "startElement('div')",
-//   "text('Text')",
-//   "endElement('div')",
-//   '])',
-//   "endElement('div')",
-//   '])'
-// ]

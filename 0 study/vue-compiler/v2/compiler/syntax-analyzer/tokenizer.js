@@ -1,5 +1,5 @@
-import {SYMBOL} from '../syntax.mjs';
-import {useLoopGuard} from '../helper.mjs';
+import {SYMBOL} from '../syntax.js';
+import {useLoopGuard} from '../helper.js';
 
 export const tokenizer = originCode => {
   const context = {
@@ -69,11 +69,3 @@ const pushToken = (context, token) => {
   context.tokens.push(token);
   context.originCode = context.originCode.substr(token.length)
 };
-
-// const input = `<div>
-//   {{text}} Text
-//   <div>{{text}}</div>
-// </div>`;
-// const output = tokenizer(input);
-// console.log(output);
-// ['<', 'div', '>', 'Text', '</', 'div', '>']
