@@ -46,7 +46,19 @@ const generateStartTag = context => {
   context.currentAst.body.shift();
   context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.START_ELEMENT}('${firstNode(context).value}')`);
   context.currentAst.body.shift();
+  while(context.currentAst.body[0].type === SYNTAX_TYPE.ATTRIBUTE) {
+    generateAttribute(context)
+  }
   context.currentAst.body.shift()
+};
+const generateAttribute = context => {
+  const attribute = context.currentAst.body.shift();
+  const virtualCode = attribute
+    .body
+    .map(({value}) => value)
+    .join('')
+    .replace('=', `','`)
+  context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.ATTRIBUTE}('${virtualCode}')`)
 };
 const generateEndTag = context => {
   context.currentAst.body.shift();

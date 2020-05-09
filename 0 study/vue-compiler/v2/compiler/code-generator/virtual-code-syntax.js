@@ -4,4 +4,5 @@ export const VIRTUAL_CODE_SYNTAX = {
   END_ELEMENT: 'endElement',
   TEMPLATE: 'template',
   TEXT: 'text',
+  ATTRIBUTE: 'attribute',
 };
