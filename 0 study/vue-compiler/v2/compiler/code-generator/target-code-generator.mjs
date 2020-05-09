@@ -14,11 +14,8 @@ export const targetCodeGenerator = virtualCode => {
       const comma = code.endsWith(')') ? ',' : '';
       switch (true) {
         case code.startsWith(VIRTUAL_CODE_SYNTAX.ELEMENT):
-          return `create.${code}${comma}`;
         case code.startsWith(VIRTUAL_CODE_SYNTAX.START_ELEMENT):
-          return `create.${code}${comma}`;
         case code.startsWith(VIRTUAL_CODE_SYNTAX.END_ELEMENT):
-          return `create.${code}${comma}`;
         case code.startsWith(VIRTUAL_CODE_SYNTAX.TEXT):
           return `create.${code}${comma}`;
         case code.startsWith(VIRTUAL_CODE_SYNTAX.TEMPLATE):
