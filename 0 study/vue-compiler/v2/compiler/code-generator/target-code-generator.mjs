@@ -1,3 +1,5 @@
+import {VIRTUAL_CODE_SYNTAX} from './virtual-code-syntax.mjs';
+
 const create = {
   element: (children) => children.join(''),
   startElement: (tag) => `<${tag}>`,
@@ -11,15 +13,15 @@ export const targetCodeGenerator = virtualCode => {
     .map(code => {
       const comma = code.endsWith(')') ? ',' : '';
       switch (true) {
-        case code.startsWith('element'):
+        case code.startsWith(VIRTUAL_CODE_SYNTAX.ELEMENT):
           return `create.${code}${comma}`;
-        case code.startsWith('startElement'):
+        case code.startsWith(VIRTUAL_CODE_SYNTAX.START_ELEMENT):
           return `create.${code}${comma}`;
-        case code.startsWith('endElement'):
+        case code.startsWith(VIRTUAL_CODE_SYNTAX.END_ELEMENT):
           return `create.${code}${comma}`;
-        case code.startsWith('text'):
+        case code.startsWith(VIRTUAL_CODE_SYNTAX.TEXT):
           return `create.${code}${comma}`;
-        case code.startsWith('template'):
+        case code.startsWith(VIRTUAL_CODE_SYNTAX.TEMPLATE):
           const templateFn = code
             .replace(`('`, `(state.`)
             .replace(`')`, `)`);
