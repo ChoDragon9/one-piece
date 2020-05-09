@@ -20,8 +20,8 @@ const create = {
   }
 };
 
-export const targetCodeGenerator = virtualCode => {
-  const targetCode = virtualCode
+const generateTargetCode = virtualCode => {
+  return virtualCode
     .map(code => {
       const comma = code.endsWith(')') ? ',' : '';
       switch (true) {
@@ -40,9 +40,28 @@ export const targetCodeGenerator = virtualCode => {
           return `${code}${comma}`
       }
     })
+};
+
+export const debugTargetCode = virtualCode => {
+  let tabCount = 0
+  return generateTargetCode(virtualCode)
+    .map((code, index, arr) => {
+      const tab = Array.from({length: tabCount * 2}, () => ' ').join('')
+      if (code.includes('[')) {
+        tabCount++
+      }
+      if (arr[index + 1] && arr[index + 1].includes(']')) {
+        tabCount--
+      }
+      return `${tab}${code}`
+    })
+    .join('\n');
+};
+
+export const targetCodeGenerator = virtualCode => {
+  const targetCode = generateTargetCode(virtualCode)
     .join('')
     .replace(/,$/, ''); // remove last comma
-
   return (state) => new Function(
     TARGET_CODE_SYNTAX.CREATE,
     TARGET_CODE_SYNTAX.STATE,

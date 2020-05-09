@@ -12,8 +12,6 @@
     }
     #result {word-break: break-all;}
     #result, textarea {width: 100%; height: 150px; border: 1px solid #ddd;}
-    .w50 {width: 100%; float: left;}
-    .w50+div:not(.w50) {clear: left;}
   </style>
 </head>
 <body>
@@ -29,7 +27,7 @@ Template: '{{' StringConstant '}}'
 Attribute: ' ' StringConstant '=' '"' StringConstant '"'
   </pre>
 </div>
-<div class="w50">
+<div>
   <h3>Template</h3>
   <textarea id="template">
 <div id="test" class="class-name" no-name>
@@ -37,7 +35,7 @@ Attribute: ' ' StringConstant '=' '"' StringConstant '"'
   <div>{{text}}</div>
 </div></textarea>
 </div>
-<div class="w50">
+<div>
   <h3>state</h3>
   <pre id="state"></pre>
 </div>
@@ -45,20 +43,21 @@ Attribute: ' ' StringConstant '=' '"' StringConstant '"'
   <h3>Result</h3>
   <div id="result"></div>
 </div>
-<div class="w50">
+<div>
   <h3>Tokenizer</h3>
   <pre id="tokenizer"></pre>
 </div>
-<div class="w50">
+<div>
   <h3>Parser</h3>
   <pre id="parser"></pre>
 </div>
-<div class="w50">
+<div>
   <h3>Virtual Code Generator</h3>
   <pre id="virtualCodeGenerator"></pre>
 </div>
-<div class="w50">
+<div>
   <h3>Target Code Generator</h3>
+  <pre id="debugTargetCode"></pre>
   <pre id="targetCodeGenerator"></pre>
 </div>
 
@@ -66,7 +65,7 @@ Attribute: ' ' StringConstant '=' '"' StringConstant '"'
 import {tokenizer} from './compiler/syntax-analyzer/tokenizer.js';
 import {parser} from './compiler/syntax-analyzer/parser.js';
 import {virtualCodeGenerator} from './compiler/code-generator/virtual-code-generator.js';
-import {targetCodeGenerator} from './compiler/code-generator/target-code-generator.js';
+import {targetCodeGenerator, debugTargetCode} from './compiler/code-generator/target-code-generator.js';
 
 const addResult = (id, result) => {
   document
@@ -78,7 +77,7 @@ const addResult = (id, result) => {
 };
 
 export const onInput = () => {
-  const template = document.querySelector('textarea').value
+  const template = document.querySelector('textarea').value;
   const tokens = tokenizer(template);
   addResult('tokenizer', tokens);
 
@@ -88,6 +87,7 @@ export const onInput = () => {
   const virtualCode = virtualCodeGenerator(ast);
   addResult('virtualCodeGenerator', virtualCode);
 
+  addResult('debugTargetCode', debugTargetCode(virtualCode));
   const render = targetCodeGenerator(virtualCode);
   addResult('targetCodeGenerator', render);
 
