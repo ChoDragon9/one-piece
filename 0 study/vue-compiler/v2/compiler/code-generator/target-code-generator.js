@@ -6,12 +6,10 @@ const TARGET_CODE_SYNTAX = {
 };
 
 const create = {
-  element: (children) => children.join(''),
-  startElement: (tag, attrs = []) => {
+  element: (tag, attrs = [], children) => {
     const attrStr = attrs.map(attr => ` ${attr}`).join('');
-    return `<${tag}${attrStr}>`
+    return `<${tag}${attrStr}>${children.join('')}</${tag}>`
   },
-  endElement: (tag) => `</${tag}>`,
   text: (txt) => txt,
   template: (value) => value,
   attribute: (key, value = '') => {
@@ -26,8 +24,6 @@ const generateTargetCode = virtualCode => {
       const comma = code.endsWith(')') ? ',' : '';
       switch (true) {
         case code.startsWith(VIRTUAL_CODE_SYNTAX.ELEMENT):
-        case code.startsWith(VIRTUAL_CODE_SYNTAX.START_ELEMENT):
-        case code.startsWith(VIRTUAL_CODE_SYNTAX.END_ELEMENT):
         case code.startsWith(VIRTUAL_CODE_SYNTAX.TEXT):
         case code.startsWith(VIRTUAL_CODE_SYNTAX.ATTRIBUTE):
           return `${TARGET_CODE_SYNTAX.CREATE}.${code}${comma}`;
@@ -50,7 +46,7 @@ export const debugTargetCode = virtualCode => {
       if (code.includes('[')) {
         tabCount++
       }
-      if (arr[index + 1] && arr[index + 1].includes(']')) {
+      if (code.includes(']')) {
         tabCount--
       }
       return `${tab}${code}`
