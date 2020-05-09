@@ -9,7 +9,23 @@ export const compiler = (originCode) => {
 
 // const input = `<div>
 //   {{text}} Text
-//   <div>{{text}}</div>
+//   <div v-if="text">{{text}}</div>
 // </div>`;
 // const output = compiler(input);
 // console.log(output({ text: 'Text' }));
+// (state) => {
+//   const elem = state.text
+//     ? create.element([
+//       create.startElement('div'),
+//       create.template(state.text),
+//       create.endElement('div'),
+//     ])
+//     : create.noop();
+//   create.element([
+//     create.startElement('div'),
+//     create.text('Text'),
+//     create.template(state.text),
+//     elem,
+//     create.endElement('div'),
+//   ])
+// }

@@ -1,6 +1,7 @@
 Keyword: 'div' | 'span'
-Symbol: '<' | '>' | '</' | '{' | '}'
+Symbol: '<' | '>' | '</' | '{' | '}' | '=' | '"'
 StringConstant: 문자열
 
-Tag: '<' keyword '>' (Tag | Template | StringConstant) '</' keyword '>'
-Template: '{{' stringConstant '}}'
+Tag: '<' Keyword (Attribute)* '>' (Tag | Template | StringConstant) '</' Keyword '>'
+Template: '{{' StringConstant '}}'
+Attribute: ' ' StringConstant '=' '"' StringConstant '"'
