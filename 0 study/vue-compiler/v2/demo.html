@@ -41,8 +41,8 @@ Attribute: ' ' StringConstant '=' '"' StringConstant '"'
 </div>
 <div>
   <h3>Result</h3>
-  <div id="result"></div>
-</div>
+  <div id="result1"></div>
+  <pre id="result2"></pre>
 <div>
   <h3>Tokenizer</h3>
   <pre id="tokenizer"></pre>
@@ -98,7 +98,10 @@ export const onInput = () => {
   };
 
   addResult('state', state);
-  addResult('result', render(state));
+  document
+    .querySelector(`#result1`)
+    .innerHTML = render(state);
+  addResult('result2', render(state));
 };
 
 document.querySelector('textarea').oninput = onInput;
