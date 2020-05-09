@@ -4,7 +4,7 @@ const create = {
   endElement: (tag) => `</${tag}>`,
   text: (txt) => txt,
   template: (value) => value
-}
+};
 
 export const targetCodeGenerator = virtualCode => {
   const targetCode = virtualCode
@@ -12,21 +12,25 @@ export const targetCodeGenerator = virtualCode => {
       const comma = code.endsWith(')') ? ',' : '';
       switch (true) {
         case code.startsWith('element'):
-          return `create.${code}${comma}`
+          return `create.${code}${comma}`;
         case code.startsWith('startElement'):
-          return `create.${code}${comma}`
+          return `create.${code}${comma}`;
         case code.startsWith('endElement'):
-          return `create.${code}${comma}`
+          return `create.${code}${comma}`;
         case code.startsWith('text'):
-          return `create.${code}${comma}`
+          return `create.${code}${comma}`;
         case code.startsWith('template'):
-          return `create.${code.replace(`('`, `(state.`).replace(`')`, `)`)}${comma}`
+          const templateFn = code
+            .replace(`('`, `(state.`)
+            .replace(`')`, `)`);
+          return `create.${templateFn}${comma}`;
         default:
           return `${code}${comma}`
       }
     })
     .join('')
-    .replace(/,$/, '')
+    .replace(/,$/, ''); // remove last comma
+
   return (state) => new Function(
     'create',
     'state',
