@@ -1,3 +1,4 @@
+import {SYMBOL, SYNTAX_TYPE} from '../syntax.mjs';
 import {useLoopGuard} from '../helper.mjs';
 
 export const virtualCodeGenerator = ast => {
@@ -9,19 +10,19 @@ export const virtualCodeGenerator = ast => {
 
   while (ast.body.length) {
     switch (true) {
-      case context.currentAst.body[0].value === '<':
+      case isValue(context, SYMBOL.START_OPEN):
         generateStartTag(context);
         break;
-      case context.currentAst.body[0].value === '</':
+      case isValue(context, SYMBOL.END_OPEN):
         generateEndTag(context);
         break;
-      case context.currentAst.body[0].type === 'Tag':
+      case isType(context, SYNTAX_TYPE.TAG):
         generateTag(context);
         break;
-      case context.currentAst.body[0].type === 'Template':
+      case isType(context, SYNTAX_TYPE.TEMPLATE):
         generateTemplate(context);
         break;
-      case context.currentAst.body[0].type === 'StringConstant':
+      case isType(context, SYNTAX_TYPE.STRING_CONSTANT):
         generateStringConstant(context);
         break;
     }
@@ -35,16 +36,20 @@ export const virtualCodeGenerator = ast => {
   return context.virtualCode
 };
 
+const firstNode = (context) => context.currentAst.body[0];
+const isValue = (context, symbol) => firstNode(context).value === symbol;
+const isType = (context, type) => firstNode(context).type === type;
+
 const generateStartTag = context => {
   context.virtualCode.push('element([');
   context.currentAst.body.shift();
-  context.virtualCode.push(`startElement('${context.currentAst.body[0].value}')`);
+  context.virtualCode.push(`startElement('${firstNode(context).value}')`);
   context.currentAst.body.shift();
   context.currentAst.body.shift()
 };
 const generateEndTag = context => {
   context.currentAst.body.shift();
-  context.virtualCode.push(`endElement('${context.currentAst.body[0].value}')`);
+  context.virtualCode.push(`endElement('${firstNode(context).value}')`);
   context.currentAst.body.shift();
   context.currentAst.body.shift();
   context.virtualCode.push('])');
@@ -54,53 +59,53 @@ const generateEndTag = context => {
   }
 };
 const generateTag = context => {
-  const newAst = context.currentAst.body[0];
+  const newAst = firstNode(context);
   newAst.parent = context.currentAst;
   context.currentAst = newAst
 };
 const generateTemplate = context => {
-  context.virtualCode.push(`template('${context.currentAst.body[0].body[1].value}')`);
+  context.virtualCode.push(`template('${firstNode(context).body[1].value}')`);
   context.currentAst.body.shift()
 };
 const generateStringConstant = context => {
-  context.virtualCode.push(`text('${context.currentAst.body[0].value}')`);
+  context.virtualCode.push(`text('${firstNode(context).value}')`);
   context.currentAst.body.shift()
 };
 
-const input = {
-  type: 'Tag',
-  body: [
-    { type: 'Symbol', value: '<' },
-    { type: 'Keyword', value: 'div' },
-    { type: 'Symbol', value: '>' },
-    { type: 'StringConstant', value: 'Text' },
-    {
-      type: 'Template',
-      body: [
-        { type: 'Symbol', value: '{{' },
-        { type: 'StringConstant', value: 'text' },
-        { type: 'Symbol', value: '}}' },
-      ]
-    },
-    {
-      type: 'Tag',
-      body: [
-        { type: 'Symbol', value: '<' },
-        { type: 'Keyword', value: 'div' },
-        { type: 'Symbol', value: '>' },
-        { type: 'StringConstant', value: 'Text' },
-        { type: 'Symbol', value: '</' },
-        { type: 'Keyword', value: 'div' },
-        { type: 'Symbol', value: '>' },
-      ]
-    },
-    { type: 'Symbol', value: '</' },
-    { type: 'Keyword', value: 'div' },
-    { type: 'Symbol', value: '>' },
-  ]
-};
-const output = virtualCodeGenerator(input);
-console.log(output);
+// const input = {
+//   type: 'Tag',
+//   body: [
+//     { type: 'Symbol', value: '<' },
+//     { type: 'Keyword', value: 'div' },
+//     { type: 'Symbol', value: '>' },
+//     { type: 'StringConstant', value: 'Text' },
+//     {
+//       type: 'Template',
+//       body: [
+//         { type: 'Symbol', value: '{{' },
+//         { type: 'StringConstant', value: 'text' },
+//         { type: 'Symbol', value: '}}' },
+//       ]
+//     },
+//     {
+//       type: 'Tag',
+//       body: [
+//         { type: 'Symbol', value: '<' },
+//         { type: 'Keyword', value: 'div' },
+//         { type: 'Symbol', value: '>' },
+//         { type: 'StringConstant', value: 'Text' },
+//         { type: 'Symbol', value: '</' },
+//         { type: 'Keyword', value: 'div' },
+//         { type: 'Symbol', value: '>' },
+//       ]
+//     },
+//     { type: 'Symbol', value: '</' },
+//     { type: 'Keyword', value: 'div' },
+//     { type: 'Symbol', value: '>' },
+//   ]
+// };
+// const output = virtualCodeGenerator(input);
+// console.log(output);
 // Step 1.
 // [
 //   'element([',
