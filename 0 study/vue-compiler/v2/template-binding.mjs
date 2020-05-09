@@ -1,4 +1,4 @@
-import {compiler} from './compiler.mjs';
+import {compiler} from './compiler/compiler.mjs';
 
 const template = `<div>
   {{text}} Text
