@@ -5,6 +5,7 @@ import {useLoopGuard} from '../helper.js';
 export const virtualCodeGenerator = ast => {
   const context = {
     virtualCode: [],
+    currentTagIndex: 0,
     currentAst: ast
   };
   const loopGuard = useLoopGuard();
@@ -48,12 +49,14 @@ const generateStartTag = context => {
 
   if (hasAttribute) {
     context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.ELEMENT}('${tag.value}', [`);
+    context.currentTagIndex = context.virtualCode.length - 1
     while(context.currentAst.body[0].type === SYNTAX_TYPE.ATTRIBUTE) {
       generateAttribute(context)
     }
     context.virtualCode.push(`], [`);
   } else {
     context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.ELEMENT}('${tag.value}', [], [`);
+    context.currentTagIndex = context.virtualCode.length - 1
   }
   context.currentAst.body.shift()
 };
@@ -64,7 +67,12 @@ const generateAttribute = context => {
     .map(({value}) => value)
     .join('')
     .replace('=', `','`)
-  context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.ATTRIBUTE}('${virtualCode}')`)
+  if (virtualCode.startsWith('d-')) {
+    context.virtualCode.splice(context.currentTagIndex, 0, `'${attribute.body[2].value}' === 'false' ? '' :`)
+    context.currentTagIndex++
+  } else {
+    context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.ATTRIBUTE}('${virtualCode}')`)
+  }
 };
 const generateEndTag = context => {
   context.currentAst.body.shift();
