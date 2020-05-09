@@ -1,4 +1,5 @@
 import {SYMBOL, SYNTAX_TYPE} from '../syntax.mjs';
+import {VIRTUAL_CODE_SYNTAX} from './virtual-code-syntax.mjs';
 import {useLoopGuard} from '../helper.mjs';
 
 export const virtualCodeGenerator = ast => {
@@ -41,15 +42,15 @@ const isValue = (context, symbol) => firstNode(context).value === symbol;
 const isType = (context, type) => firstNode(context).type === type;
 
 const generateStartTag = context => {
-  context.virtualCode.push('element([');
+  context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.ELEMENT}([`);
   context.currentAst.body.shift();
-  context.virtualCode.push(`startElement('${firstNode(context).value}')`);
+  context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.START_ELEMENT}('${firstNode(context).value}')`);
   context.currentAst.body.shift();
   context.currentAst.body.shift()
 };
 const generateEndTag = context => {
   context.currentAst.body.shift();
-  context.virtualCode.push(`endElement('${firstNode(context).value}')`);
+  context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.END_ELEMENT}('${firstNode(context).value}')`);
   context.currentAst.body.shift();
   context.currentAst.body.shift();
   context.virtualCode.push('])');
@@ -64,11 +65,11 @@ const generateTag = context => {
   context.currentAst = newAst
 };
 const generateTemplate = context => {
-  context.virtualCode.push(`template('${firstNode(context).body[1].value}')`);
+  context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.TEMPLATE}('${firstNode(context).body[1].value}')`);
   context.currentAst.body.shift()
 };
 const generateStringConstant = context => {
-  context.virtualCode.push(`text('${firstNode(context).value}')`);
+  context.virtualCode.push(`${VIRTUAL_CODE_SYNTAX.TEXT}('${firstNode(context).value}')`);
   context.currentAst.body.shift()
 };
 
