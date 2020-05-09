@@ -8,12 +8,36 @@ const SYMBOL = {
   CLOSE_TEMPLATE: '}}',
 };
 
+export const tokenizer = originCode => {
+  const context = {
+    originCode: originCode.replace(/\n/g, ''),
+    tokens: []
+  };
+  const loopGuard = useLoopGuard();
+
+  while (context.originCode) {
+    switch (true) {
+      case startsWith(context, SYMBOL.START_OPEN):
+        tokenizeTag(context);
+        break;
+      case startsWith(context, SYMBOL.OPEN_TEMPLATE):
+        tokenizeTemplate(context);
+        break;
+      default:
+        tokenizeString(context);
+        break
+    }
+
+    if (loopGuard.isMaxLoop()) {
+      loopGuard.log();
+      break
+    }
+  }
+  return context.tokens
+};
+
 const startsWith = (context, symbol) => {
   return context.originCode.startsWith(symbol)
-};
-const pushToken = (context, token) => {
-  context.tokens.push(token);
-  context.originCode = context.originCode.substr(token.length)
 };
 
 const tokenizeTag = (context) => {
@@ -48,32 +72,9 @@ const tokenizeString = (context) => {
   pushToken(context, stringConstant)
 };
 
-export const tokenizer = originCode => {
-  const context = {
-    originCode: originCode.replace(/\n/g, ''),
-    tokens: []
-  };
-  const loopGuard = useLoopGuard();
-
-  while (context.originCode) {
-    switch (true) {
-      case startsWith(context, SYMBOL.START_OPEN):
-        tokenizeTag(context);
-        break;
-      case startsWith(context, SYMBOL.OPEN_TEMPLATE):
-        tokenizeTemplate(context);
-        break;
-      default:
-        tokenizeString(context);
-        break
-    }
-
-    if (loopGuard.isMaxLoop()) {
-      loopGuard.log();
-      break
-    }
-  }
-  return context.tokens
+const pushToken = (context, token) => {
+  context.tokens.push(token);
+  context.originCode = context.originCode.substr(token.length)
 };
 
 // const input = `<div>
