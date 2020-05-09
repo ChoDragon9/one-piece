@@ -1,5 +1,10 @@
 import {VIRTUAL_CODE_SYNTAX} from './virtual-code-syntax.mjs';
 
+const TARGET_CODE_SYNTAX = {
+  CREATE: 'create',
+  STATE: 'state',
+};
+
 const create = {
   element: (children) => children.join(''),
   startElement: (tag) => `<${tag}>`,
@@ -17,12 +22,12 @@ export const targetCodeGenerator = virtualCode => {
         case code.startsWith(VIRTUAL_CODE_SYNTAX.START_ELEMENT):
         case code.startsWith(VIRTUAL_CODE_SYNTAX.END_ELEMENT):
         case code.startsWith(VIRTUAL_CODE_SYNTAX.TEXT):
-          return `create.${code}${comma}`;
+          return `${TARGET_CODE_SYNTAX.CREATE}.${code}${comma}`;
         case code.startsWith(VIRTUAL_CODE_SYNTAX.TEMPLATE):
           const templateFn = code
-            .replace(`('`, `(state.`)
+            .replace(`('`, `(${TARGET_CODE_SYNTAX.STATE}.`)
             .replace(`')`, `)`);
-          return `create.${templateFn}${comma}`;
+          return `${TARGET_CODE_SYNTAX.CREATE}.${templateFn}${comma}`;
         default:
           return `${code}${comma}`
       }
@@ -31,8 +36,8 @@ export const targetCodeGenerator = virtualCode => {
     .replace(/,$/, ''); // remove last comma
 
   return (state) => new Function(
-    'create',
-    'state',
+    TARGET_CODE_SYNTAX.CREATE,
+    TARGET_CODE_SYNTAX.STATE,
     `return ${targetCode}`
   )(create, state);
 };
