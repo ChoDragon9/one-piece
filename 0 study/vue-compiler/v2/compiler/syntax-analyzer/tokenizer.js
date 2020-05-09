@@ -26,7 +26,7 @@ export const tokenizer = originCode => {
       break
     }
   }
-  return context.tokens
+  return context.tokens.filter(Boolean)
 };
 
 const startsWith = (context, symbol) => {
