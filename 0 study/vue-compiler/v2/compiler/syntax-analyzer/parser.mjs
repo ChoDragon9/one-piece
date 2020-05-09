@@ -1,17 +1,5 @@
+import {SYMBOL, SYNTAX_TYPE} from '../syntax.mjs';
 import {useLoopGuard} from '../helper.mjs';
-
-const SYMBOL = {
-  START_OPEN: '<',
-  END_OPEN: '</',
-  OPEN_TEMPLATE: '{{',
-};
-const SYNTAX_TYPE = {
-  SYMBOL: 'Symbol',
-  KEYWORD: 'Keyword',
-  TAG: 'Tag',
-  TEMPLATE: 'Template',
-  STRING_CONSTANT: 'StringConstant',
-};
 
 export const parser = tokens => {
   const ast = {

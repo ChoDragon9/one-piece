@@ -1,12 +1,5 @@
+import {SYMBOL} from '../syntax.mjs';
 import {useLoopGuard} from '../helper.mjs';
-
-const SYMBOL = {
-  START_OPEN: '<',
-  END_OPEN: '</',
-  CLOSE: '>',
-  OPEN_TEMPLATE: '{{',
-  CLOSE_TEMPLATE: '}}',
-};
 
 export const tokenizer = originCode => {
   const context = {
