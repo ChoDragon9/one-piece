@@ -24,14 +24,15 @@ Keyword: 'div' | 'span'
 Symbol: '&lt;' | '&gt;' | '&lt;/' | '{' | '}'
 StringConstant: 문자열
 
-Tag: '&lt;' keyword '&gt;' (Tag | Template | StringConstant) '&lt;/' keyword '&gt;'
-Template: '{{' stringConstant '}}'
+Tag: '&lt;' Keyword (Attribute)* '&gt;' (Tag | Template | StringConstant) '&lt;/' Keyword '&gt;'
+Template: '{{' StringConstant '}}'
+Attribute: ' ' StringConstant '=' '"' StringConstant '"'
   </pre>
 </div>
 <div class="w50">
   <h3>Template</h3>
   <textarea id="template">
-<div>
+<div id="test" class="class-name" no-name>
   {{hello}} {{world}}
   <div>{{text}}</div>
 </div></textarea>

@@ -43,8 +43,27 @@ const tokenizeTag = context => {
   const {originCode} = context;
   const endIndex = originCode.indexOf(SYMBOL.CLOSE);
   const keyword = originCode.substr(0, endIndex);
-  pushToken(context, keyword);
+  if (keyword.includes(' ')) {
+    tokenizeAttribute(context, keyword);
+  } else {
+    pushToken(context, keyword);
+  }
   pushToken(context, SYMBOL.CLOSE)
+};
+const tokenizeAttribute = (context, keyword) => {
+  const [tagName, ...attrs] = keyword.split( ' ');
+  context.tokens.push(tagName);
+  attrs.forEach(attr => {
+    const [key, value] = attr.split('=');
+    context.tokens.push(key);
+    if (value) {
+      context.tokens.push('=');
+      context.tokens.push('"');
+      context.tokens.push(value.replace(/"/g, ''));
+      context.tokens.push('"');
+    }
+  });
+  context.originCode = context.originCode.substr(keyword.length)
 };
 const tokenizeTemplate = context => {
   pushToken(context, SYMBOL.OPEN_TEMPLATE);
