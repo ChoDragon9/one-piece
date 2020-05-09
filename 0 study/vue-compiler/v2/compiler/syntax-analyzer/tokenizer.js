@@ -58,9 +58,7 @@ const tokenizeAttribute = (context, keyword) => {
     context.tokens.push(key);
     if (value) {
       context.tokens.push('=');
-      context.tokens.push('"');
       context.tokens.push(value.replace(/"/g, ''));
-      context.tokens.push('"');
     }
   });
   context.originCode = context.originCode.substr(keyword.length)

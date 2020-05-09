@@ -47,9 +47,7 @@ const parseTag = context => {
 };
 const parseEndTag = context => {
   pushTag(context);
-  const parent = context.currentAst.parent
-  context.currentAst.parent = null
-  context.currentAst = parent
+  backAst(context)
 };
 const parseStartTag = context => {
   if (context.currentAst.type === '') {
@@ -63,7 +61,62 @@ const parseStartTag = context => {
     context.currentAst.body.push(newAst);
     context.currentAst = newAst
   }
-  pushTag(context)
+  if (context.tokens[3] === SYMBOL.EQUAL) {
+    parseAttribute(context)
+  } else {
+    pushTag(context)
+  }
+};
+const parseAttribute = context => {
+  pushType(context, [
+    SYNTAX_TYPE.SYMBOL,
+    SYNTAX_TYPE.KEYWORD
+  ]);
+  while(context.tokens.length) {
+    if (context.currentAst.type === SYNTAX_TYPE.TAG) {
+      const newAst = {
+        type: SYNTAX_TYPE.ATTRIBUTE,
+        body: [],
+        parent: context.currentAst
+      };
+      context.currentAst.body.push(newAst);
+      context.currentAst = newAst
+    }
+
+    const token = context.tokens.shift();
+    if (token === SYMBOL.EQUAL) {
+      context.currentAst.body.push({
+        type: SYNTAX_TYPE.SYMBOL,
+        value: token
+      });
+      context.currentAst.body.push({
+        type: SYNTAX_TYPE.STRING_CONSTANT,
+        value: context.tokens.shift()
+      });
+      backAst(context);
+    } else {
+      context.currentAst.body.push({
+        type: SYNTAX_TYPE.STRING_CONSTANT,
+        value: token
+      });
+    }
+
+    if (context.tokens[0] === SYMBOL.CLOSE) {
+      if (context.currentAst.type === SYNTAX_TYPE.ATTRIBUTE) {
+        backAst(context);
+      }
+      context.currentAst.body.push({
+        type: SYNTAX_TYPE.SYMBOL,
+        value: context.tokens.shift()
+      });
+      break;
+    }
+  }
+};
+const backAst = context => {
+  const parent = context.currentAst.parent;
+  context.currentAst.parent = null;
+  context.currentAst = parent
 };
 const parseTemplate = context => {
   const newAst = {

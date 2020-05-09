@@ -4,6 +4,7 @@ export const SYMBOL = {
   CLOSE: '>',
   OPEN_TEMPLATE: '{{',
   CLOSE_TEMPLATE: '}}',
+  EQUAL: '=',
 };
 
 export const SYNTAX_TYPE = {
@@ -12,4 +13,5 @@ export const SYNTAX_TYPE = {
   TAG: 'Tag',
   TEMPLATE: 'Template',
   STRING_CONSTANT: 'StringConstant',
+  ATTRIBUTE: 'Attribute',
 };
