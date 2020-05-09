@@ -30,9 +30,9 @@ const tokenizeTag = (context) => {
   pushToken(context, SYMBOL.CLOSE)
 };
 const tokenizeTemplate = (context) => {
-  const {originCode} = context;
   pushToken(context, SYMBOL.OPEN_TEMPLATE);
 
+  const {originCode} = context;
   const endIndex = originCode.indexOf(SYMBOL.CLOSE_TEMPLATE);
   const template = originCode.substr(0, endIndex);
   pushToken(context, template);
