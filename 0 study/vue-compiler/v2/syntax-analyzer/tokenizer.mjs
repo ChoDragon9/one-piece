@@ -40,7 +40,7 @@ const startsWith = (context, symbol) => {
   return context.originCode.startsWith(symbol)
 };
 
-const tokenizeTag = (context) => {
+const tokenizeTag = context => {
   if (startsWith(context, SYMBOL.END_OPEN)) {
     pushToken(context, SYMBOL.END_OPEN)
   } else {
@@ -53,7 +53,7 @@ const tokenizeTag = (context) => {
   pushToken(context, keyword);
   pushToken(context, SYMBOL.CLOSE)
 };
-const tokenizeTemplate = (context) => {
+const tokenizeTemplate = context => {
   pushToken(context, SYMBOL.OPEN_TEMPLATE);
 
   const {originCode} = context;
@@ -62,7 +62,7 @@ const tokenizeTemplate = (context) => {
   pushToken(context, template);
   pushToken(context, SYMBOL.CLOSE_TEMPLATE)
 };
-const tokenizeString = (context) => {
+const tokenizeString = context => {
   const {originCode} = context;
   const nextSymbolIndex = Math.min(...[
     originCode.indexOf(SYMBOL.START_OPEN),
