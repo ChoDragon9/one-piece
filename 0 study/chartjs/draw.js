@@ -3,6 +3,7 @@ const draw = (datasets) => {
   return  new Chart(ctx, {
     type: 'line',
     data: {
+      labels: datasets[0].data,
       datasets
     }
   })
