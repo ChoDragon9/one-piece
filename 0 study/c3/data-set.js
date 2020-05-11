@@ -19,3 +19,30 @@ const columns2 = [
   createData('data1', 1, 1),
   createData('data2', 0, 1)
 ];
+
+const DATA_500_1 = [
+  createData('data1', 0, 50),
+  createData('data2', 1, 50)
+];
+const DATA_500_2 = [
+  createData('data1', 1, 50),
+  createData('data2', 0, 50)
+];
+
+const DATA_10000_1 = [
+  createData('data1', 0, 1000),
+  createData('data2', 1, 1000)
+];
+const DATA_10000_2 = [
+  createData('data1', 1, 1000),
+  createData('data2', 0, 1000)
+];
+
+const DATA_20000_1 = [
+  createData('data1', 0, 2000),
+  createData('data2', 1, 2000)
+];
+const DATA_20000_2 = [
+  createData('data1', 1, 2000),
+  createData('data2', 0, 2000)
+];
