@@ -29,6 +29,31 @@ const DATA_500_2 = [
   createData('data2', 0, 50)
 ];
 
+const DATA_1000 = [
+  createData('data1', 0, 100),
+  createData('data2', 1, 100)
+];
+
+const DATA_2000 = [
+  createData('data1', 0, 200),
+  createData('data2', 1, 200)
+];
+
+const DATA_3000 = [
+  createData('data1', 0, 300),
+  createData('data2', 1, 300)
+];
+
+const DATA_4000 = [
+  createData('data1', 0, 400),
+  createData('data2', 1, 400)
+];
+
+const DATA_5000 = [
+  createData('data1', 0, 500),
+  createData('data2', 1, 500)
+];
+
 const DATA_10000_1 = [
   createData('data1', 0, 1000),
   createData('data2', 1, 1000)
