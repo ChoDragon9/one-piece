@@ -16,8 +16,12 @@
 <script src="./data-set.js"></script>
 <script src="./draw.js"></script>
 <script>
-  let chart = draw(DATA_500_1, true)
-  updateData(chart, DATA_500_2)
+  let chart = createChart({
+    columns: DATA_500_1,
+    unmount: false,
+    zoom: true
+  });
+  chart.update(DATA_500_2)
 </script>
 </body>
 </html>
