@@ -17,10 +17,14 @@ const updateData = (chart, columns, unmount = false, zoom = false) => {
   setTimeout(function () {
     if (unmount) {
       document.querySelector('#chart').innerHTML = '';
-      chart = draw(columns, true)
+      setTimeout(function () {
+        chart = draw(columns, zoom)
+      })
     } else {
       chart.load({columns});
-      zoom && chart.zoom(ZOOM_OPTION.initialRange)
+      if (zoom) {
+        chart.zoom(ZOOM_OPTION.initialRange)
+      }
     }
   }, 1000);
 };
