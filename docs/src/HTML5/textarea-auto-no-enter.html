@@ -27,6 +27,7 @@
 
   const renderHeight = () => {
     textarea.style.height = state.height
+    textarea.setAttribute('rows', state.rows)
   }
 
   const state = {
@@ -34,6 +35,9 @@
     get height () {
       return `${state.lineLength * ONE_LINE}px`
     },
+    get rows () {
+      return state.lineLength
+    }
   }
 
   const mutation = {
@@ -53,7 +57,7 @@
       mutation.mutateLineLength(1)
 
       requestAnimationFrame(() => {
-        const scrollHeight = textarea.scrollHeight
+        const {scrollHeight} = textarea
         const lineLength = Math.round(scrollHeight / ONE_LINE)
 
         mutation.mutateLineLength(lineLength)
