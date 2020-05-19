@@ -26,12 +26,14 @@
   const textarea = document.querySelector('textarea');
 
   const renderHeight = () => {
+    textarea.value = state.value
     textarea.style.height = state.height
     textarea.setAttribute('rows', state.rows)
   }
 
   const state = {
     lineLength: 1,
+    value: '',
     get height () {
       return `${state.lineLength * ONE_LINE}px`
     },
@@ -44,6 +46,11 @@
     mutateLineLength: length => {
       state.lineLength = length
       renderHeight();
+    },
+    mutateValue: value => {
+      const removedNewLine = value.split(/\n/g).join('')
+      state.value = removedNewLine
+      renderHeight();
     }
   }
 
@@ -54,6 +61,7 @@
       }
     },
     onInput: () => {
+      mutation.mutateValue(textarea.value)
       mutation.mutateLineLength(1)
 
       requestAnimationFrame(() => {
