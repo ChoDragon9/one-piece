@@ -3,8 +3,11 @@ title: Array
 sidebar: auto
 ---
 
-## array-booter.js
-<<< @/docs/src/Javascript/Array/array-booter.js
+## replace-item-at-index.js
+<<< @/docs/src/Javascript/Array/replace-item-at-index.js
+
+## remove-item-at-index.js
+<<< @/docs/src/Javascript/Array/remove-item-at-index.js
 
 ## chunk.js
 <<< @/docs/src/Javascript/Array/chunk.js
@@ -35,3 +38,6 @@ sidebar: auto
 
 ## take-while.js
 <<< @/docs/src/Javascript/Array/take-while.js
+
+## array-booter.js
+<<< @/docs/src/Javascript/Array/array-booter.js
