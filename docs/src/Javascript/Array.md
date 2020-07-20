@@ -3,6 +3,9 @@ title: Array
 sidebar: auto
 ---
 
+## each-until.js
+<<< @/docs/src/Javascript/Array/each-until.js
+
 ## replace-item-at-index.js
 <<< @/docs/src/Javascript/Array/replace-item-at-index.js
 
