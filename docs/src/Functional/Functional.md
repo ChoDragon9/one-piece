@@ -3,6 +3,9 @@ title: Functional
 sidebar: auto
 ---
 
+## unfold
+<<< @/docs/src/Functional/unfold.js
+
 ## always
 <<< @/docs/src/Functional/always.js
 
