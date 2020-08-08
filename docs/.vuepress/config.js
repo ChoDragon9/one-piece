@@ -16,6 +16,7 @@ module.exports = {
         text: 'Helper',
         items: [
           {text: 'Helper', link: '/src/Helper/Helper/'},
+          {text: 'Contextmenu', link: '/src/Helper/contextmenu/'},
           {text: 'clone', link: '/src/Helper/clone/'},
           {text: 'produce', link: '/src/Helper/produce/'},
           {text: 'safe-chain', link: '/src/Helper/safe-chain/'},

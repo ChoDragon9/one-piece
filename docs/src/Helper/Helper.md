@@ -3,12 +3,6 @@ title: Helper
 sidebar: auto
 ---
 
-## contextmenu.ts
-<<< @/docs/src/Helper/contextmenu.ts
-
-## contextmenu-composition.ts
-<<< @/docs/src/Helper/contextmenu-composition.ts
-
 ## debounce.js
 <<< @/docs/src/Helper/debounce.js
 
