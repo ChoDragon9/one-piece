@@ -1,12 +1,12 @@
+const TARGET_ELEMENT = '.wrapper'
 const STEP = 10
 let currentNum = 0
-
 
 const assign = (obj, ...objs) => Object.assign(obj, ...objs)
 const findElem = selector => document.querySelector(selector)
 
 const addElems = () => {
-  const wrapper = findElem('.wrapper')
+  const wrapper = findElem(TARGET_ELEMENT)
   const frag = document.createDocumentFragment()
   const liTag = assign(document.createElement('div'), {
     className: 'box'
@@ -25,13 +25,17 @@ const addElems = () => {
   currentNum += STEP
 }
 
-window.onload = () => {
-  addElems()
-  const wrapper = findElem('.wrapper')
+const addScrollEvent = () => {
+  const wrapper = findElem(TARGET_ELEMENT)
   wrapper.addEventListener('scroll', () => {
     const isBottom = wrapper.scrollHeight - wrapper.scrollTop === wrapper.clientHeight
     if (isBottom) {
       addElems()
     }
   })
+}
+
+window.onload = () => {
+  addElems()
+  addScrollEvent()
 }
