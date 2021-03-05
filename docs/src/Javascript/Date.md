@@ -3,6 +3,9 @@ title: Date
 sidebar: auto
 ---
 
+## dateToString.js
+<<< @/docs/src/Javascript/Date/dateToString.ts
+
 ## toLocalString.js
 <<< @/docs/src/Javascript/Date/toLocalString.js
 
